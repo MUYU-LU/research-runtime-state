@@ -1,0 +1,64 @@
+{
+  "target_generation": "generation_004",
+  "source_unit": "generation_003/proposal_004",
+  "proposal_directory": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_003_proposal_004_continuation",
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "exploit"
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "exploit"
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "jump"
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md",
+      "role": "jump"
+    },
+    {
+      "id": "proposal_006",
+      "path": "proposal_006.md",
+      "role": "backward_simplify"
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md",
+      "role": "wildcard"
+    },
+    {
+      "id": "proposal_009",
+      "path": "proposal_009.md",
+      "role": "control"
+    },
+    {
+      "id": "proposal_010",
+      "path": "proposal_010.md",
+      "role": "jump"
+    }
+  ],
+  "rejected_proposals": [
+    {
+      "id": "proposal_005",
+      "path": "proposal_005.md",
+      "reason": "Lower-priority control-style variant after adding a stronger source-matched control replicate in proposal_009."
+    },
+    {
+      "id": "proposal_008",
+      "path": "proposal_008.md",
+      "reason": "Second wildcard not selected to keep room for stronger exploit and jump coverage."
+    }
+  ],
+  "selection_notes": [
+    "Selected set preserves at least 2 exploit proposals, at least 2 jump proposals, 1 backward-simplify proposal, and 1 control proposal.",
+    "Control anchor is the source-matched replicate of generation_003/proposal_004.",
+    "One wildcard was kept, while the second wildcard and the weaker control-style variant were left out to preserve exploit/jump coverage."
+  ]
+}

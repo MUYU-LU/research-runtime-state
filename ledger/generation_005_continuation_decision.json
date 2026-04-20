@@ -1,0 +1,68 @@
+{
+  "generated_at_utc": "2026-04-18T07:40:45.263518+00:00",
+  "completed_generation": "generation_004",
+  "target_generation": "generation_005",
+  "selected_continuation_source": "generation_004/proposal_001",
+  "selection_rule": "highest terminal_success Q_total unless --source-unit is provided",
+  "selected_Q_rmd17": 3.0291108938796594,
+  "selected_Q_iso17": 3.32668622930551,
+  "selected_Q_total": 3.1332622612787073,
+  "candidates": [
+    {
+      "unit": "generation_004/proposal_001",
+      "run_state": "terminal_success",
+      "Q_rmd17": 3.0291108938796594,
+      "Q_iso17": 3.32668622930551,
+      "Q_total": 3.1332622612787073
+    },
+    {
+      "unit": "generation_004/proposal_002",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.9728719438179514,
+      "Q_iso17": 3.3666897160680302,
+      "Q_total": 3.110708164105479
+    },
+    {
+      "unit": "generation_004/proposal_003",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.91278187287435,
+      "Q_iso17": 3.3500470650609744,
+      "Q_total": 3.065824690139668
+    },
+    {
+      "unit": "generation_004/proposal_009",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.9469981144853343,
+      "Q_iso17": 3.1930018040184973,
+      "Q_total": 3.0330994058219414
+    },
+    {
+      "unit": "generation_004/proposal_006",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.7891460794531704,
+      "Q_iso17": 3.19258956279737,
+      "Q_total": 2.9303512986236404
+    },
+    {
+      "unit": "generation_004/proposal_004",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.7935780322122152,
+      "Q_iso17": 3.1721084802597064,
+      "Q_total": 2.926063689028837
+    },
+    {
+      "unit": "generation_004/proposal_007",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.643650904041294,
+      "Q_iso17": 2.992901620987732,
+      "Q_total": 2.765888654972547
+    },
+    {
+      "unit": "generation_004/proposal_010",
+      "run_state": "terminal_success",
+      "Q_rmd17": 1.3983855053348244,
+      "Q_iso17": 2.4214479029721154,
+      "Q_total": 1.7564573445078762
+    }
+  ]
+}

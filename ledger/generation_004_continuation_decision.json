@@ -1,0 +1,71 @@
+{
+  "generation": "generation_004",
+  "decision_basis": "generation_003 benchmark-centric round review",
+  "decision_time_utc": "2026-04-17T18:31:07Z",
+  "mode": "balanced",
+  "selected_continuation_source": "generation_003/proposal_004",
+  "alternate_exploit_anchor": "generation_003/proposal_003",
+  "excluded_control": "generation_003/proposal_008",
+  "rationale": {
+    "selected_continuation_source": "proposal_004 is the strongest non-control overall candidate from generation_003, with the highest observed Q_total (2.8688) and the best cross-benchmark result, so it becomes the primary continuation source.",
+    "alternate_exploit_anchor": "proposal_003 is the strongest non-control balanced exploit-style fallback among the remaining successful units, with solid Q_total 1.7759 and better balance than the calibration-heavy alternatives.",
+    "mode": "Balanced mode remains preferred because generation_003 produced one dominant jump winner (proposal_004) plus a credible exploit-style anchor (proposal_003).",
+    "control_exclusion": "proposal_008 is excluded from advancement choice because it is the control replicate, even though it outperformed several non-control variants.",
+    "other_notes": [
+      "proposal_005 remained positive but clearly below proposal_004 and below the control replicate.",
+      "proposal_006 underperformed badly on RMD17 despite decent ISO17 behavior, so it should not be advanced.",
+      "proposal_002 lacks a complete benchmark-centric Q_total in the current collected state and is not used as the continuation source."
+    ]
+  },
+  "source_summary": {
+    "proposal_001": {
+      "q_total": 1.3640511788438214,
+      "q_rmd17": 1.1564066444454166,
+      "q_iso17": 1.7496767427265731,
+      "control": false
+    },
+    "proposal_002": {
+      "q_total": null,
+      "q_rmd17": null,
+      "q_iso17": 2.0203827667160486,
+      "control": false
+    },
+    "proposal_003": {
+      "q_total": 1.7759429019416921,
+      "q_rmd17": 1.3292863746234698,
+      "q_iso17": 2.605447881246963,
+      "control": false
+    },
+    "proposal_004": {
+      "q_total": 2.8687623334851278,
+      "q_rmd17": 2.6795083100762995,
+      "q_iso17": 3.22023409124438,
+      "control": false
+    },
+    "proposal_005": {
+      "q_total": 1.698412609961232,
+      "q_rmd17": 1.4048325505649806,
+      "q_iso17": 2.2436327202685566,
+      "control": false
+    },
+    "proposal_006": {
+      "q_total": 0.939160373887887,
+      "q_rmd17": 0.22340882334814513,
+      "q_iso17": 2.268413253461693,
+      "control": false
+    },
+    "proposal_007": {
+      "q_total": 1.6210393598599255,
+      "q_rmd17": 1.1972312809691712,
+      "q_iso17": 2.408111506371326,
+      "control": false
+    },
+    "proposal_008": {
+      "q_total": 1.87383898597439,
+      "q_rmd17": 1.7297132982677625,
+      "q_iso17": 2.1415009774295553,
+      "control": true
+    }
+  },
+  "next_recommended_step": "proposal_writing_for_generation_004_from_generation_003_proposal_004_with_balanced_mode_and_proposal_003_as_exploit_anchor"
+}

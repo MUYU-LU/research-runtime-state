@@ -1,0 +1,17 @@
+{
+  "implementation_state": "implementation_needed",
+  "source_unit": "base_unit",
+  "proposal_file": null,
+  "control_replicate": false,
+  "changed_files": [],
+  "repair_attempts": 0,
+  "same_failure_class_repairs": 0,
+  "last_failure_class": null,
+  "remote_synced": false,
+  "remote_smoke_passed": false,
+  "remote_path": null,
+  "smoke_log_local": null,
+  "smoke_log_remote": null,
+  "last_actor": "create_unit.py",
+  "last_updated_utc": "2026-04-17T02:47:42.406238+00:00"
+}

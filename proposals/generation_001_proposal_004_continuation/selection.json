@@ -1,0 +1,93 @@
+{
+  "source_unit": "generation_001/proposal_004",
+  "selected_proposals": [
+    "01_exploit_two_stage_minimal_equivariant_local.md",
+    "02_exploit_vector_coupled_energy_head.md",
+    "04_jump_bounded_triplet_augmented_equivariant_local.md",
+    "05_jump_clean_nequip_style_interaction_refactor.md",
+    "06_jump_multi_stage_low_rank_equivariant_mix.md",
+    "07_backward_simplify_single_stage_equivariant_local.md",
+    "08_control_replicate_proposal_004.md",
+    "10_exploit_seed_stability_and_epoch_extension.md"
+  ],
+  "unselected_proposals": [
+    "03_exploit_sparse_neighbor_pipeline_cleanup.md",
+    "09_wildcard_bounded_long_range_correction_on_equivariant_base.md"
+  ],
+  "control_proposal": "08_control_replicate_proposal_004.md",
+  "family_coverage": {
+    "minimal_equivariant_local_exploit": [
+      "01_exploit_two_stage_minimal_equivariant_local.md",
+      "02_exploit_vector_coupled_energy_head.md",
+      "10_exploit_seed_stability_and_epoch_extension.md"
+    ],
+    "body_order_bridge_jump": [
+      "04_jump_bounded_triplet_augmented_equivariant_local.md"
+    ],
+    "lightweight_equivariant_refactor_jump": [
+      "05_jump_clean_nequip_style_interaction_refactor.md"
+    ],
+    "equivariant_capacity_jump": [
+      "06_jump_multi_stage_low_rank_equivariant_mix.md"
+    ],
+    "backward_simplify": [
+      "07_backward_simplify_single_stage_equivariant_local.md"
+    ],
+    "control_replicate": [
+      "08_control_replicate_proposal_004.md"
+    ]
+  },
+  "phase_coverage": {
+    "4": [
+      "01_exploit_two_stage_minimal_equivariant_local.md",
+      "02_exploit_vector_coupled_energy_head.md",
+      "04_jump_bounded_triplet_augmented_equivariant_local.md",
+      "05_jump_clean_nequip_style_interaction_refactor.md",
+      "06_jump_multi_stage_low_rank_equivariant_mix.md",
+      "07_backward_simplify_single_stage_equivariant_local.md",
+      "08_control_replicate_proposal_004.md",
+      "10_exploit_seed_stability_and_epoch_extension.md"
+    ]
+  },
+  "selection_reasons": {
+    "01_exploit_two_stage_minimal_equivariant_local.md": "Default continuation of the current winner, best implementation fit, and clearest test of whether modest added interaction depth is the next gain.",
+    "02_exploit_vector_coupled_energy_head.md": "Strong exploit complement that targets a concrete bottleneck in proposal_004 without broadening into a heavier rewrite.",
+    "04_jump_bounded_triplet_augmented_equivariant_local.md": "Main bounded jump to test whether adding controlled body-order signal beats pure depth within the winning family.",
+    "05_jump_clean_nequip_style_interaction_refactor.md": "Clean representation jump with higher ceiling, selected to isolate principled equivariant interaction structure from body-order complexity.",
+    "06_jump_multi_stage_low_rank_equivariant_mix.md": "Selected as a third jump axis to probe richer equivariant composition without repeating the failed overstacked hybrid pattern.",
+    "07_backward_simplify_single_stage_equivariant_local.md": "Required simplification anchor centered on the winning family rather than the original base unit.",
+    "08_control_replicate_proposal_004.md": "Mandatory control replicate for variance calibration around the current best unit.",
+    "10_exploit_seed_stability_and_epoch_extension.md": "Low-risk family-confidence probe that tests whether some headroom remains before larger architectural change dominates."
+  },
+  "jump_proposal_reasons": {
+    "04_jump_bounded_triplet_augmented_equivariant_local.md": "Best evidence-backed bounded jump, adding body-order inside the winning family while staying diagnosable.",
+    "05_jump_clean_nequip_style_interaction_refactor.md": "Most principled clean architecture jump, with better isolation than a multi-idea hybrid.",
+    "06_jump_multi_stage_low_rank_equivariant_mix.md": "Provides jump breadth inside the winner family by stressing composition capacity rather than explicit triplet or long-range branches."
+  },
+  "selection_summary": {
+    "counts": {
+      "exploit": 3,
+      "jump": 3,
+      "backward_simplify": 1,
+      "control": 1,
+      "selected_total": 8
+    },
+    "policy_checks": {
+      "at_least_2_exploit": true,
+      "at_least_2_jump": true,
+      "has_control": true,
+      "has_backward_simplify": true
+    },
+    "why_unselected": {
+      "03_exploit_sparse_neighbor_pipeline_cleanup.md": "Useful engineering branch, but lower scientific priority than depth, vector-coupling, and calibration exploits in this round's bounded selection budget.",
+      "09_wildcard_bounded_long_range_correction_on_equivariant_base.md": "Kept as a speculative side branch, but current evidence does not justify spending one of the eight selected slots on long-range augmentation yet."
+    }
+  },
+  "next_safe_step": "materialization",
+  "materialization_constraints": [
+    "Do not change benchmark formulas, split semantics, metric field names, or runnable unit entrypoint contract.",
+    "Keep exactly one control replicate.",
+    "Materialize each selected proposal as its own runnable unit under one generation container.",
+    "Do not launch runs in the same step as selection."
+  ]
+}

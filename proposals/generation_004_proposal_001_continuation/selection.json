@@ -1,0 +1,71 @@
+{
+  "source_unit": "generation_004/proposal_001",
+  "target_generation": "generation_005",
+  "proposal_directory": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_004_proposal_001_continuation",
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_004_proposal_001_continuation/proposal_001.md",
+      "jump_type": "exploit",
+      "family": "compact_local_equivariant_readout_enrichment",
+      "phase": 4,
+      "rationale": "Primary exploit anchor, best evidence-backed low-risk continuation."
+    },
+    {
+      "id": "proposal_002",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_004_proposal_001_continuation/proposal_002.md",
+      "jump_type": "exploit",
+      "family": "compact_local_equivariant_readout_enrichment",
+      "phase": 4,
+      "rationale": "Exploit plus stability rebalance, benchmark-centric hedge against energy/gap volatility."
+    },
+    {
+      "id": "proposal_003",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_004_proposal_001_continuation/proposal_003.md",
+      "jump_type": "exploit",
+      "family": "compact_local_equivariant_late_fusion",
+      "phase": 4,
+      "rationale": "Third exploit gives a lighter architectural contrast within the same family."
+    },
+    {
+      "id": "proposal_004",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_004_proposal_001_continuation/proposal_004.md",
+      "jump_type": "jump",
+      "family": "compact_local_equivariant_body_order",
+      "phase": 5,
+      "rationale": "Main bounded higher-upside jump, directly supported by refreshed evidence."
+    },
+    {
+      "id": "proposal_005",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_004_proposal_001_continuation/proposal_005.md",
+      "jump_type": "jump",
+      "family": "separated_invariant_equivariant_local_equivariant",
+      "phase": 5,
+      "rationale": "Distinct stream-separation jump for family-level comparison."
+    },
+    {
+      "id": "proposal_006",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_004_proposal_001_continuation/proposal_006.md",
+      "jump_type": "jump",
+      "family": "higher_order_local_equivariant_bridge",
+      "phase": 5,
+      "rationale": "Highest-variance jump kept for bounded phase-5 probing."
+    },
+    {
+      "id": "proposal_007",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_004_proposal_001_continuation/proposal_007.md",
+      "jump_type": "backward-simplify",
+      "family": "compact_local_equivariant_simplified",
+      "phase": 3,
+      "rationale": "Interpretability and efficiency probe, useful contrast against exploit branch."
+    },
+    {
+      "id": "proposal_008",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_004_proposal_001_continuation/proposal_008.md",
+      "jump_type": "control",
+      "family": "compact_local_equivariant_control",
+      "phase": 4,
+      "rationale": "Required control replicate for variance-aware benchmark interpretation."
+    }
+  ]
+}

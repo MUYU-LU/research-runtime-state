@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.DS_Store
+benchmark/
+knowledge/repo_cache/
+generations/
+**/outputs/
+**/*.pt

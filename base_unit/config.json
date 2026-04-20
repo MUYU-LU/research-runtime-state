@@ -1,0 +1,15 @@
+{
+  "benchmark_root": "../benchmark",
+  "outputs_root": "outputs",
+  "device": "cuda",
+  "require_cuda": true,
+  "iso17_sample_ratio": 0.02,
+  "iso17_sample_seed": 17,
+  "cutoff": 5.0,
+  "num_rbf": 32,
+  "hidden_dim": 96,
+  "batch_size": 1,
+  "learning_rate": 0.001,
+  "energy_weight": 1.0,
+  "force_weight": 20.0
+}

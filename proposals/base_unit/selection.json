@@ -1,0 +1,100 @@
+{
+  "source_unit": "base_unit",
+  "selected_proposals": [
+    "01_exploit_neighbor_message_passing.md",
+    "02_exploit_angular_triplet_head.md",
+    "03_exploit_residual_pair_graph.md",
+    "04_jump_minimal_equivariant_local.md",
+    "05_jump_cace_body_order_bridge.md",
+    "06_jump_equivariant_triplet_hybrid.md",
+    "07_backward_simplify_atomwise_local_baseline.md",
+    "08_control_replicate_base_unit.md"
+  ],
+  "unselected_proposals": [
+    "09_wildcard_les_side_branch.md",
+    "10_wildcard_taip_side_branch.md"
+  ],
+  "control_proposal": "08_control_replicate_base_unit.md",
+  "family_coverage": {
+    "invariant_message_passing": [
+      "01_exploit_neighbor_message_passing.md",
+      "03_exploit_residual_pair_graph.md"
+    ],
+    "angular_body_order": [
+      "02_exploit_angular_triplet_head.md"
+    ],
+    "minimal_equivariant_local": [
+      "04_jump_minimal_equivariant_local.md"
+    ],
+    "cace_bridge": [
+      "05_jump_cace_body_order_bridge.md"
+    ],
+    "equivariant_hybrid": [
+      "06_jump_equivariant_triplet_hybrid.md"
+    ],
+    "backward_simplify_local": [
+      "07_backward_simplify_atomwise_local_baseline.md"
+    ],
+    "control_replicate": [
+      "08_control_replicate_base_unit.md"
+    ]
+  },
+  "phase_coverage": {
+    "1": [
+      "07_backward_simplify_atomwise_local_baseline.md",
+      "08_control_replicate_base_unit.md"
+    ],
+    "2": [
+      "01_exploit_neighbor_message_passing.md",
+      "03_exploit_residual_pair_graph.md"
+    ],
+    "3": [
+      "02_exploit_angular_triplet_head.md",
+      "05_jump_cace_body_order_bridge.md"
+    ],
+    "4": [
+      "04_jump_minimal_equivariant_local.md",
+      "06_jump_equivariant_triplet_hybrid.md"
+    ]
+  },
+  "selection_reasons": {
+    "01_exploit_neighbor_message_passing.md": "Highest implementation-fit exploit that directly adds neighbor context while preserving the scalar energy and autograd-force contract.",
+    "02_exploit_angular_triplet_head.md": "Best direct test of the evidence-backed directional/body-order gap in the current pair-only model.",
+    "03_exploit_residual_pair_graph.md": "Lower-complexity exploit branch that isolates the value of richer local interaction parameterization without full angular or equivariant machinery.",
+    "04_jump_minimal_equivariant_local.md": "Primary next-phase jump, selected because verified paper and repo evidence most strongly support a minimal equivariant local model as the clearest representation upgrade.",
+    "05_jump_cace_body_order_bridge.md": "Selected as a bridge jump to cover higher-body structure without committing only to an irreps-heavy route.",
+    "06_jump_equivariant_triplet_hybrid.md": "Selected as one aggressive jump branch to test whether combining equivariance with explicit directional summaries unlocks a stronger signal than either alone.",
+    "07_backward_simplify_atomwise_local_baseline.md": "Selected as the required simplification/calibration branch to measure whether some current pair complexity is unnecessary noise.",
+    "08_control_replicate_base_unit.md": "Mandatory control replicate for run-to-run variance estimation."
+  },
+  "jump_proposal_reasons": {
+    "04_jump_minimal_equivariant_local.md": "Most evidence-backed next-phase jump from fresh verified local PDFs and verified NequIP/MACE repo inspection.",
+    "05_jump_cace_body_order_bridge.md": "Provides a distinct body-order bridge hypothesis with better bounded fit than immediately betting only on full equivariance.",
+    "06_jump_equivariant_triplet_hybrid.md": "High-upside hybrid probe to test whether the current frontier needs both directional structure and symmetry-aware interactions together."
+  },
+  "selection_summary": {
+    "counts": {
+      "exploit": 3,
+      "jump": 3,
+      "backward_simplify": 1,
+      "control": 1,
+      "selected_total": 8
+    },
+    "policy_checks": {
+      "at_least_2_exploit": true,
+      "at_least_2_jump": true,
+      "has_control": true
+    },
+    "why_wildcards_unselected": {
+      "09_wildcard_les_side_branch.md": "Evidence-backed but less aligned to the dominant local geometry gap for this benchmark pair.",
+      "10_wildcard_taip_side_branch.md": "Benchmark-relevant in principle but weakest immediate implementation fit for a bounded next round."
+    }
+  },
+  "next_safe_step": "materialization",
+  "materialization_constraints": [
+    "Do not change benchmark formulas, split semantics, metric field names, or runnable unit entrypoint contract.",
+    "Keep exactly one control replicate.",
+    "Materialize each selected proposal as its own runnable unit under one generation container.",
+    "Do not launch runs in the same step as selection."
+  ]
+}

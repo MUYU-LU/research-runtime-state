@@ -1,0 +1,91 @@
+{
+  "source_unit": "generation_002/proposal_005",
+  "selected_proposals": [
+    "01_exploit_iso17_energy_calibrated_low_rank_stack.md",
+    "02_exploit_residual_stability_refinement.md",
+    "03_exploit_proposal001_balance_port.md",
+    "04_jump_nequip_style_recalibrated_refactor.md",
+    "05_jump_cross_stage_channel_bottleneck_mix.md",
+    "06_jump_dual_path_energy_calibration_head.md",
+    "07_backward_simplify_single_stage_low_rank_ablation.md",
+    "08_control_replicate_proposal_005.md"
+  ],
+  "unselected_proposals": [
+    "09_wildcard_dataset_balance_regularized_anchor_hybrid.md",
+    "10_wildcard_sparse_neighbor_cleanup_on_low_rank_base.md"
+  ],
+  "control_proposal": "08_control_replicate_proposal_005.md",
+  "family_coverage": {
+    "low_rank_equivariant_exploit": [
+      "01_exploit_iso17_energy_calibrated_low_rank_stack.md",
+      "02_exploit_residual_stability_refinement.md",
+      "03_exploit_proposal001_balance_port.md"
+    ],
+    "phase_5_jump": [
+      "04_jump_nequip_style_recalibrated_refactor.md",
+      "05_jump_cross_stage_channel_bottleneck_mix.md",
+      "06_jump_dual_path_energy_calibration_head.md"
+    ],
+    "backward_simplify": [
+      "07_backward_simplify_single_stage_low_rank_ablation.md"
+    ],
+    "control_replicate": [
+      "08_control_replicate_proposal_005.md"
+    ]
+  },
+  "phase_coverage": {
+    "4": [
+      "01_exploit_iso17_energy_calibrated_low_rank_stack.md",
+      "02_exploit_residual_stability_refinement.md",
+      "03_exploit_proposal001_balance_port.md",
+      "07_backward_simplify_single_stage_low_rank_ablation.md",
+      "08_control_replicate_proposal_005.md"
+    ],
+    "5": [
+      "04_jump_nequip_style_recalibrated_refactor.md",
+      "05_jump_cross_stage_channel_bottleneck_mix.md",
+      "06_jump_dual_path_energy_calibration_head.md"
+    ]
+  },
+  "selection_reasons": {
+    "01_exploit_iso17_energy_calibrated_low_rank_stack.md": "Default exploit around the chosen continuation source, directly targeting the main benchmark-centric weakness of proposal_005, namely ISO17 energy calibration.",
+    "02_exploit_residual_stability_refinement.md": "Strong exploit complement that probes whether proposal_005's upside is limited by fragile residual routing rather than representational ceiling.",
+    "03_exploit_proposal001_balance_port.md": "Selected to keep proposal_001's balanced cross-benchmark behavior in the round while remaining anchored on proposal_005 as the primary source family.",
+    "04_jump_nequip_style_recalibrated_refactor.md": "Chosen as the main non-low-rank jump branch, carrying forward proposal_004's ISO17 upside in a more benchmark-balanced form.",
+    "05_jump_cross_stage_channel_bottleneck_mix.md": "Selected as the ceiling-raising jump most directly aligned to proposal_005's strongest non-control upside.",
+    "06_jump_dual_path_energy_calibration_head.md": "Selected as a distinct jump that targets benchmark-balanced energy calibration instead of only deeper internal mixing.",
+    "07_backward_simplify_single_stage_low_rank_ablation.md": "Required bounded backward-simplify proposal to diagnose whether stacked-stage complexity is truly necessary for the proposal_005 family.",
+    "08_control_replicate_proposal_005.md": "Mandatory control replicate around the actual continuation source for variance interpretation."
+  },
+  "jump_proposal_reasons": {
+    "04_jump_nequip_style_recalibrated_refactor.md": "Best bounded alternative jump outside the low-rank family, justified by proposal_004's selective ISO17 upside without making it the main continuation.",
+    "05_jump_cross_stage_channel_bottleneck_mix.md": "Highest-ceiling jump inside the selected continuation family, testing whether proposal_005 can improve through stronger bottlenecked composition.",
+    "06_jump_dual_path_energy_calibration_head.md": "Benchmark-centric jump focused on energy balance, complementing the more internal-capacity-oriented bottleneck jump."
+  },
+  "selection_summary": {
+    "counts": {
+      "exploit": 3,
+      "jump": 3,
+      "backward_simplify": 1,
+      "control": 1,
+      "selected_total": 8
+    },
+    "policy_checks": {
+      "at_least_2_exploit": true,
+      "at_least_2_jump": true,
+      "has_control": true,
+      "has_backward_simplify": true
+    },
+    "why_unselected": {
+      "09_wildcard_dataset_balance_regularized_anchor_hybrid.md": "Useful balanced wildcard, but selection already retains proposal_001 anchor context through proposal 03 and needed to protect clearer exploit and jump probes.",
+      "10_wildcard_sparse_neighbor_cleanup_on_low_rank_base.md": "Reasonable infrastructure-cleanup branch, but lower scientific priority than the chosen exploit, jump, and simplify set under the eight-slot budget."
+    }
+  },
+  "next_safe_step": "materialization",
+  "materialization_constraints": [
+    "Do not change benchmark formulas, split semantics, metric field names, or runnable unit entrypoint contract.",
+    "Keep exactly one control replicate.",
+    "Materialize each selected proposal as its own runnable unit under one generation container.",
+    "Do not launch runs in the same step as selection."
+  ]
+}

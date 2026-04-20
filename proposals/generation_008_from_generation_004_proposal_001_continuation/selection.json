@@ -1,0 +1,64 @@
+{
+  "target_generation": "generation_008",
+  "source_unit": "generation_004/proposal_001",
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_008_from_generation_004_proposal_001_continuation/proposal_001.md",
+      "role": "exploit"
+    },
+    {
+      "id": "proposal_002",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_008_from_generation_004_proposal_001_continuation/proposal_002.md",
+      "role": "exploit"
+    },
+    {
+      "id": "proposal_004",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_008_from_generation_004_proposal_001_continuation/proposal_004.md",
+      "role": "jump"
+    },
+    {
+      "id": "proposal_005",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_008_from_generation_004_proposal_001_continuation/proposal_005.md",
+      "role": "jump"
+    },
+    {
+      "id": "proposal_006",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_008_from_generation_004_proposal_001_continuation/proposal_006.md",
+      "role": "jump"
+    },
+    {
+      "id": "proposal_007",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_008_from_generation_004_proposal_001_continuation/proposal_007.md",
+      "role": "backward-simplify"
+    },
+    {
+      "id": "proposal_008",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_008_from_generation_004_proposal_001_continuation/proposal_008.md",
+      "role": "control"
+    },
+    {
+      "id": "proposal_010",
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_008_from_generation_004_proposal_001_continuation/proposal_010.md",
+      "role": "wildcard"
+    }
+  ],
+  "rejected_proposals": [
+    "proposal_003",
+    "proposal_009"
+  ],
+  "selection_rationale": {
+    "exploits": [
+      "proposal_001",
+      "proposal_002"
+    ],
+    "jumps": [
+      "proposal_004",
+      "proposal_005",
+      "proposal_006"
+    ],
+    "control": "proposal_008",
+    "backward_simplify": "proposal_007",
+    "wildcard": "proposal_010"
+  }
+}

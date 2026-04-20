@@ -1,0 +1,20 @@
+{
+  "generation": "generation_003",
+  "decision_basis": "generation_002 benchmark-centric round review",
+  "decision_time_utc": "2026-04-17T10:40:00Z",
+  "mode": "balanced",
+  "selected_continuation_source": "generation_002/proposal_005",
+  "alternate_exploit_anchor": "generation_002/proposal_001",
+  "excluded_control": "generation_002/proposal_007",
+  "rationale": {
+    "selected_continuation_source": "proposal_005 is the strongest non-control overall candidate from generation_002, with Q_total 1.7129 and positive G_delta +0.2010, making it the best jump-side continuation source.",
+    "alternate_exploit_anchor": "proposal_001 remains the safest balanced exploit anchor, with Q_total 1.6553 and healthier cross-benchmark balance.",
+    "mode": "Balanced mode is preferred because generation_002 supports both a strong non-control jump continuation (proposal_005) and a stable exploit anchor (proposal_001).",
+    "control_exclusion": "proposal_007 is excluded from advancement choice because it is the control replicate, even though it has the highest Q_total.",
+    "other_notes": [
+      "proposal_004 showed ISO17 upside but negative G_delta, so it is not the main continuation.",
+      "proposal_003 produced NaN benchmark outputs and should not be advanced."
+    ]
+  },
+  "next_recommended_step": "proposal_writing_for_generation_003_from_generation_002_proposal_005_with_balanced_mode_and_proposal_001_as_exploit_anchor"
+}

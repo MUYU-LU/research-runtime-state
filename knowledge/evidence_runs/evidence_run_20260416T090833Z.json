@@ -1,0 +1,259 @@
+{
+  "schema_version": "evidence-run.v1",
+  "created_at": "2026-04-16T09:08:33Z",
+  "question": "For the next MLIP round starting from the current remote-derived base_unit under the fixed benchmark contract, what evidence-backed exploit angles and next-phase jump angles are justified now?",
+  "mode": "balanced",
+  "source_unit": {
+    "name": "base_unit",
+    "root": "/home/lmy/.openclaw/workspace/research_runtime/base_unit"
+  },
+  "current_capability_profile": {
+    "phase_guess": "relative geometry pair model",
+    "verified_from_code": {
+      "relative_geometry": true,
+      "cutoff_locality": true,
+      "pairwise_rbf_distance_features": true,
+      "atom_type_embedding": true,
+      "atomref_baseline": true,
+      "force_from_autograd": true,
+      "message_passing": false,
+      "angular_triplets": false,
+      "equivariance": false,
+      "periodic_cell_support": false,
+      "long_range_head": false,
+      "uncertainty_or_adaptation": false
+    },
+    "notes": [
+      "model.py uses all-pairs distances within a hard cutoff, concatenates atom embeddings and Gaussian RBF features, and sums pair energies.",
+      "No graph neighborhood updates, no directional features, and no explicit periodic/cell handling are present.",
+      "train.py optimizes L1 energy plus weighted L1 force loss on per-sample autograd forces.",
+      "eval.py targets rMD17 and ISO17 only, with anchored Q score computed from mixed force and energy MAE."
+    ]
+  },
+  "frontier_records": {
+    "checked": true,
+    "path": "/home/lmy/.openclaw/workspace/research_runtime/ledger/frontier.jsonl",
+    "status": "missing"
+  },
+  "recent_briefs_checked": [
+    {
+      "path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/briefs/evidence_brief_20260416T090259Z.md",
+      "status": "freshly_read",
+      "use": "context_only",
+      "warning": "Contained no verified paper or repo evidence, so not relied on for claims."
+    }
+  ],
+  "strong_papers": [
+    {
+      "title": "High-performance training and inference for deep equivariant interatomic potentials",
+      "local_pdf": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP等变训练 - NequIP高性能训练推理深度等变原子间势.pdf",
+      "evidence_type": "verified_local_pdf",
+      "extraction_status": "success",
+      "signals": [
+        "Deep equivariant models improve data efficiency, generalization, and state-of-the-art accuracy in MLIP simulations.",
+        "Framework supports compiled training/inference, dynamic tensor shapes, and distributed training.",
+        "Allegro models trained on SPICE 2 used 6.0 Å cutoff and tensor-product equivariant features, with substantial inference speedups after compilation."
+      ],
+      "fit_against_base_unit": "major_architecture_jump",
+      "relevance": "Supports justified jump from pair-only invariant model to local equivariant message passing, while highlighting implementation complexity and deployment cost."
+    },
+    {
+      "title": "A foundation model for atomistic materials chemistry",
+      "local_pdf": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP基础模型 - MACE-MP原子材料化学基础模型.pdf",
+      "evidence_type": "verified_local_pdf",
+      "extraction_status": "success",
+      "signals": [
+        "MACE unifies ACE-style body-order expansion with equivariant graph neural networks.",
+        "Authors emphasize stable molecular dynamics, broad transfer, and fine-tuning from foundation initialization on small task-specific data.",
+        "Higher-order equivariant message passing is treated as the key modeling ingredient beyond simpler local models."
+      ],
+      "fit_against_base_unit": "major_architecture_jump",
+      "relevance": "Supports next-phase jump toward higher-order equivariant message passing; also suggests exploit path via injecting higher-body structure before full foundation-scale complexity."
+    },
+    {
+      "title": "Machine learning of charges and long-range interactions from energies and forces",
+      "local_pdf": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP长程相互作用 - 从能量和力学习电荷与长程作用.pdf",
+      "evidence_type": "verified_local_pdf",
+      "extraction_status": "success",
+      "signals": [
+        "LES splits energy into short-range and long-range parts and predicts latent charges from local features without supervising explicit charges.",
+        "LES can be combined with short-range MLIPs including ACE, GAP, MTP, NequIP, and MACE.",
+        "Long-range augmentation helps strongly electrostatic or charged systems and can outperform explicit charge-learning baselines."
+      ],
+      "fit_against_base_unit": "medium_to_low_for_current_benchmark",
+      "relevance": "Interesting next-phase direction, but current fixed benchmark targets rMD17 and ISO17 where missing angular/message structure is the more immediate gap than long-range electrostatics."
+    },
+    {
+      "title": "Online test-time adaptation for better generalization of interatomic potentials to out-of-distribution data",
+      "local_pdf": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP泛化 - TAIP在线测试时适应分布外数据.pdf",
+      "evidence_type": "verified_local_pdf",
+      "extraction_status": "success",
+      "signals": [
+        "TAIP adds dual-level self-supervised adaptation during inference, reducing energy and force errors on MD17, ISO17, water, and electrolyte benchmarks without extra training data.",
+        "Reported average force/energy improvements are roughly 30 to 40 percent across several OOD settings.",
+        "Method requires an encoder-based MLIP with self-supervised heads and test-time parameter updates."
+      ],
+      "fit_against_base_unit": "low_for_round_impl",
+      "relevance": "Benchmark-relevant in principle because it directly improves MD17/ISO17 OOD generalization, but implementation fit to the current minimalist model is poor and risks violating benchmark simplicity/runtime expectations."
+    }
+  ],
+  "strong_repos": [
+    {
+      "repo": "https://github.com/mir-group/nequip",
+      "evidence_type": "verified_repo_readme_and_key_files",
+      "verified_files": [
+        "README.md",
+        "nequip/model/nequip_models.py",
+        "nequip/nn/interaction_block.py"
+      ],
+      "capabilities": [
+        "E(3)-equivariant graph neural network MLIPs",
+        "Spherical harmonics edge attributes plus learned radial basis embeddings",
+        "Multiple interaction layers with tensor-product message passing",
+        "Autograd derivatives for forces and compiled training/inference"
+      ],
+      "implementation_fit": "medium",
+      "fit_notes": "Conceptually aligned with benchmark energy-force prediction, but migrating current base_unit to NequIP-like irreps/message passing is a substantial rewrite."
+    },
+    {
+      "repo": "https://github.com/ACEsuit/mace",
+      "evidence_type": "verified_repo_readme_and_key_files",
+      "verified_files": [
+        "README.md",
+        "mace/modules/models.py",
+        "mace/modules/blocks.py",
+        "mace/modules/radial.py"
+      ],
+      "capabilities": [
+        "Higher-order equivariant message passing",
+        "ACE-inspired product basis blocks and radial embedding blocks",
+        "Foundation/fine-tuning workflows",
+        "Optional pair repulsion and multiple domain heads"
+      ],
+      "implementation_fit": "medium",
+      "fit_notes": "Architecturally richer than needed for the immediate round, but strongly evidences the value of adding body-order structure and equivariant interactions beyond current pair pooling."
+    },
+    {
+      "repo": "https://github.com/BingqingCheng/cace",
+      "evidence_type": "verified_repo_readme_and_key_files",
+      "verified_files": [
+        "README.md",
+        "cace/modules/les_wrapper.py",
+        "cace/modules/ewald.py",
+        "cace/modules/interaction.py"
+      ],
+      "capabilities": [
+        "Cartesian atomic cluster expansion descriptors",
+        "Inter-atomic message passing",
+        "Internal long-range LES/Ewald modules",
+        "Training and evaluation tasks in repo"
+      ],
+      "implementation_fit": "medium_low",
+      "fit_notes": "Useful evidence for a structured exploit path adding angular/body-order information and optional long-range modules, but still a large step from current code."
+    }
+  ],
+  "exploit_angles": [
+    {
+      "angle": "Add lightweight local message passing over cutoff neighbors while keeping scalar invariant outputs and autograd forces.",
+      "justification": [
+        "Current base_unit already builds neighbor-like pair features from atom embeddings plus RBF distances, so edge aggregation is the smallest structural extension.",
+        "Verified NequIP and MACE repo evidence shows interaction layers are the core mechanism for improving local-environment modeling.",
+        "Verified local NequIP/MACE papers support the claim that richer local interactions, not just optimizer tweaks, drive better accuracy and generalization."
+      ],
+      "implementation_fit": "highest_among_nontrivial_upgrades",
+      "confidence": "medium_high"
+    },
+    {
+      "angle": "Inject directional or three-body structure before full equivariance, for example angular basis or triplet features on top of current distance features.",
+      "justification": [
+        "Current model is strictly pairwise within cutoff, which is a sharp capability gap for directional chemistry and conformational OOD behavior on rMD17/ISO17.",
+        "MACE paper and CACE repo both verify the importance of higher-body structural representations beyond plain pair pooling.",
+        "This is a balanced exploit because it can preserve simple scalar training/eval plumbing while addressing the most obvious missing inductive bias."
+      ],
+      "implementation_fit": "medium_high",
+      "confidence": "medium_high"
+    },
+    {
+      "angle": "Keep the same benchmark loss shape but improve parameterization of the local model, for example deeper edge MLP plus neighbor aggregation rather than isolated pair scoring.",
+      "justification": [
+        "Base unit loss/eval stack is already benchmark-compatible and simple.",
+        "Evidence points to architectural locality upgrades as more justified than pure training-hyperparameter search."
+      ],
+      "implementation_fit": "high",
+      "confidence": "medium"
+    }
+  ],
+  "jump_angles": [
+    {
+      "angle": "Jump to a minimal E(3)-equivariant local model in the NequIP/MACE family.",
+      "justification": [
+        "Verified local paper evidence from NequIP and MACE supports equivariant models as a major accuracy/generalization phase transition for MLIPs.",
+        "Verified repo evidence confirms practical implementations rely on spherical harmonics, tensor products, and multi-layer interaction blocks."
+      ],
+      "implementation_fit": "medium_low",
+      "confidence": "medium"
+    },
+    {
+      "angle": "Explore a CACE-style higher-body Cartesian expansion path as a bridge between simple pair models and full equivariant GNNs.",
+      "justification": [
+        "Verified repo evidence shows CACE includes angular/product-basis machinery and optional inter-atomic message passing.",
+        "This may be a more incremental jump than full irreps-heavy equivariance while still moving beyond pairwise geometry."
+      ],
+      "implementation_fit": "medium",
+      "confidence": "medium"
+    },
+    {
+      "angle": "Reserve long-range latent-charge augmentation as a later jump, not the first next round default.",
+      "justification": [
+        "Verified LES paper evidence is strong for electrostatic and charged systems, but current benchmark and base-unit capability gap point more strongly to missing local geometry/body-order bias.",
+        "Adding long-range machinery now risks complexity without targeting the dominant observed structural deficiency."
+      ],
+      "implementation_fit": "medium_low",
+      "confidence": "medium"
+    },
+    {
+      "angle": "Treat TAIP-style test-time adaptation as a research branch rather than the default next-round candidate.",
+      "justification": [
+        "Verified local TAIP paper directly reports gains on MD17 and ISO17-like settings.",
+        "But adapting the current model into an encoder plus self-supervised test-time update framework is a poor fit for a single bounded round starting from this base_unit."
+      ],
+      "implementation_fit": "low",
+      "confidence": "medium"
+    }
+  ],
+  "implementation_fit": {
+    "best_near_term": [
+      "scalar neighbor message passing",
+      "angular or triplet augmentation",
+      "deeper local interaction/readout without changing benchmark contract"
+    ],
+    "best_next_phase": [
+      "minimal equivariant NequIP/MACE-like model",
+      "CACE-style higher-body expansion",
+      "later long-range or adaptation branches"
+    ]
+  },
+  "risks_or_mismatches": [
+    "No fresh frontier.jsonl record was available, so this brief cannot tie recommendations to recent round outcomes beyond current base_unit inspection.",
+    "TAIP repo itself was not verified in this run; only the local paper was verified for TAIP claims.",
+    "Long-range LES evidence is verified, but likely mismatched to the most immediate capability gap for rMD17/ISO17 compared with missing angular/equivariant locality.",
+    "Foundation-model scale claims from MACE paper should not be interpreted as directly implementable inside the current minimal base_unit without substantial rewrite."
+  ],
+  "followup_queries": [
+    "Find the smallest angular or triplet MLIP variants with public code that beat pairwise baselines on MD17/ISO17 without full equivariance.",
+    "Check whether recent frontier records outside this run showed energy-force gap patterns that specifically implicate OOD conformational directionality.",
+    "Inspect a verified repo focused on TAIP or other lightweight test-time adaptation if the round owner wants a benchmark-specific adaptation branch."
+  ],
+  "confidence": {
+    "current_code_profile": "high",
+    "verified_local_paper_evidence": "medium_high",
+    "verified_repo_evidence": "medium_high",
+    "exploit_recommendations": "medium_high",
+    "jump_recommendations": "medium"
+  },
+  "unverified_or_not_freshly_verified": [
+    "Any claim from the earlier brief beyond its existence",
+    "Any TAIP repository implementation details",
+    "Any causal conclusion about prior frontier failures, because frontier ledger was missing in this run"
+  ]
+}

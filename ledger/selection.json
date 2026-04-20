@@ -1,0 +1,34 @@
+{
+  "completed_generation": "generation_006",
+  "target_generation": "generation_007",
+  "source_unit": "generation_004/proposal_001",
+  "proposal_directory": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_007_from_generation_004_proposal_001_continuation",
+  "selected_proposals": [
+    "proposal_001",
+    "proposal_002",
+    "proposal_004",
+    "proposal_005",
+    "proposal_006",
+    "proposal_007",
+    "proposal_008",
+    "proposal_009"
+  ],
+  "selection_rationale": {
+    "proposal_001": "Primary exploit aligned with evidence, smallest in-block invariant refinement and best chance to recover source-level Q without destabilizing training.",
+    "proposal_002": "Second exploit keeps the same bounded family but shifts emphasis to residual calibration, giving a complementary low-risk refinement path.",
+    "proposal_004": "Jump candidate for a very narrow late invariant many-body summary, directly matching the evidence brief's only endorsed bounded jump.",
+    "proposal_005": "Alternative jump exploring the same late-summary idea in a slightly different placement, preserving diversity among bounded jump implementations.",
+    "proposal_006": "Hybrid jump/exploit path combining stream refinement with a narrow invariant summary, offering the strongest upside among non-wildcard expansion options.",
+    "proposal_007": "Backward-simplify slot to test whether stripping some late complexity restores benchmark balance after generation_006 regressions.",
+    "proposal_008": "Required control proposal to anchor attribution against the source continuation and quantify drift from proposal-writing choices.",
+    "proposal_009": "Best wildcard because it stays within the local balanced regime while probing a distinct scalar-normalized refinement, adding breadth without violating evidence constraints."
+  },
+  "rejected_proposals": [
+    "proposal_003",
+    "proposal_010"
+  ],
+  "rejection_rationale": {
+    "proposal_003": "Redundant exploit relative to proposals 001 and 002, with less distinct coverage under the eight-slot budget.",
+    "proposal_010": "Wildcard is weaker and less evidence-grounded than proposal_009, so it loses the final diversity slot."
+  }
+}

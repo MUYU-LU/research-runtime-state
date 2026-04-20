@@ -1,0 +1,46 @@
+{
+  "source_unit": "generation_004/proposal_001",
+  "target_generation": "generation_006",
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "exploit"
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "exploit"
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "exploit"
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md",
+      "role": "jump"
+    },
+    {
+      "id": "proposal_005",
+      "path": "proposal_005.md",
+      "role": "jump"
+    },
+    {
+      "id": "proposal_006",
+      "path": "proposal_006.md",
+      "role": "jump"
+    },
+    {
+      "id": "proposal_008",
+      "path": "proposal_008.md",
+      "role": "control"
+    },
+    {
+      "id": "proposal_009",
+      "path": "proposal_009.md",
+      "role": "wildcard_exploit"
+    }
+  ]
+}
