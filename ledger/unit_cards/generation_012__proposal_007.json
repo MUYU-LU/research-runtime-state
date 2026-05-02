@@ -1,0 +1,148 @@
+{
+  "unit": "generation_012/proposal_007",
+  "source_unit": "generation_011/proposal_007",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_012_from_generation_011_proposal_007_continuation/proposal_007.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_011/proposal_007",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_011/proposal_007",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 4,
+        "removed_lines": 1,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/model.py",
+          "+++ child/model/model.py",
+          "@@ -116,6 +116,8 @@",
+          " ",
+          "         self.embedding = nn.Embedding(max_atomic_number + 1, hidden_dim)",
+          "         self.atomref = nn.Embedding(max_atomic_number + 1, 1)",
+          "+        self.readout_scale_raw = nn.Embedding(max_atomic_number + 1, 1)",
+          "+        nn.init.zeros_(self.readout_scale_raw.weight)",
+          " ",
+          "         centers = torch.linspace(0.0, cutoff, num_rbf)",
+          "         widths = torch.full((num_rbf,), (cutoff / max(num_rbf - 1, 1)) + 1e-6)",
+          "@@ -180,7 +182,8 @@",
+          " ",
+          "         vector_norm = torch.linalg.norm(vector_state, dim=-1)",
+          "         per_atom_energy = self.readout(torch.cat([scalar_state, vector_norm], dim=-1)).squeeze(-1)",
+          "-        return atomref + per_atom_energy.sum()",
+          "+        readout_scale = 1.0 + 0.1 * torch.tanh(self.readout_scale_raw(numbers).squeeze(-1))",
+          "+        return atomref + (per_atom_energy * readout_scale).sum()",
+          " ",
+          "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:",
+          "         positions = batch[\"positions\"].clone().detach().requires_grad_(True)"
+        ]
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 7,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/train.py",
+          "+++ child/model/train.py",
+          "@@ -1,6 +1,7 @@",
+          " from __future__ import annotations",
+          " ",
+          " import json",
+          "+import math",
+          " from pathlib import Path",
+          " ",
+          " import torch",
+          "@@ -133,6 +134,12 @@",
+          "         warmup_ratio = min(1.0, epoch / energy_warmup_epochs)",
+          "         epoch_energy_weight = energy_weight * (0.6 + 0.4 * warmup_ratio)",
+          "         epoch_force_weight = force_weight * (1.1 - 0.1 * warmup_ratio)",
+          "+        late_start = max(1, int(math.ceil(0.65 * max(epochs, 1))))",
+          "+        if epoch >= late_start:",
+          "+            late_span = max(1, epochs - late_start + 1)",
+          "+            late_ratio = (epoch - late_start + 1) / late_span",
+          "+            epoch_energy_weight = epoch_energy_weight * (1.0 + 0.2 * late_ratio)",
+          "+            epoch_force_weight = epoch_force_weight * (1.0 - 0.1 * late_ratio)",
+          " ",
+          "         model.train()",
+          "         train_metrics = run_epoch("
+        ]
+      }
+    ],
+    "changed_files": [
+      "model/model.py",
+      "model/train.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 2.4077191273266045,
+  "Q_iso17": 3.0912981346520185,
+  "Q_total": 2.6469717798904995,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 1.2199005126953124,
+      "mild_ood_force_mae": 0.18877817776193842,
+      "hard_ood_energy_mae": 1.2237919921875,
+      "hard_ood_force_mae": 0.18872866269387306,
+      "mixed_force_mae": 0.1887484687210992,
+      "mixed_energy_mae": 1.222235400390625,
+      "gap_penalty": 0.0,
+      "Q_dataset": 2.4077191273266045,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.18877815688494592,
+      "best_val_energy_mae": 1.21990673828125
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.5998356280940594,
+      "within_force_mae": 0.2770206260282804,
+      "other_energy_mae": 0.6084810697115385,
+      "other_force_mae": 0.28088952742230433,
+      "mixed_force_mae": 0.27934196686469476,
+      "mixed_energy_mae": 0.6050228930645469,
+      "gap_penalty": 0.013850054245103958,
+      "Q_dataset": 3.0912981346520185,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.1786701281865438,
+      "best_val_energy_mae": 0.509765625
+    }
+  },
+  "created_at_utc": "2026-04-28T14:56:57.911836+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": 0.035875039699408084,
+  "outcome_class": "frontier_win",
+  "outcome_reasons": [
+    "delta_Q=0.035875 exceeds margin=0.03"
+  ]
+}

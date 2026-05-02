@@ -139,6 +139,8 @@ def make_dataset(dataset: str, split_dir: str | Path, *, max_samples: int | None
         return ExtXYZDataset(dataset, split_dir, energy_scale=KCAL_MOL_TO_EV, force_scale=KCAL_MOL_TO_EV, max_samples=max_samples)
     if dataset == "iso17":
         return ExtXYZDataset(dataset, split_dir, energy_scale=1.0, force_scale=1.0, max_samples=max_samples)
+    if dataset == "mad10k":
+        return ExtXYZDataset(dataset, split_dir, energy_scale=1.0, force_scale=1.0, max_samples=max_samples)
     raise KeyError(dataset)
 
 

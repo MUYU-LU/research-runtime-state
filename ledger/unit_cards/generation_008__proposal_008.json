@@ -1,0 +1,147 @@
+{
+  "unit": "generation_008/proposal_008",
+  "source_unit": "generation_004/proposal_001",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_008_from_generation_004_proposal_001_continuation/proposal_008.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_004/proposal_001",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_004/proposal_001",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      }
+    ],
+    "changed_files": [],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": [
+    "Exact source-matched control replicate confirmed; model/model.py and model/train.py already matched generation_004/proposal_001."
+  ],
+  "Q_rmd17": 2.243605445735774,
+  "Q_iso17": 3.0633537781471505,
+  "Q_total": 2.5305173620797556,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 2.8353388671875,
+      "mild_ood_force_mae": 0.177727150964085,
+      "hard_ood_energy_mae": 2.830578552246094,
+      "hard_ood_force_mae": 0.17737978841317817,
+      "mixed_force_mae": 0.1775187334335409,
+      "mixed_energy_mae": 2.8324826782226564,
+      "gap_penalty": 0.0,
+      "Q_dataset": 2.243605445735774,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.17772715362068264,
+      "best_val_energy_mae": 2.8353370361328123
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.6036799969059405,
+      "within_force_mae": 0.29124200618503115,
+      "other_energy_mae": 0.5399196213942308,
+      "other_force_mae": 0.2992426898387762,
+      "mixed_force_mae": 0.2960424163772782,
+      "mixed_energy_mae": 0.5654237715989148,
+      "gap_penalty": 0.027025463957576688,
+      "Q_dataset": 3.0633537781471505,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "worsening",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.1725740134716034,
+      "best_val_energy_mae": 0.3792317708333333
+    }
+  },
+  "created_at_utc": "2026-04-20T08:04:52.908560+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.6027448991989517,
+  "component_improvements_vs_parent": [
+    {
+      "dataset": "rmd17",
+      "metric": "gap_penalty",
+      "parent": 0.004287495707365973,
+      "child": 0.0,
+      "relative_improvement": 1.0
+    },
+    {
+      "dataset": "iso17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.7798239487635663,
+      "child": 0.5654237715989148,
+      "relative_improvement": 0.2749340764727594
+    },
+    {
+      "dataset": "iso17",
+      "metric": "gap_penalty",
+      "parent": 0.04911174683177137,
+      "child": 0.027025463957576688,
+      "relative_improvement": 0.44971487065710775
+    }
+  ],
+  "component_regressions_vs_parent": [
+    {
+      "dataset": "rmd17",
+      "metric": "mixed_force_mae",
+      "parent": 0.1048515516906511,
+      "child": 0.1775187334335409,
+      "relative_regression": 0.6930482245726177
+    },
+    {
+      "dataset": "rmd17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.5927447387695313,
+      "child": 2.8324826782226564,
+      "relative_regression": 3.7785876330215245
+    },
+    {
+      "dataset": "iso17",
+      "metric": "mixed_force_mae",
+      "parent": 0.18665905864049892,
+      "child": 0.2960424163772782,
+      "relative_regression": 0.5860061576087187
+    }
+  ],
+  "outcome_class": "benchmark_tradeoff",
+  "outcome_reasons": [
+    "some component metrics improved but other tracked metrics regressed strongly"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_022/proposal_006",
+  "target_generation": "generation_023",
+  "mode": "balanced",
+  "selection_intent": "Expand beyond the recent LES/CACE repeat by testing a dispersion-tail mechanism: generation_022/proposal_006 already spends capacity on a cutoff neutral charge q_i q_j head, so this run asks whether a bounded XDM/MLXDM-style pairwise dispersion correction is a safer non-duplicate long-range residual for generation_023.",
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP长程相互作用 - 严格长程色散神经网络势.pdf",
+      "pages": 10,
+      "max_chars": 30000,
+      "why_selected": "Fresh local MLXDM paper gives explicit long-range London dispersion equations (C6/C8/C10 damped pair expansion) and states the correction is added to a short-range NNP, directly contrasting with the current cutoff electrostatic charge head.",
+      "expected_evidence": ["Eq. 1 dispersion multipole expansion", "Eq. 6 damped C6/C8/C10 pair energy", "Eq. 7 van-der-Waals radius damping", "NN-predicted dispersion coefficients added to NNP"]
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "RowleyGroup/MLXDM",
+      "max_files": 40,
+      "max_file_chars": 20000,
+      "why_selected": "Paper-linked MLXDM implementation contains torchanipbe0/dispersion/nn.py with EnergyLayer, vanderWaalsLayer, DistanceLayer, CoefficientConvert, and DispersionModel classes implementing differentiable pairwise dispersion components that can be mapped to EvolutionMLIP.forward_energy.",
+      "expected_evidence": ["torchanipbe0/dispersion/nn.py::EnergyLayer.forward", "torchanipbe0/dispersion/nn.py::vanderWaalsLayer.forward", "torchanipbe0/dispersion/nn.py::CoefficientConvert.forward", "torchanipbe0/dispersion/utils.py::cutoff_function"]
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 2,
+    "min_new_sources": 1,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 1,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 1,
+    "max_pdf_attempts": 4,
+    "max_repo_attempts": 3,
+    "max_external_source_attempts": 6,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 2
+  }
+}

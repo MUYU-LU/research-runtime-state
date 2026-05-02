@@ -1,0 +1,65 @@
+{
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "exploit",
+      "selection_rationale": "Primary strong-mechanism exploit: full PaiNN-style vector-conditioned body-order descriptor gate directly targets the source ISO17 energy/gap weakness while preserving the successful generation_016/proposal_002 body-order branch."
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "exploit",
+      "selection_rationale": "Tiny norm-only ablation of the same strong mechanism; isolates whether vector magnitude conditioning is enough with lower variance and implementation risk than the full norm-plus-dot gate."
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "exploit",
+      "selection_rationale": "Complementary low-risk exploit that modulates body-order residual amplitude rather than descriptor content, separating readout scaling from representation rewriting."
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md",
+      "role": "jump",
+      "selection_rationale": "Architecture integration-path jump: moves body-order/vector information into the final scalar state so both main readout and residual paths can address ISO17 energy calibration."
+    },
+    {
+      "id": "proposal_005",
+      "path": "proposal_005.md",
+      "role": "jump",
+      "selection_rationale": "Broader but still bounded PaiNNMixing jump on scalar/vector states, testing whether the strong evidence should be applied to the main learned representation rather than only the body-order side branch."
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md",
+      "role": "backward-simplify",
+      "selection_rationale": "Backward simplification control for the source body-order message branch; important to determine whether the generation_016/proposal_002 improvement came from the added message pass or simpler static invariants would suffice."
+    },
+    {
+      "id": "proposal_008",
+      "path": "proposal_008.md",
+      "role": "control",
+      "selection_rationale": "Exact source control replicate for generation_016/proposal_002, required to interpret small G_delta changes against run variance."
+    },
+    {
+      "id": "proposal_010",
+      "path": "proposal_010.md",
+      "role": "wildcard",
+      "selection_rationale": "Training-target diagnostic wildcard for the observed ISO17 late energy worsening; keeps architecture fixed and tests whether a tiny train.py-only schedule change explains part of the bottleneck."
+    }
+  ],
+  "source_unit": "generation_016/proposal_002",
+  "target_generation": "generation_017",
+  "selection_policy": "Prioritize strong PaiNN-style vector/scalar mixing mechanisms from the generation_017 evidence package, cover exploit and jump integration paths, retain a backward-simplify branch and exact source control, and include one training-stability diagnostic for the ISO17 energy/gap failure mode.",
+  "omitted_proposals": [
+    {
+      "id": "proposal_006",
+      "reason": "Dual-gated descriptor plus scalar residual coupling is a higher-interaction medium-risk combination; deferred until single-gate and main-state PaiNNMixing effects are measured."
+    },
+    {
+      "id": "proposal_009",
+      "reason": "Weak normalized l2 contraction stabilizer has weaker mechanism support and overlaps less directly with the strong M01 evidence than the selected vector-conditioning and training-diagnostic tests."
+    }
+  ]
+}

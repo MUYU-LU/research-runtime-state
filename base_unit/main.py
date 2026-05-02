@@ -10,11 +10,12 @@ from model.train import train
 ROOT = Path(__file__).resolve().parent
 CONFIG = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))
 OUTPUTS = (ROOT / CONFIG.get("outputs_root", "outputs")).resolve()
-BENCHMARK = ((ROOT / CONFIG["benchmark_root"]).resolve() / "data")
+BENCHMARK_ROOT = (ROOT / CONFIG["benchmark_root"]).resolve()
+BENCHMARK = BENCHMARK_ROOT / "data"
 
 
 def run_one(dataset: str, epochs: int, batch_size: int, max_samples: int | None):
-    benchmark_root = BENCHMARK / dataset
+    benchmark_root = BENCHMARK_ROOT / "profiles" / dataset if dataset == "mad10k" else BENCHMARK / dataset
     output_dir = OUTPUTS / dataset
 
     train_result = train(
@@ -42,9 +43,9 @@ def run_one(dataset: str, epochs: int, batch_size: int, max_samples: int | None)
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", choices=["rmd17", "iso17", "both"], default="both")
+    parser.add_argument("--dataset", choices=["rmd17", "iso17", "mad10k", "both"], default="both")
     parser.add_argument("--epochs", type=int, default=8)
-    parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--batch-size", type=int, default=1)
     parser.add_argument("--max-samples", type=int, default=None)
     args = parser.parse_args()
 

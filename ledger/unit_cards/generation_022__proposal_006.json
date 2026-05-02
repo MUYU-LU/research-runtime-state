@@ -1,0 +1,163 @@
+{
+  "unit": "generation_022/proposal_006",
+  "source_unit": "generation_021/proposal_001",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_022_from_generation_021_proposal_001_continuation/proposal_006.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_021/proposal_001",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_021/proposal_001",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 38,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/model.py",
+          "+++ child/model/model.py",
+          "@@ -451,6 +451,25 @@",
+          "         self.energy_residual_scale_logit = nn.Parameter(torch.tensor(0.0))",
+          "         nn.init.zeros_(self.energy_residual_head[-1].weight)",
+          "         nn.init.zeros_(self.energy_residual_head[-1].bias)",
+          "+",
+          "+        # GEN022-M01 / SpookyNet Eq. (23)-(24) bounded variant:",
+          "+        # learn neutral partial charges from invariant scalar/vector features,",
+          "+        # then add a shell-decomposed q_i q_j electrostatic pair energy on the",
+          "+        # existing directed neighbor list (cf. ElectrostaticEnergy._coulomb).",
+          "+        self.charge_head = nn.Sequential(",
+          "+            nn.LayerNorm(hidden_dim * 2),",
+          "+            nn.Linear(hidden_dim * 2, hidden_dim // 2),",
+          "+            nn.SiLU(),",
+          "+            nn.Linear(hidden_dim // 2, 1),",
+          "+        )",
+          "+        self.charge_shell_beta_logits = nn.Parameter(torch.full((2,), -6.0))",
+          "+        self.charge_scale = 0.1",
+          "+        self.charge_shell_beta_cap = 0.006",
+          "+        # Near-zero, not exactly zero, so the quadratic q_i q_j term keeps a",
+          "+        # gradient path while remaining a source-near fallback at construction.",
+          "+        nn.init.normal_(self.charge_head[-1].weight, mean=0.0, std=1e-4)",
+          "+        nn.init.zeros_(self.charge_head[-1].bias)",
+          "+",
+          "         self.final_tp_invariant_mixer = TPInvariantPaiNNMixing(hidden_dim=hidden_dim)",
+          " ",
+          "     def _rbf(self, distances: torch.Tensor) -> torch.Tensor:",
+          "@@ -534,11 +553,30 @@",
+          "         per_atom_energy = self.readout(scalar_state).squeeze(-1)",
+          "         body_order_residual = self.body_order_readout(body_order_descriptor).squeeze(-1)",
+          "         body_order_multiplier = 0.05 * torch.sigmoid(self.body_order_scale)",
+          "+",
+          "+        charge_raw = self.charge_scale * torch.tanh(self.charge_head(residual_input).squeeze(-1))",
+          "+        # Single-molecule contract for this benchmark: enforce total neutral",
+          "+        # charge by subtracting the molecular mean, matching SpookyNet Eq. (24)",
+          "+        # with Q=0 and avoiding charge labels or dataloader changes.",
+          "+        charge = charge_raw - charge_raw.mean()",
+          "+        near_shell = torch.sigmoid(6.0 * (0.45 * self.cutoff - dij))",
+          "+        mid_shell = 1.0 - near_shell",
+          "+        beta_near, beta_mid = self.charge_shell_beta_cap * torch.sigmoid(self.charge_shell_beta_logits)",
+          "+        damped_kernel = near_shell / torch.sqrt(dij * dij + 1.0)",
+          "+        coulomb_kernel = mid_shell / dij.clamp_min(1e-6)",
+          "+        electrostatic_pair_energy = 0.5 * torch.sum(",
+          "+            charge[i_idx]",
+          "+            * charge[j_idx]",
+          "+            * cutoff_weight",
+          "+            * (beta_near * damped_kernel + beta_mid * coulomb_kernel)",
+          "+        )",
+          "+",
+          "         return (",
+          "             atomref",
+          "             + per_atom_energy.sum()",
+          "             + body_order_multiplier * body_order_residual.sum()",
+          "             + energy_residual_multiplier * energy_residual.sum()",
+          "+            + electrostatic_pair_energy",
+          "         )",
+          " ",
+          "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+        ]
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      }
+    ],
+    "changed_files": [
+      "model/model.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": [
+    "Implemented GEN022-M01 multishell neutral q_i q_j electrostatic pair-energy correction in model/model.py; local_sanity_unit.py passed."
+  ],
+  "Q_rmd17": 4.195700703172324,
+  "Q_iso17": 3.7576871122660367,
+  "Q_total": 4.042395946355124,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.02857086181640625,
+      "mild_ood_force_mae": 0.06009618485928513,
+      "hard_ood_energy_mae": 0.02924371337890625,
+      "hard_ood_force_mae": 0.06074051922332728,
+      "mixed_force_mae": 0.060482785477710424,
+      "mixed_energy_mae": 0.02897457275390625,
+      "gap_penalty": 0.010653186008917345,
+      "Q_dataset": 4.195700703172324,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.06009618436492747,
+      "best_val_energy_mae": 0.02857098388671875
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.23224299969059406,
+      "within_force_mae": 0.13517623302701973,
+      "other_energy_mae": 0.28307091346153845,
+      "other_force_mae": 0.1580578953314286,
+      "mixed_force_mae": 0.14890523040966508,
+      "mixed_energy_mae": 0.2627397479531607,
+      "gap_penalty": 0.1536659406879372,
+      "Q_dataset": 3.7576871122660367,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "worsening",
+      "best_val_force_mae": 0.15972749888896942,
+      "best_val_energy_mae": 0.5846354166666666
+    }
+  },
+  "created_at_utc": "2026-05-01T15:20:37.082891+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.005140575183481211,
+  "outcome_class": "neutral_variance",
+  "outcome_reasons": [
+    "abs(delta_Q)=0.00514058 within margin=0.03"
+  ]
+}

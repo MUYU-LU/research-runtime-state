@@ -1,0 +1,175 @@
+{
+  "unit": "generation_013/proposal_007",
+  "source_unit": "generation_012/proposal_005",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_013_from_generation_012_proposal_005_continuation/proposal_007.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_012/proposal_005",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_012/proposal_005",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 2,
+        "removed_lines": 3,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/model.py",
+          "+++ child/model/model.py",
+          "@@ -126,7 +126,7 @@",
+          "             [BalancedInteractionBlock(hidden_dim=hidden_dim, num_rbf=num_rbf) for _ in range(num_interactions)]",
+          "         )",
+          "         self.readout = nn.Sequential(",
+          "-            nn.Linear(hidden_dim * 2, hidden_dim),",
+          "+            nn.Linear(hidden_dim, hidden_dim),",
+          "             nn.SiLU(),",
+          "             nn.Linear(hidden_dim, hidden_dim),",
+          "             nn.SiLU(),",
+          "@@ -178,8 +178,7 @@",
+          "                 cutoff_weight=cutoff_weight,",
+          "             )",
+          " ",
+          "-        vector_norm = torch.linalg.norm(vector_state, dim=-1)",
+          "-        per_atom_energy = self.readout(torch.cat([scalar_state, vector_norm], dim=-1)).squeeze(-1)",
+          "+        per_atom_energy = self.readout(scalar_state).squeeze(-1)",
+          "         return atomref + per_atom_energy.sum()",
+          " ",
+          "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+        ]
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 3,
+        "removed_lines": 1,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/train.py",
+          "+++ child/model/train.py",
+          "@@ -162,12 +162,14 @@",
+          "         num_rbf=int(CONFIG.get(\"num_rbf\", 32)),",
+          "         cutoff=float(CONFIG.get(\"cutoff\", 5.0)),",
+          "     ).to(device)",
+          "-    initialize_atomref_lstsq(",
+          "+    atomref_fitted = initialize_atomref_lstsq(",
+          "         model,",
+          "         train_loader,",
+          "         ridge=float(CONFIG.get(\"atomref_lstsq_ridge\", 1e-3)),",
+          "         device=device,",
+          "     )",
+          "+    if atomref_fitted:",
+          "+        model.atomref.weight.requires_grad_(False)",
+          " ",
+          "     learning_rate = float(lr if lr is not None else CONFIG.get(\"learning_rate\", 1e-3))",
+          "     optimizer = torch.optim.AdamW("
+        ]
+      }
+    ],
+    "changed_files": [
+      "model/model.py",
+      "model/train.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 3.8924795966943937,
+  "Q_iso17": 3.5019229809919272,
+  "Q_total": 3.75578478119853,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.05100494384765625,
+      "mild_ood_force_mae": 0.07466745734721189,
+      "hard_ood_energy_mae": 0.05195660400390625,
+      "hard_ood_force_mae": 0.07495471962349257,
+      "mixed_force_mae": 0.07483981471298029,
+      "mixed_energy_mae": 0.051575939941406246,
+      "gap_penalty": 0.0038383616712377284,
+      "Q_dataset": 3.8924795966943937,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.07466745805862593,
+      "best_val_energy_mae": 0.051005126953125
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.3246383818069307,
+      "within_force_mae": 0.17941443540045235,
+      "other_energy_mae": 0.4264445612980769,
+      "other_force_mae": 0.19121329879818055,
+      "mixed_force_mae": 0.18649375343908925,
+      "mixed_energy_mae": 0.38572208950161846,
+      "gap_penalty": 0.0632668021318932,
+      "Q_dataset": 3.5019229809919272,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "worsening",
+      "energy_trend": "worsening",
+      "best_val_force_mae": 0.15454469621181488,
+      "best_val_energy_mae": 0.15852864583333334
+    }
+  },
+  "created_at_utc": "2026-04-28T22:46:03.730806+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.07451670430602064,
+  "component_improvements_vs_parent": [
+    {
+      "dataset": "rmd17",
+      "metric": "gap_penalty",
+      "parent": 0.0041654527485749234,
+      "child": 0.0038383616712377284,
+      "relative_improvement": 0.0785247359843654
+    },
+    {
+      "dataset": "iso17",
+      "metric": "gap_penalty",
+      "parent": 0.06912723100833351,
+      "child": 0.0632668021318932,
+      "relative_improvement": 0.08477742838757445
+    }
+  ],
+  "component_regressions_vs_parent": [
+    {
+      "dataset": "rmd17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.041819213867187496,
+      "child": 0.051575939941406246,
+      "relative_regression": 0.2333072569275183
+    },
+    {
+      "dataset": "iso17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.3340302942628998,
+      "child": 0.38572208950161846,
+      "relative_regression": 0.15475181780379002
+    }
+  ],
+  "outcome_class": "benchmark_tradeoff",
+  "outcome_reasons": [
+    "some component metrics improved but other tracked metrics regressed strongly"
+  ]
+}

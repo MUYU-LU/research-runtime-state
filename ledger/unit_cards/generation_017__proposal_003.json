@@ -1,0 +1,142 @@
+{
+  "unit": "generation_017/proposal_003",
+  "source_unit": "generation_016/proposal_002",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_017_from_generation_016_proposal_002_continuation/proposal_003.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_016/proposal_002",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_016/proposal_002",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 22,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/model.py",
+          "+++ child/model/model.py",
+          "@@ -252,8 +252,19 @@",
+          "             nn.Linear(hidden_dim // 2, 1),",
+          "         )",
+          "         self.body_order_scale = nn.Parameter(torch.tensor(-4.0))",
+          "+        self.body_residual_u = nn.Linear(hidden_dim, hidden_dim)",
+          "+        self.body_residual_v = nn.Linear(hidden_dim, hidden_dim)",
+          "+        body_residual_gate_hidden = max(hidden_dim // 2, 1)",
+          "+        self.body_residual_gate = nn.Sequential(",
+          "+            nn.Linear(hidden_dim * 2, body_residual_gate_hidden),",
+          "+            nn.SiLU(),",
+          "+            nn.Linear(body_residual_gate_hidden, 1),",
+          "+        )",
+          "+        self.body_residual_gate_scale = 0.05",
+          "         nn.init.normal_(self.body_order_readout[-1].weight, mean=0.0, std=1e-3)",
+          "         nn.init.zeros_(self.body_order_readout[-1].bias)",
+          "+        nn.init.zeros_(self.body_residual_gate[-1].weight)",
+          "+        nn.init.zeros_(self.body_residual_gate[-1].bias)",
+          " ",
+          "         self.interactions = nn.ModuleList(",
+          "             [BalancedInteractionBlock(hidden_dim=hidden_dim, num_rbf=num_rbf) for _ in range(num_interactions)]",
+          "@@ -338,6 +349,17 @@",
+          "         scalar_state = self.readout_norm(scalar_state + torch.sigmoid(scalar_gate) * scalar_update)",
+          "         per_atom_energy = self.readout(scalar_state).squeeze(-1)",
+          "         body_order_residual = self.body_order_readout(body_order_descriptor).squeeze(-1)",
+          "+",
+          "+        body_uv = self.body_residual_u(vector_state.transpose(1, 2)).transpose(1, 2)",
+          "+        body_vv = self.body_residual_v(vector_state.transpose(1, 2)).transpose(1, 2)",
+          "+        body_norm_v = torch.sqrt(torch.sum(body_vv * body_vv, dim=-1).clamp_min(1e-12))",
+          "+        body_dot_uv = torch.sum(body_uv * body_vv, dim=-1)",
+          "+        body_gate_input = torch.cat([body_norm_v, body_dot_uv], dim=-1)",
+          "+        per_atom_body_gate = 1.0 + self.body_residual_gate_scale * torch.tanh(",
+          "+            self.body_residual_gate(body_gate_input).squeeze(-1)",
+          "+        )",
+          "+        body_order_residual = body_order_residual * per_atom_body_gate",
+          "+",
+          "         body_order_multiplier = 0.05 * torch.sigmoid(self.body_order_scale)",
+          "         return atomref + per_atom_energy.sum() + body_order_multiplier * body_order_residual.sum()",
+          " "
+        ]
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      }
+    ],
+    "changed_files": [
+      "model/model.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 4.087588139313619,
+  "Q_iso17": 3.602184007105058,
+  "Q_total": 3.9176966930406225,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.03487548828125,
+      "mild_ood_force_mae": 0.0650555793683161,
+      "hard_ood_energy_mae": 0.03570416259765625,
+      "hard_ood_force_mae": 0.06560547638358548,
+      "mixed_force_mae": 0.06538551757747774,
+      "mixed_energy_mae": 0.03537269287109375,
+      "gap_penalty": 0.008410073600921993,
+      "Q_dataset": 4.087588139313619,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.0650555794411921,
+      "best_val_energy_mae": 0.03487548828125
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.24623685024752476,
+      "within_force_mae": 0.16212098095381614,
+      "other_energy_mae": 0.3713311298076923,
+      "other_force_mae": 0.17949184269859242,
+      "mixed_force_mae": 0.17254349800068192,
+      "mixed_energy_mae": 0.32129341798362526,
+      "gap_penalty": 0.1006752612874868,
+      "Q_dataset": 3.602184007105058,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.15979817261298498,
+      "best_val_energy_mae": 0.1826171875
+    }
+  },
+  "created_at_utc": "2026-04-30T00:45:18.663961+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.024851423746690138,
+  "outcome_class": "neutral_variance",
+  "outcome_reasons": [
+    "abs(delta_Q)=0.0248514 within margin=0.03"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "seed_anchor": {
+    "rmd17": {
+      "mixed_force_mae": 0.5777367596257479,
+      "mixed_energy_mae": 649.010449609375
+    },
+    "iso17": {
+      "mixed_force_mae": 1.6291503025157161,
+      "mixed_energy_mae": 719.1803221786047
+    }
+  }
+}

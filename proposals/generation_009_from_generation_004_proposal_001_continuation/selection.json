@@ -1,17 +1,50 @@
 {
+  "target_generation": "generation_009",
+  "source_unit": "generation_004/proposal_001",
+  "proposal_directory": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_009_from_generation_004_proposal_001_continuation",
   "selected_proposals": [
-    "proposal_001.md",
-    "proposal_002.md",
-    "proposal_003.md",
-    "proposal_004.md",
-    "proposal_005.md",
-    "proposal_007.md",
-    "proposal_008.md",
-    "proposal_010.md"
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md"
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md"
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md"
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md"
+    },
+    {
+      "id": "proposal_005",
+      "path": "proposal_005.md"
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md"
+    },
+    {
+      "id": "proposal_008",
+      "path": "proposal_008.md"
+    },
+    {
+      "id": "proposal_010",
+      "path": "proposal_010.md"
+    }
   ],
   "rejected_proposals": [
-    "proposal_006.md",
-    "proposal_009.md"
+    {
+      "id": "proposal_006",
+      "path": "proposal_006.md"
+    },
+    {
+      "id": "proposal_009",
+      "path": "proposal_009.md"
+    }
   ],
   "selection_summary": {
     "rationale": [

@@ -1,0 +1,114 @@
+{
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "exploit",
+      "selection_rationale": "Near-zero capped LES real-space latent-charge tail; lowest-risk direct test of GEN023-M01 while preserving proposal_006 fallback and fixed benchmark semantics."
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "exploit",
+      "selection_rationale": "Ultra-conservative beta probe; provides a second small-step exploit to distinguish real LES-tail signal from neutral variance without introducing PBC/Ewald/cell assumptions."
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "jump",
+      "selection_rationale": "Stronger LES tail with wider sigma and higher beta cap; probes whether ISO17 energy/gap can benefit from a more visible all-pair latent-charge interaction while remaining bounded."
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md",
+      "role": "jump",
+      "selection_rationale": "Two-sigma LES electrostatic tail; tests multi-scale nonperiodic real-space kernels derived from GEN023-M01 and the CACE realspace trace without changing dataset or launch protocol."
+    },
+    {
+      "id": "proposal_005",
+      "path": "proposal_005.md",
+      "role": "control",
+      "selection_rationale": "Mechanism ablation disabling the source cutoff charge shell to isolate the all-pair LES tail from ordinary source-shell or residual calibration effects."
+    },
+    {
+      "id": "proposal_006",
+      "path": "proposal_006.md",
+      "role": "control",
+      "selection_rationale": "Exact source replicate variance control for generation_022/proposal_006; required because generation_022 deltas were small and proposal_006 did not beat the parent/control by a robust margin."
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md",
+      "role": "exploit",
+      "selection_rationale": "RMS-normalized latent charges before LES tail; keeps the same GEN023-M01 kernel but controls charge scale so the tail can act without destabilizing RMD17 forces."
+    },
+    {
+      "id": "proposal_009",
+      "path": "proposal_009.md",
+      "role": "jump",
+      "selection_rationale": "Smooth outer-domain LES tail beyond the source cutoff; complements proposal_005 by focusing the new mechanism specifically where cutoff-local charge shells cannot act."
+    }
+  ],
+  "source_unit": "generation_022/proposal_006",
+  "target_generation": "generation_023",
+  "selection_policy": "Select eight units that best test the A-grade LES evidence package around mechanism GEN023-M01-les-realspace-latent-charge-tail while preserving benchmark semantics and attribution discipline. The set includes two conservative small-beta exploits, bounded stronger/multiscale/outer-domain LES variants, a charge-scale exploit, an exact source replicate, and a mechanism ablation that separates the all-pair LES tail from the existing cutoff charge shell. Defer learned-sigma and training-objective variants because the first adds parameterization risk and the second confounds mechanism attribution with loss calibration under the fixed benchmark protocol.",
+  "selected_role_counts": {
+    "exploit": 3,
+    "jump": 3,
+    "control": 2
+  },
+  "selected_mechanism_axes": [
+    "GEN023-M01 near-zero capped nonperiodic LES real-space latent-charge tail",
+    "Ultra-conservative LES beta probe / source fallback",
+    "Stronger bounded LES tail with sigma=1.5 and beta cap 0.004",
+    "Two-sigma/multiscale LES electrostatic tail",
+    "LES all-pair tail vs source cutoff charge-shell ablation",
+    "Exact generation_022/proposal_006 source replicate variance control",
+    "RMS-normalized latent charges before LES tail",
+    "Smooth outer-domain LES tail beyond cutoff"
+  ],
+  "les_evidence_constraints": {
+    "mechanism_id": "GEN023-M01-les-realspace-latent-charge-tail",
+    "selected_les_mechanism_proposals": [
+      "proposal_001",
+      "proposal_002",
+      "proposal_003",
+      "proposal_004",
+      "proposal_005",
+      "proposal_007",
+      "proposal_009"
+    ],
+    "conservative_small_beta_variants": [
+      "proposal_001",
+      "proposal_002"
+    ],
+    "stronger_or_aggressive_variants": [
+      "proposal_003",
+      "proposal_004",
+      "proposal_009"
+    ],
+    "mechanism_ablation_control": "proposal_005",
+    "exact_source_control": "proposal_006",
+    "required_citation_fields": [
+      "mechanism_id",
+      "mathematical_or_algorithmic_form",
+      "repo_code_trace",
+      "current_insertion_point"
+    ],
+    "repo_trace": [
+      "BingqingCheng/cace:cace/modules/les_wrapper.py::LesWrapper.forward",
+      "BingqingCheng/cace:cace/modules/ewald.py::EwaldPotential.compute_potential_realspace"
+    ],
+    "benchmark_semantics": "No dataset, metric, launch protocol, PBC/Ewald/cell, or charge-label changes; use nonperiodic real-space LES tail only."
+  },
+  "omitted_proposals": [
+    {
+      "id": "proposal_008",
+      "reason": "Bounded learned-sigma LES tail is interesting but adds an additional learned scale/identifiability risk; fixed-sigma and two-sigma selected variants provide cleaner mechanism attribution first."
+    },
+    {
+      "id": "proposal_010",
+      "reason": "Energy-balanced training objective control may be useful later, but it confounds LES mechanism attribution with loss calibration; selected proposal_005 plus exact replicate give cleaner controls under an 8-unit implementation budget."
+    }
+  ]
+}

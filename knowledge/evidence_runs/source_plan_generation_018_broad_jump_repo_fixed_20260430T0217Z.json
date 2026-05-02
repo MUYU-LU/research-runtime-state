@@ -1,0 +1,117 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_016/proposal_002",
+  "target_generation": "generation_018",
+  "completed_generation": "generation_017",
+  "mode": "jump",
+  "selection_intent": "Broad branch-diversification evidence for generation_018 after generation_017 failed to produce any non-control child beating generation_016/proposal_002. RMD17/ISO17 remain fixed evaluators, but source selection targets stronger representation mechanisms beyond the current local body-order scalar/vector branch: long-range/global communication, higher-order tensor/body-order bases, explicit equivariant tensor products, and charge/global-state modeling. Re-used failed-repo sources are included only to re-deep-read repositories now that clone/cache cleanup is fixed, not to consume old failed packages as active evidence.",
+  "negative_signal_to_record": {
+    "completed_generation": "generation_017",
+    "source_unit": "generation_016/proposal_002",
+    "did_any_non_control_child_beat_source": false,
+    "interpretation": "weak/negative signal for continuing generation_017 local variants around scalar/vector gates, body-order gates, norm/dot gates, readout damping, or ISO17-only energy-stability fixes"
+  },
+  "mechanism_axes": [
+    {
+      "axis": "global_or_long_range_representation",
+      "why": "Current source is cutoff-local and ISO17 energy/gap remains the larger weakness; inspect linear/global attention or long-range paths that can be added as a bounded side channel rather than repairing local gates."
+    },
+    {
+      "axis": "higher_order_many_body_tensor_basis",
+      "why": "Current body-order branch uses low-order Cartesian monomials and a single descriptor message; inspect product-basis/body-order implementations for better angular/many-body encoding without unbounded triplet loops."
+    },
+    {
+      "axis": "equivariant_scalar_vector_information_flow",
+      "why": "Current vector state is lightweight and not a full irreducible tensor product pipeline; inspect exact code patterns for equivariant convolution/tensor products that could inspire a bounded migration path."
+    },
+    {
+      "axis": "charge_or_global_state_conditioning",
+      "why": "Composition/energy and conformer transfer errors may benefit from environment-conditioned scalar state or charge-like global summaries; inspect implementations without treating materials-only benchmarks as design boundaries."
+    }
+  ],
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP长程注意力 - EFA欧氏快速注意力全局原子表示.pdf",
+      "why_selected": "Expected formula/algorithm for Euclidean Fast Attention linear-scaling global atomic representation; tests a nonlocal side-channel axis distinct from the current cutoff branch.",
+      "expected_evidence": ["attention update", "linear complexity derivation", "rotation/translation symmetry statement"],
+      "mechanism_axis": "global_or_long_range_representation",
+      "pages": 10,
+      "max_chars": 32000
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP基础模型 - MACE-MP原子材料化学基础模型.pdf",
+      "why_selected": "Expected product-basis / many-body expansion equations and implementation implications for stronger body-order representations beyond the current compact descriptor branch.",
+      "expected_evidence": ["product basis equation", "body-order reasoning", "energy/force consistency"],
+      "mechanism_axis": "higher_order_many_body_tensor_basis",
+      "pages": 10,
+      "max_chars": 32000
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP等变训练 - NequIP高性能训练推理深度等变原子间势.pdf",
+      "why_selected": "Expected equivariant convolution/tensor-product forms and training/inference design lessons; used to ground a migration path, not to propose a full rewrite.",
+      "expected_evidence": ["equivariant message update", "tensor product", "force-from-energy training"],
+      "mechanism_axis": "equivariant_scalar_vector_information_flow",
+      "pages": 10,
+      "max_chars": 32000
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP通用势 - CHGNet电荷感知预训练神经网络势.pdf",
+      "why_selected": "Expected charge/global-state or composition-aware conditioning mechanism; tests whether a bounded charge-like or global scalar head is a worthwhile branch-diversification axis.",
+      "expected_evidence": ["charge-related loss/readout", "composition/state embedding", "energy decomposition"],
+      "mechanism_axis": "charge_or_global_state_conditioning",
+      "pages": 10,
+      "max_chars": 32000
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "thorben-frank/euclidean_fast_attention",
+      "why_selected": "Fresh repo for exact EFA code paths implementing global Euclidean attention kernels that may map to a bounded global descriptor side path in model.py.",
+      "expected_evidence": ["repo file", "class/function", "attention data-flow", "examples/config"],
+      "mechanism_axis": "global_or_long_range_representation",
+      "max_files": 44,
+      "max_file_chars": 28000
+    },
+    {
+      "repo": "ACESuit/mace",
+      "why_selected": "Fresh repo for exact MACE product-basis and interaction block code paths; evidence for higher-order many-body/tensor basis branch design.",
+      "expected_evidence": ["repo file", "class/function", "product basis code trace", "training entrypoint"],
+      "mechanism_axis": "higher_order_many_body_tensor_basis",
+      "max_files": 44,
+      "max_file_chars": 28000
+    },
+    {
+      "repo": "mir-group/nequip",
+      "why_selected": "Re-deep-read previously failed repository now that clone/cache cleanup is fixed; exact equivariant convolution/tensor-product classes and configs needed before any scalar-vector/equivariant migration claim.",
+      "expected_evidence": ["repo file", "class/function", "irreps/tensor product code trace", "training/config pattern"],
+      "mechanism_axis": "equivariant_scalar_vector_information_flow",
+      "max_files": 44,
+      "max_file_chars": 28000
+    },
+    {
+      "repo": "CederGroupHub/chgnet",
+      "why_selected": "Fresh repo for charge-informed/global-state energy-force-stress-magnetic-moment implementation patterns; may provide bounded environment-conditioned scalar branch ideas.",
+      "expected_evidence": ["repo file", "class/function", "composition/charge/magmom/state data-flow", "training pattern"],
+      "mechanism_axis": "charge_or_global_state_conditioning",
+      "max_files": 44,
+      "max_file_chars": 28000
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 8,
+    "min_new_sources": 3,
+    "max_recent_reused_sources": 5,
+    "reuse_justification": "Recent failed packages are explicitly diagnosis-only. Reuse is allowed only to re-deep-read repositories after the clone/cache fix and to extract mechanisms not promoted from those failed packages."
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 3,
+    "min_successful_repo_sources": 3,
+    "min_strong_mechanism_cards": 3,
+    "max_pdf_attempts": 4,
+    "max_repo_attempts": 4,
+    "max_external_source_attempts": 8,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 1
+  }
+}

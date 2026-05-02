@@ -1,0 +1,115 @@
+{
+  "unit": "generation_014/proposal_003",
+  "source_unit": "generation_013/proposal_007",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_014_from_generation_013_proposal_007_continuation/proposal_003.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_013/proposal_007",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_013/proposal_007",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 2,
+        "removed_lines": 2,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/train.py",
+          "+++ child/model/train.py",
+          "@@ -168,8 +168,8 @@",
+          "         ridge=float(CONFIG.get(\"atomref_lstsq_ridge\", 1e-3)),",
+          "         device=device,",
+          "     )",
+          "-    if atomref_fitted:",
+          "-        model.atomref.weight.requires_grad_(False)",
+          "+    # Keep the least-squares atomref initialization, but leave it trainable so",
+          "+    # the energy baseline can adapt during residual training.",
+          " ",
+          "     learning_rate = float(lr if lr is not None else CONFIG.get(\"learning_rate\", 1e-3))",
+          "     optimizer = torch.optim.AdamW("
+        ]
+      }
+    ],
+    "changed_files": [
+      "model/train.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 3.9522072675870508,
+  "Q_iso17": 3.525791933626595,
+  "Q_total": 3.8029619007008915,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.04363330078125,
+      "mild_ood_force_mae": 0.07291403535404242,
+      "hard_ood_energy_mae": 0.04350115966796875,
+      "hard_ood_force_mae": 0.07324216241959948,
+      "mixed_force_mae": 0.07311091159337665,
+      "mixed_energy_mae": 0.043554016113281246,
+      "gap_penalty": 0.004488072414929309,
+      "Q_dataset": 3.9522072675870508,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.07291403508908115,
+      "best_val_energy_mae": 0.04363330078125
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.26959023050742575,
+      "within_force_mae": 0.18205725865457023,
+      "other_energy_mae": 0.38006760817307694,
+      "other_force_mae": 0.19394581565776697,
+      "mixed_force_mae": 0.18919039285648828,
+      "mixed_energy_mae": 0.33587665710681647,
+      "gap_penalty": 0.06283911579036708,
+      "Q_dataset": 3.525791933626595,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "worsening",
+      "best_val_force_mae": 0.1569106181462606,
+      "best_val_energy_mae": 0.08919270833333333
+    }
+  },
+  "created_at_utc": "2026-04-29T08:29:11.567649+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": 0.047177119502361364,
+  "outcome_class": "frontier_win",
+  "outcome_reasons": [
+    "delta_Q=0.0471771 exceeds margin=0.03"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_019/proposal_003",
+  "target_generation": "generation_020",
+  "mode": "balanced",
+  "selection_intent": "Source expansion after the ELoRA-only evidence run failed the strong-card gate: extract a bounded scalar-vector update mechanism that is not another rank2/body-order branch and directly addresses generation_019/proposal_003's neutral TP scale calibration outcome. Prioritize a mechanism with explicit equations and repository code for invariant vector-norm-to-scalar mixing so TP/vector geometry can affect energy without changing benchmark semantics or adding unbounded loops.",
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP等变架构 - PaiNN张量性质与分子光谱消息传递.pdf",
+      "why_selected": "Expected explicit PaiNN interaction/update equations for scalar features q and vector features mu, including vector-channel norm injection into scalar update; this is a bounded alternative to generation_019/proposal_003's independent TP residual scale calibration.",
+      "expected_evidence": [
+        "scalar/vector message equations",
+        "vector norm to scalar mixing update",
+        "rotation-equivariant/invariant constraint",
+        "energy/force conservative atomic-energy readout rule"
+      ],
+      "pages": 8,
+      "max_chars": 36000
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "atomistic-machine-learning/schnetpack",
+      "why_selected": "SchNetPack includes a production PaiNN implementation; expected code paths for PaiNNInteraction/PaiNNMixing showing split scalar/vector filters, vector norm, gated scalar update, and energy output modules that can be mapped into the current model/model.py insertion points.",
+      "expected_evidence": [
+        "repo file",
+        "PaiNNInteraction class/function",
+        "PaiNNMixing vector norm code trace",
+        "energy output/forces training pattern"
+      ],
+      "max_files": 64,
+      "max_file_chars": 26000
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 2,
+    "min_new_sources": 1,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 1,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 1,
+    "max_pdf_attempts": 6,
+    "max_repo_attempts": 4,
+    "max_external_source_attempts": 10,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 2
+  }
+}

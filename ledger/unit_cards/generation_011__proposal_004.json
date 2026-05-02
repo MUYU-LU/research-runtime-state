@@ -1,0 +1,178 @@
+{
+  "unit": "generation_011/proposal_004",
+  "source_unit": "generation_010/proposal_007",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_011_from_generation_010_proposal_007_continuation/proposal_004.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_010/proposal_007",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_010/proposal_007",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 18,
+        "removed_lines": 1,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/model.py",
+          "+++ child/model/model.py",
+          "@@ -126,6 +126,18 @@",
+          "         self.interactions = nn.ModuleList(",
+          "             [BalancedInteractionBlock(hidden_dim=hidden_dim, num_rbf=num_rbf) for _ in range(num_interactions)]",
+          "         )",
+          "+        helper_width = max(4, hidden_dim // 48)",
+          "+        self.late_helper_proj = nn.Sequential(",
+          "+            nn.Linear(hidden_dim * 3, helper_width),",
+          "+            nn.SiLU(),",
+          "+            nn.Linear(helper_width, hidden_dim),",
+          "+        )",
+          "+        self.late_helper_gate = nn.Linear(hidden_dim * 2, hidden_dim)",
+          "+        self.late_helper_norm = nn.LayerNorm(hidden_dim)",
+          "+        nn.init.zeros_(self.late_helper_proj[-1].weight)",
+          "+        nn.init.zeros_(self.late_helper_proj[-1].bias)",
+          "+        nn.init.zeros_(self.late_helper_gate.weight)",
+          "+        nn.init.constant_(self.late_helper_gate.bias, -7.0)",
+          "         self.readout = nn.Sequential(",
+          "             nn.Linear(hidden_dim * 2, hidden_dim),",
+          "             nn.SiLU(),",
+          "@@ -180,7 +192,12 @@",
+          "             )",
+          " ",
+          "         vector_norm = torch.linalg.norm(vector_state, dim=-1)",
+          "-        per_atom_energy = self.readout(torch.cat([scalar_state, vector_norm], dim=-1)).squeeze(-1)",
+          "+        late_helper_input = torch.cat([scalar_state, vector_norm, scalar_state * vector_norm], dim=-1)",
+          "+        late_helper = self.late_helper_proj(late_helper_input)",
+          "+        late_helper_gate = 0.05 * torch.sigmoid(self.late_helper_gate(torch.cat([scalar_state, vector_norm], dim=-1)))",
+          "+        readout_scalar = self.late_helper_norm(scalar_state + late_helper_gate * late_helper)",
+          "+",
+          "+        per_atom_energy = self.readout(torch.cat([readout_scalar, vector_norm], dim=-1)).squeeze(-1)",
+          "         return atomref + per_atom_energy.sum()",
+          " ",
+          "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+        ]
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      }
+    ],
+    "changed_files": [
+      "model/model.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": [
+    "Implemented conservative late helper jump in model/model.py; model/train.py unchanged."
+  ],
+  "Q_rmd17": 2.353510665255083,
+  "Q_iso17": 2.6465563980072924,
+  "Q_total": 2.456076671718356,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 1.390927001953125,
+      "mild_ood_force_mae": 0.1943914892077446,
+      "hard_ood_energy_mae": 1.3907664794921875,
+      "hard_ood_force_mae": 0.1943091675117612,
+      "mixed_force_mae": 0.19434209619015455,
+      "mixed_energy_mae": 1.3908306884765624,
+      "gap_penalty": 0.0,
+      "Q_dataset": 2.353510665255083,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.19439148692646996,
+      "best_val_energy_mae": 1.39092041015625
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 3.3494561223700496,
+      "within_force_mae": 0.28091540426606,
+      "other_energy_mae": 3.5472213040865386,
+      "other_force_mae": 0.2836774678872182,
+      "mixed_force_mae": 0.2825726424387549,
+      "mixed_energy_mae": 3.468115231399943,
+      "gap_penalty": 0.009774702877498466,
+      "Q_dataset": 2.6465563980072924,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.20955999692281088,
+      "best_val_energy_mae": 2.2936197916666665
+    }
+  },
+  "created_at_utc": "2026-04-22T03:21:19.617314+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.31866126453515786,
+  "component_improvements_vs_parent": [
+    {
+      "dataset": "iso17",
+      "metric": "mixed_force_mae",
+      "parent": 0.2913965663328165,
+      "child": 0.2825726424387549,
+      "relative_improvement": 0.030281495781194046
+    },
+    {
+      "dataset": "iso17",
+      "metric": "gap_penalty",
+      "parent": 0.021890034905864147,
+      "child": 0.009774702877498466,
+      "relative_improvement": 0.5534633489835181
+    }
+  ],
+  "component_regressions_vs_parent": [
+    {
+      "dataset": "rmd17",
+      "metric": "mixed_force_mae",
+      "parent": 0.17101307652965186,
+      "child": 0.19434209619015455,
+      "relative_regression": 0.13641658365497963
+    },
+    {
+      "dataset": "rmd17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.6365381103515625,
+      "child": 1.3908306884765624,
+      "relative_regression": 1.184992015180994
+    },
+    {
+      "dataset": "iso17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.7179993082992193,
+      "child": 3.468115231399943,
+      "relative_regression": 3.8302487081988095
+    }
+  ],
+  "outcome_class": "benchmark_tradeoff",
+  "outcome_reasons": [
+    "some component metrics improved but other tracked metrics regressed strongly"
+  ]
+}

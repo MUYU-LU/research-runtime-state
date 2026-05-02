@@ -1,0 +1,1107 @@
+{
+  "generation": "generation_023",
+  "created_at_utc": "2026-05-01T22:08:39.008903+00:00",
+  "source_unit": "generation_022/proposal_006",
+  "parent": {
+    "unit": "generation_022/proposal_006",
+    "Q_rmd17": 4.195700703172324,
+    "Q_iso17": 3.7576871122660367,
+    "Q_total": 4.042395946355124
+  },
+  "control_sigma_Q_total": 0.030787328209918474,
+  "margin": 0.06157465641983695,
+  "did_any_child_beat_parent": false,
+  "best_child": {
+    "unit": "generation_023/proposal_004",
+    "Q_rmd17": 4.206413224218935,
+    "Q_iso17": 3.7570626760477586,
+    "Q_total": 4.049140532359024,
+    "outcome_class": "neutral_variance"
+  },
+  "outcome_counts": {
+    "control_replicate": 2,
+    "neutral_variance": 6
+  },
+  "lessons": [
+    "No child beat parent generation_022/proposal_006; keep parent unless a reviewed override is chosen."
+  ],
+  "units": [
+    {
+      "unit": "generation_023/proposal_001",
+      "source_unit": "generation_022/proposal_006",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_023_from_generation_022_proposal_006_continuation/proposal_001.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": false,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_022/proposal_006",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_022/proposal_006",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": false,
+            "added_lines": 18,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": [
+              "--- source/model/model.py",
+              "+++ child/model/model.py",
+              "@@ -465,6 +465,12 @@",
+              "         self.charge_shell_beta_logits = nn.Parameter(torch.full((2,), -6.0))",
+              "         self.charge_scale = 0.1",
+              "         self.charge_shell_beta_cap = 0.006",
+              "+        # GEN023-M01 / LES-inspired nonperiodic real-space latent-charge tail:",
+              "+        # keep the source shell correction unchanged, then add a separately",
+              "+        # capped all-nonself-pair erf(1/r) tail with a near-zero initial gate.",
+              "+        self.les_tail_beta_logit = nn.Parameter(torch.tensor(-8.0))",
+              "+        self.les_tail_beta_cap = 0.002",
+              "+        self.register_buffer(\"les_tail_sigma\", torch.tensor(1.0))",
+              "         # Near-zero, not exactly zero, so the quadratic q_i q_j term keeps a",
+              "         # gradient path while remaining a source-near fallback at construction.",
+              "         nn.init.normal_(self.charge_head[-1].weight, mean=0.0, std=1e-4)",
+              "@@ -571,12 +577,24 @@",
+              "             * (beta_near * damped_kernel + beta_mid * coulomb_kernel)",
+              "         )",
+              " ",
+              "+        all_rij = positions[:, None, :] - positions[None, :, :]",
+              "+        all_sq = torch.sum(all_rij * all_rij, dim=-1)",
+              "+        n_atoms = positions.shape[0]",
+              "+        nonself = ~torch.eye(n_atoms, device=positions.device, dtype=torch.bool)",
+              "+        all_dij = torch.sqrt(torch.where(nonself, all_sq.clamp_min(1e-12), torch.ones_like(all_sq)))",
+              "+        sigma = self.les_tail_sigma.to(device=positions.device, dtype=positions.dtype).clamp_min(1e-6)",
+              "+        les_kernel = torch.erf(all_dij / (math.sqrt(2.0) * sigma)) / all_dij.clamp_min(1e-6)",
+              "+        les_kernel = torch.where(nonself, les_kernel, torch.zeros_like(les_kernel))",
+              "+        les_tail_beta = self.les_tail_beta_cap * torch.sigmoid(self.les_tail_beta_logit)",
+              "+        les_tail_energy = les_tail_beta * 0.5 * torch.sum(charge[:, None] * charge[None, :] * les_kernel)",
+              "+",
+              "         return (",
+              "             atomref",
+              "             + per_atom_energy.sum()",
+              "             + body_order_multiplier * body_order_residual.sum()",
+              "             + energy_residual_multiplier * energy_residual.sum()",
+              "             + electrostatic_pair_energy",
+              "+            + les_tail_energy",
+              "         )",
+              " ",
+              "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+            ]
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [
+          "model/model.py"
+        ],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": null,
+      "Q_rmd17": 4.152349730622807,
+      "Q_iso17": 3.722895531006966,
+      "Q_total": 4.002040760757263,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 0.0382362060546875,
+          "mild_ood_force_mae": 0.05798984626715537,
+          "hard_ood_energy_mae": 0.03829083251953125,
+          "hard_ood_force_mae": 0.05867053028650116,
+          "mixed_force_mae": 0.05839825667876285,
+          "mixed_energy_mae": 0.03826898193359375,
+          "gap_penalty": 0.011655896220985512,
+          "Q_dataset": 4.152349730622807,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.05798984616575763,
+          "best_val_energy_mae": 0.03823614501953125
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 0.24899926516089108,
+          "within_force_mae": 0.13647449485183058,
+          "other_energy_mae": 0.3299474158653846,
+          "other_force_mae": 0.15860595035724914,
+          "mixed_force_mae": 0.14975336815508172,
+          "mixed_energy_mae": 0.2975681555835872,
+          "gap_penalty": 0.14778602830723556,
+          "Q_dataset": 3.722895531006966,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "worsening",
+          "best_val_force_mae": 0.14727958043416342,
+          "best_val_energy_mae": 0.3714192708333333
+        }
+      },
+      "created_at_utc": "2026-05-01T22:08:38.996341+00:00",
+      "control_replicate": false,
+      "delta_Q_vs_parent": -0.04035518559786144,
+      "outcome_class": "neutral_variance",
+      "outcome_reasons": [
+        "abs(delta_Q)=0.0403552 within margin=0.0615747"
+      ]
+    },
+    {
+      "unit": "generation_023/proposal_002",
+      "source_unit": "generation_022/proposal_006",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_023_from_generation_022_proposal_006_continuation/proposal_002.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": false,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_022/proposal_006",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_022/proposal_006",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": false,
+            "added_lines": 17,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": [
+              "--- source/model/model.py",
+              "+++ child/model/model.py",
+              "@@ -465,6 +465,12 @@",
+              "         self.charge_shell_beta_logits = nn.Parameter(torch.full((2,), -6.0))",
+              "         self.charge_scale = 0.1",
+              "         self.charge_shell_beta_cap = 0.006",
+              "+        # GEN023-M01 ultra-conservative LES real-space tail probe.  Reuse the",
+              "+        # same neutral latent charges, cap the additive all-pair branch at",
+              "+        # 1e-3, and initialize the beta gate effectively at source fallback.",
+              "+        self.les_tail_beta_logit = nn.Parameter(torch.tensor(-10.0))",
+              "+        self.les_tail_beta_cap = 0.001",
+              "+        self.les_tail_sigma = 1.0",
+              "         # Near-zero, not exactly zero, so the quadratic q_i q_j term keeps a",
+              "         # gradient path while remaining a source-near fallback at construction.",
+              "         nn.init.normal_(self.charge_head[-1].weight, mean=0.0, std=1e-4)",
+              "@@ -571,12 +577,23 @@",
+              "             * (beta_near * damped_kernel + beta_mid * coulomb_kernel)",
+              "         )",
+              " ",
+              "+        all_rij = positions[:, None, :] - positions[None, :, :]",
+              "+        all_dij = torch.linalg.norm(all_rij, dim=-1)",
+              "+        n_atoms = positions.shape[0]",
+              "+        nonself = ~torch.eye(n_atoms, device=positions.device, dtype=torch.bool)",
+              "+        sigma = positions.new_tensor(self.les_tail_sigma).clamp_min(1e-6)",
+              "+        les_kernel = torch.erf(all_dij / (math.sqrt(2.0) * sigma)) / all_dij.clamp_min(1e-6)",
+              "+        les_kernel = les_kernel.masked_fill(~nonself, 0.0)",
+              "+        beta_tail = self.les_tail_beta_cap * torch.sigmoid(self.les_tail_beta_logit)",
+              "+        les_tail_energy = beta_tail * 0.5 * torch.sum(charge[:, None] * charge[None, :] * les_kernel)",
+              "+",
+              "         return (",
+              "             atomref",
+              "             + per_atom_energy.sum()",
+              "             + body_order_multiplier * body_order_residual.sum()",
+              "             + energy_residual_multiplier * energy_residual.sum()",
+              "             + electrostatic_pair_energy",
+              "+            + les_tail_energy",
+              "         )",
+              " ",
+              "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+            ]
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [
+          "model/model.py"
+        ],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": null,
+      "Q_rmd17": 4.1777166195597175,
+      "Q_iso17": 3.778840921609489,
+      "Q_total": 4.038110125277138,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 0.0309854736328125,
+          "mild_ood_force_mae": 0.06000017693190603,
+          "hard_ood_energy_mae": 0.03145928955078125,
+          "hard_ood_force_mae": 0.060657221088826194,
+          "mixed_force_mae": 0.06039440342605813,
+          "mixed_energy_mae": 0.03126976318359375,
+          "gap_penalty": 0.010879222570907876,
+          "Q_dataset": 4.1777166195597175,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.06000017724803183,
+          "best_val_energy_mae": 0.0309854736328125
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 0.21821869198638613,
+          "within_force_mae": 0.13322319878209934,
+          "other_energy_mae": 0.267724609375,
+          "other_force_mae": 0.15693719694820735,
+          "mixed_force_mae": 0.14745159768176413,
+          "mixed_energy_mae": 0.24792224241955443,
+          "gap_penalty": 0.16082564406746994,
+          "Q_dataset": 3.778840921609489,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "worsening",
+          "best_val_force_mae": 0.14578300466140112,
+          "best_val_energy_mae": 0.5006510416666666
+        }
+      },
+      "created_at_utc": "2026-05-01T22:08:38.998034+00:00",
+      "control_replicate": false,
+      "delta_Q_vs_parent": -0.004285821077986363,
+      "outcome_class": "neutral_variance",
+      "outcome_reasons": [
+        "abs(delta_Q)=0.00428582 within margin=0.0615747"
+      ]
+    },
+    {
+      "unit": "generation_023/proposal_003",
+      "source_unit": "generation_022/proposal_006",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_023_from_generation_022_proposal_006_continuation/proposal_003.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": false,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_022/proposal_006",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_022/proposal_006",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": false,
+            "added_lines": 20,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": [
+              "--- source/model/model.py",
+              "+++ child/model/model.py",
+              "@@ -465,6 +465,12 @@",
+              "         self.charge_shell_beta_logits = nn.Parameter(torch.full((2,), -6.0))",
+              "         self.charge_scale = 0.1",
+              "         self.charge_shell_beta_cap = 0.006",
+              "+        # GEN023-M01 bounded LES-inspired nonperiodic all-pair tail.  This is",
+              "+        # a source-near fallback at init: beta_tail is capped and controlled by",
+              "+        # a single near-zero gate while reusing the neutral latent charges.",
+              "+        self.les_tail_beta_logit = nn.Parameter(torch.tensor(-6.0))",
+              "+        self.les_tail_beta_cap = 0.004",
+              "+        self.les_tail_sigma = 1.5",
+              "         # Near-zero, not exactly zero, so the quadratic q_i q_j term keeps a",
+              "         # gradient path while remaining a source-near fallback at construction.",
+              "         nn.init.normal_(self.charge_head[-1].weight, mean=0.0, std=1e-4)",
+              "@@ -571,12 +577,26 @@",
+              "             * (beta_near * damped_kernel + beta_mid * coulomb_kernel)",
+              "         )",
+              " ",
+              "+        # LES-style isolated real-space tail over all non-self atom pairs.",
+              "+        # No periodic cell, reciprocal Ewald, charge labels, or dataloader",
+              "+        # contract changes are introduced; forces remain conservative through",
+              "+        # autograd on this scalar energy contribution.",
+              "+        all_rij = positions[:, None, :] - positions[None, :, :]",
+              "+        all_dij = torch.linalg.norm(all_rij, dim=-1)",
+              "+        n_atoms = positions.shape[0]",
+              "+        nonself = ~torch.eye(n_atoms, device=positions.device, dtype=torch.bool)",
+              "+        les_kernel = torch.erf(all_dij / (math.sqrt(2.0) * self.les_tail_sigma)) / all_dij.clamp_min(1e-6)",
+              "+        les_kernel = torch.where(nonself, les_kernel, torch.zeros_like(les_kernel))",
+              "+        beta_tail = self.les_tail_beta_cap * torch.sigmoid(self.les_tail_beta_logit)",
+              "+        les_tail_energy = beta_tail * 0.5 * torch.sum(charge[:, None] * charge[None, :] * les_kernel)",
+              "+",
+              "         return (",
+              "             atomref",
+              "             + per_atom_energy.sum()",
+              "             + body_order_multiplier * body_order_residual.sum()",
+              "             + energy_residual_multiplier * energy_residual.sum()",
+              "             + electrostatic_pair_energy",
+              "+            + les_tail_energy",
+              "         )",
+              " ",
+              "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+            ]
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [
+          "model/model.py"
+        ],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": null,
+      "Q_rmd17": 4.166071248645509,
+      "Q_iso17": 3.7256415985360705,
+      "Q_total": 4.011920871107206,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 0.0337347412109375,
+          "mild_ood_force_mae": 0.05915340531762922,
+          "hard_ood_energy_mae": 0.03482720947265625,
+          "hard_ood_force_mae": 0.05964148098166334,
+          "mixed_force_mae": 0.0594462507160497,
+          "mixed_energy_mae": 0.034390222167968755,
+          "gap_penalty": 0.008210369167893252,
+          "Q_dataset": 4.166071248645509,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.05915340543718776,
+          "best_val_energy_mae": 0.0337347412109375
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 0.23523118425123762,
+          "within_force_mae": 0.1382748801630027,
+          "other_energy_mae": 0.31862079326923076,
+          "other_force_mae": 0.16013286269054963,
+          "mixed_force_mae": 0.15138966967953088,
+          "mixed_energy_mae": 0.28526494966203353,
+          "gap_penalty": 0.1443822591968963,
+          "Q_dataset": 3.7256415985360705,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "worsening",
+          "best_val_force_mae": 0.14668968816598257,
+          "best_val_energy_mae": 0.4742838541666667
+        }
+      },
+      "created_at_utc": "2026-05-01T22:08:38.999948+00:00",
+      "control_replicate": false,
+      "delta_Q_vs_parent": -0.03047507524791815,
+      "outcome_class": "neutral_variance",
+      "outcome_reasons": [
+        "abs(delta_Q)=0.0304751 within margin=0.0615747"
+      ]
+    },
+    {
+      "unit": "generation_023/proposal_004",
+      "source_unit": "generation_022/proposal_006",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_023_from_generation_022_proposal_006_continuation/proposal_004.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": false,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_022/proposal_006",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_022/proposal_006",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": false,
+            "added_lines": 23,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": [
+              "--- source/model/model.py",
+              "+++ child/model/model.py",
+              "@@ -465,6 +465,15 @@",
+              "         self.charge_shell_beta_logits = nn.Parameter(torch.full((2,), -6.0))",
+              "         self.charge_scale = 0.1",
+              "         self.charge_shell_beta_cap = 0.006",
+              "+",
+              "+        # GEN023-M01 LES-style nonperiodic real-space latent-charge tail.",
+              "+        # Two fixed sigmas separate softened near-pair electrostatics from a",
+              "+        # longer all-pair transfer kernel.  The beta gates are tiny/capped so",
+              "+        # setting them to zero recovers the source cutoff-shell model exactly.",
+              "+        self.les_tail_beta_logits = nn.Parameter(torch.full((2,), -6.5))",
+              "+        self.register_buffer(\"les_tail_beta_caps\", torch.tensor([0.002, 0.003]))",
+              "+        self.register_buffer(\"les_tail_sigmas\", torch.tensor([0.8, 2.0]))",
+              "+",
+              "         # Near-zero, not exactly zero, so the quadratic q_i q_j term keeps a",
+              "         # gradient path while remaining a source-near fallback at construction.",
+              "         nn.init.normal_(self.charge_head[-1].weight, mean=0.0, std=1e-4)",
+              "@@ -571,12 +580,26 @@",
+              "             * (beta_near * damped_kernel + beta_mid * coulomb_kernel)",
+              "         )",
+              " ",
+              "+        all_rij = positions[:, None, :] - positions[None, :, :]",
+              "+        all_dij = torch.linalg.norm(all_rij, dim=-1)",
+              "+        n_atoms = positions.shape[0]",
+              "+        nonself = ~torch.eye(n_atoms, device=positions.device, dtype=torch.bool)",
+              "+        safe_all_dij = torch.where(nonself, all_dij.clamp_min(1e-6), torch.ones_like(all_dij))",
+              "+        sigmas = self.les_tail_sigmas.to(device=positions.device, dtype=positions.dtype).view(2, 1, 1)",
+              "+        beta_caps = self.les_tail_beta_caps.to(device=positions.device, dtype=positions.dtype)",
+              "+        beta_tail = beta_caps * torch.sigmoid(self.les_tail_beta_logits).to(dtype=positions.dtype)",
+              "+        les_kernels = torch.erf(all_dij.unsqueeze(0) / (math.sqrt(2.0) * sigmas)) / safe_all_dij.unsqueeze(0)",
+              "+        les_kernels = les_kernels * nonself.to(dtype=positions.dtype).unsqueeze(0)",
+              "+        les_kernel = torch.sum(beta_tail.view(2, 1, 1) * les_kernels, dim=0)",
+              "+        les_tail_energy = 0.5 * torch.sum(charge[:, None] * charge[None, :] * les_kernel)",
+              "+",
+              "         return (",
+              "             atomref",
+              "             + per_atom_energy.sum()",
+              "             + body_order_multiplier * body_order_residual.sum()",
+              "             + energy_residual_multiplier * energy_residual.sum()",
+              "             + electrostatic_pair_energy",
+              "+            + les_tail_energy",
+              "         )",
+              " ",
+              "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+            ]
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [
+          "model/model.py"
+        ],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": null,
+      "Q_rmd17": 4.206413224218935,
+      "Q_iso17": 3.7570626760477586,
+      "Q_total": 4.049140532359024,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 0.0278399658203125,
+          "mild_ood_force_mae": 0.05996521414013114,
+          "hard_ood_energy_mae": 0.028135986328125,
+          "hard_ood_force_mae": 0.06053351961902809,
+          "mixed_force_mae": 0.0603061974274693,
+          "mixed_energy_mae": 0.028017578125,
+          "gap_penalty": 0.009423666275278415,
+          "Q_dataset": 4.206413224218935,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.05996521457179915,
+          "best_val_energy_mae": 0.0278399658203125
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 0.22880327583539603,
+          "within_force_mae": 0.13445374012030292,
+          "other_energy_mae": 0.294130859375,
+          "other_force_mae": 0.15712773027901467,
+          "mixed_force_mae": 0.14805813421552996,
+          "mixed_energy_mae": 0.2679998259591584,
+          "gap_penalty": 0.1531424820304152,
+          "Q_dataset": 3.7570626760477586,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.15148214995861053,
+          "best_val_energy_mae": 0.13704427083333334
+        }
+      },
+      "created_at_utc": "2026-05-01T22:08:39.001656+00:00",
+      "control_replicate": false,
+      "delta_Q_vs_parent": 0.006744586003899933,
+      "outcome_class": "neutral_variance",
+      "outcome_reasons": [
+        "abs(delta_Q)=0.00674459 within margin=0.0615747"
+      ]
+    },
+    {
+      "unit": "generation_023/proposal_005",
+      "source_unit": "generation_022/proposal_006",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_023_from_generation_022_proposal_006_continuation/proposal_005.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": true,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_022/proposal_006",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_022/proposal_006",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": null,
+      "Q_rmd17": 4.090013788243158,
+      "Q_iso17": 3.716683439296558,
+      "Q_total": 3.959348166111848,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 0.04179779052734375,
+          "mild_ood_force_mae": 0.061262846195953895,
+          "hard_ood_energy_mae": 0.04229510498046875,
+          "hard_ood_force_mae": 0.0616822940519196,
+          "mixed_force_mae": 0.061514514909533316,
+          "mixed_energy_mae": 0.04209617919921875,
+          "gap_penalty": 0.006818681031228959,
+          "Q_dataset": 4.090013788243158,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.061262846231402365,
+          "best_val_energy_mae": 0.0417977294921875
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 0.2170250618811881,
+          "within_force_mae": 0.14062012573427493,
+          "other_energy_mae": 0.3082068810096154,
+          "other_force_mae": 0.16527754665280764,
+          "mixed_force_mae": 0.15541457828539457,
+          "mixed_energy_mae": 0.27173415335824447,
+          "gap_penalty": 0.15865577856598853,
+          "Q_dataset": 3.716683439296558,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "worsening",
+          "energy_trend": "worsening",
+          "best_val_force_mae": 0.1536674921711286,
+          "best_val_energy_mae": 0.13997395833333334
+        }
+      },
+      "created_at_utc": "2026-05-01T22:08:39.003229+00:00",
+      "control_replicate": true,
+      "outcome_class": "control_replicate",
+      "outcome_reasons": [
+        "unit is marked as a control replicate"
+      ]
+    },
+    {
+      "unit": "generation_023/proposal_006",
+      "source_unit": "generation_022/proposal_006",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_023_from_generation_022_proposal_006_continuation/proposal_006.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": true,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_022/proposal_006",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_022/proposal_006",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": null,
+      "Q_rmd17": 4.152613614278143,
+      "Q_iso17": 3.7763542092882645,
+      "Q_total": 4.020922822531685,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 0.0356571044921875,
+          "mild_ood_force_mae": 0.05950717352575157,
+          "hard_ood_energy_mae": 0.0361177978515625,
+          "hard_ood_force_mae": 0.05978198982769391,
+          "mixed_force_mae": 0.059672063306916975,
+          "mixed_energy_mae": 0.0359335205078125,
+          "gap_penalty": 0.004605443262858906,
+          "Q_dataset": 4.152613614278143,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.05950717383477604,
+          "best_val_energy_mae": 0.034682373046875
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 0.20874748607673269,
+          "within_force_mae": 0.13210489411866017,
+          "other_energy_mae": 0.28940279447115386,
+          "other_force_mae": 0.1555337786473907,
+          "mixed_force_mae": 0.1461622248358985,
+          "mixed_energy_mae": 0.2571406711133854,
+          "gap_penalty": 0.16029370485345776,
+          "Q_dataset": 3.7763542092882645,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.14751898497343063,
+          "best_val_energy_mae": 0.4593098958333333
+        }
+      },
+      "created_at_utc": "2026-05-01T22:08:39.004721+00:00",
+      "control_replicate": true,
+      "outcome_class": "control_replicate",
+      "outcome_reasons": [
+        "unit is marked as a control replicate"
+      ]
+    },
+    {
+      "unit": "generation_023/proposal_007",
+      "source_unit": "generation_022/proposal_006",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_023_from_generation_022_proposal_006_continuation/proposal_007.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": false,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_022/proposal_006",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_022/proposal_006",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": false,
+            "added_lines": 29,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": [
+              "--- source/model/model.py",
+              "+++ child/model/model.py",
+              "@@ -465,6 +465,14 @@",
+              "         self.charge_shell_beta_logits = nn.Parameter(torch.full((2,), -6.0))",
+              "         self.charge_scale = 0.1",
+              "         self.charge_shell_beta_cap = 0.006",
+              "+        # GEN023-M01 LES-inspired real-space tail: reuse the neutral latent",
+              "+        # charges, but feed an RMS-normalized copy into a tiny capped all-pair",
+              "+        # nonperiodic erf(1/r) tail.  The original charge remains unchanged for",
+              "+        # the source shell energy, preserving beta-zero source fallback.",
+              "+        self.les_tail_beta_logit = nn.Parameter(torch.tensor(-7.0))",
+              "+        self.les_tail_beta_cap = 0.0025",
+              "+        self.register_buffer(\"les_tail_sigma\", torch.tensor(1.0))",
+              "+        self.register_buffer(\"les_charge_rms_target\", torch.tensor(0.05))",
+              "         # Near-zero, not exactly zero, so the quadratic q_i q_j term keeps a",
+              "         # gradient path while remaining a source-near fallback at construction.",
+              "         nn.init.normal_(self.charge_head[-1].weight, mean=0.0, std=1e-4)",
+              "@@ -571,12 +579,33 @@",
+              "             * (beta_near * damped_kernel + beta_mid * coulomb_kernel)",
+              "         )",
+              " ",
+              "+        charge_rms = torch.sqrt(torch.mean(charge * charge) + 1e-8)",
+              "+        raw_tail_scale = self.les_charge_rms_target.to(charge.dtype) / charge_rms",
+              "+        # Smooth cap equivalent to min(raw_tail_scale, 1): avoids amplifying",
+              "+        # tiny near-neutral charges while keeping a differentiable path through",
+              "+        # q_tail and positions for conservative force training.",
+              "+        tail_scale = raw_tail_scale / torch.pow(1.0 + raw_tail_scale.pow(8), 0.125)",
+              "+        q_tail = charge * tail_scale",
+              "+",
+              "+        all_rij = positions[:, None, :] - positions[None, :, :]",
+              "+        all_dij = torch.linalg.norm(all_rij, dim=-1)",
+              "+        n_atoms = positions.shape[0]",
+              "+        nonself = ~torch.eye(n_atoms, device=positions.device, dtype=torch.bool)",
+              "+        sigma = self.les_tail_sigma.to(dtype=positions.dtype, device=positions.device).clamp_min(1e-6)",
+              "+        les_kernel = torch.erf(all_dij / (math.sqrt(2.0) * sigma)) / all_dij.clamp_min(1e-6)",
+              "+        les_kernel = les_kernel.masked_fill(~nonself, 0.0)",
+              "+        les_tail_beta = self.les_tail_beta_cap * torch.sigmoid(self.les_tail_beta_logit)",
+              "+        les_tail_energy = les_tail_beta * 0.5 * torch.sum(",
+              "+            q_tail[:, None] * q_tail[None, :] * les_kernel",
+              "+        )",
+              "+",
+              "         return (",
+              "             atomref",
+              "             + per_atom_energy.sum()",
+              "             + body_order_multiplier * body_order_residual.sum()",
+              "             + energy_residual_multiplier * energy_residual.sum()",
+              "             + electrostatic_pair_energy",
+              "+            + les_tail_energy",
+              "         )",
+              " ",
+              "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+            ]
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [
+          "model/model.py"
+        ],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": null,
+      "Q_rmd17": 4.184752491718912,
+      "Q_iso17": 3.724110900136661,
+      "Q_total": 4.0235279346651245,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 0.03502740478515625,
+          "mild_ood_force_mae": 0.05717969641822856,
+          "hard_ood_energy_mae": 0.0352059326171875,
+          "hard_ood_force_mae": 0.057799826178350486,
+          "mixed_force_mae": 0.05755177427430172,
+          "mixed_energy_mae": 0.035134521484375,
+          "gap_penalty": 0.01077516319749773,
+          "Q_dataset": 4.184752491718912,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.057179696136445274,
+          "best_val_energy_mae": 0.03502740478515625
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 0.21538182626856436,
+          "within_force_mae": 0.1418323654663002,
+          "other_energy_mae": 0.3031727013221154,
+          "other_force_mae": 0.16368955291807652,
+          "mixed_force_mae": 0.154946677937366,
+          "mixed_energy_mae": 0.26805635130069494,
+          "gap_penalty": 0.141062640016526,
+          "Q_dataset": 3.724110900136661,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "worsening",
+          "best_val_force_mae": 0.13364984095096588,
+          "best_val_energy_mae": 0.4954427083333333
+        }
+      },
+      "created_at_utc": "2026-05-01T22:08:39.006457+00:00",
+      "control_replicate": false,
+      "delta_Q_vs_parent": -0.01886801168999952,
+      "outcome_class": "neutral_variance",
+      "outcome_reasons": [
+        "abs(delta_Q)=0.018868 within margin=0.0615747"
+      ]
+    },
+    {
+      "unit": "generation_023/proposal_009",
+      "source_unit": "generation_022/proposal_006",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_023_from_generation_022_proposal_006_continuation/proposal_009.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": false,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_022/proposal_006",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_022/proposal_006",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": false,
+            "added_lines": 28,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": [
+              "--- source/model/model.py",
+              "+++ child/model/model.py",
+              "@@ -469,6 +469,17 @@",
+              "         # gradient path while remaining a source-near fallback at construction.",
+              "         nn.init.normal_(self.charge_head[-1].weight, mean=0.0, std=1e-4)",
+              "         nn.init.zeros_(self.charge_head[-1].bias)",
+              "+",
+              "+        # GEN023-M01 LES-inspired nonperiodic outer-domain tail.  This keeps",
+              "+        # the source cutoff-shell electrostatic correction unchanged and adds",
+              "+        # only a smooth all-pair real-space term that is suppressed inside the",
+              "+        # existing cutoff.  The beta gate is capped and initialized near zero so",
+              "+        # beta_outer -> 0 algebraically recovers generation_022/proposal_006.",
+              "+        self.les_outer_beta_logit = nn.Parameter(torch.tensor(-7.5))",
+              "+        self.les_outer_beta_cap = 0.0025",
+              "+        self.register_buffer(\"les_outer_sigma\", torch.tensor(1.2))",
+              "+        self.register_buffer(\"les_outer_cutoff\", torch.tensor(float(cutoff)))",
+              "+        self.register_buffer(\"les_outer_taper_width\", torch.tensor(0.5))",
+              " ",
+              "         self.final_tp_invariant_mixer = TPInvariantPaiNNMixing(hidden_dim=hidden_dim)",
+              " ",
+              "@@ -571,12 +582,29 @@",
+              "             * (beta_near * damped_kernel + beta_mid * coulomb_kernel)",
+              "         )",
+              " ",
+              "+        all_rij = positions[:, None, :] - positions[None, :, :]",
+              "+        all_dij = torch.linalg.norm(all_rij, dim=-1)",
+              "+        n_atoms = positions.shape[0]",
+              "+        nonself_mask = ~torch.eye(n_atoms, device=positions.device, dtype=torch.bool)",
+              "+        safe_dij = torch.where(nonself_mask, all_dij.clamp_min(1e-6), torch.ones_like(all_dij))",
+              "+        sigma = self.les_outer_sigma.to(dtype=positions.dtype).clamp_min(1e-6)",
+              "+        taper_width = self.les_outer_taper_width.to(dtype=positions.dtype).clamp_min(1e-6)",
+              "+        outer_cutoff = self.les_outer_cutoff.to(dtype=positions.dtype)",
+              "+        les_kernel = torch.erf(safe_dij / (math.sqrt(2.0) * sigma)) / safe_dij",
+              "+        outer_taper = torch.sigmoid((all_dij - outer_cutoff) / taper_width)",
+              "+        les_kernel = les_kernel * outer_taper * nonself_mask.to(dtype=positions.dtype)",
+              "+        beta_outer = self.les_outer_beta_cap * torch.sigmoid(self.les_outer_beta_logit)",
+              "+        les_outer_energy = beta_outer * 0.5 * torch.sum(",
+              "+            charge.unsqueeze(1) * charge.unsqueeze(0) * les_kernel",
+              "+        )",
+              "+",
+              "         return (",
+              "             atomref",
+              "             + per_atom_energy.sum()",
+              "             + body_order_multiplier * body_order_residual.sum()",
+              "             + energy_residual_multiplier * energy_residual.sum()",
+              "             + electrostatic_pair_energy",
+              "+            + les_outer_energy",
+              "         )",
+              " ",
+              "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+            ]
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [
+          "model/model.py"
+        ],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": null,
+      "Q_rmd17": 4.12094646315517,
+      "Q_iso17": 3.743525629980868,
+      "Q_total": 3.9888491715441643,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 0.03293927001953125,
+          "mild_ood_force_mae": 0.06364301258185878,
+          "hard_ood_energy_mae": 0.03326007080078125,
+          "hard_ood_force_mae": 0.06411906400078442,
+          "mixed_force_mae": 0.06392864343321417,
+          "mixed_energy_mae": 0.03313175048828125,
+          "gap_penalty": 0.00744660598680647,
+          "Q_dataset": 4.12094646315517,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.06364301336248172,
+          "best_val_energy_mae": 0.03293927001953125
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 0.21487614093440593,
+          "within_force_mae": 0.13788607669164343,
+          "other_energy_mae": 0.3033819110576923,
+          "other_force_mae": 0.15964207735629035,
+          "mixed_force_mae": 0.1509396770904316,
+          "mixed_energy_mae": 0.26797960300837775,
+          "gap_penalty": 0.1441370558350157,
+          "Q_dataset": 3.743525629980868,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "worsening",
+          "best_val_force_mae": 0.15953816970189413,
+          "best_val_energy_mae": 0.7034505208333334
+        }
+      },
+      "created_at_utc": "2026-05-01T22:08:39.008229+00:00",
+      "control_replicate": false,
+      "delta_Q_vs_parent": -0.05354677481095971,
+      "outcome_class": "neutral_variance",
+      "outcome_reasons": [
+        "abs(delta_Q)=0.0535468 within margin=0.0615747"
+      ]
+    }
+  ],
+  "partial_positive_patterns": [],
+  "negative_patterns": []
+}

@@ -1,0 +1,141 @@
+{
+  "run_id": "evidence_run_20260430T112951Z",
+  "evidence_package_dir": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/evidence_run_20260430T112951Z",
+  "evidence_run_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/evidence_run_20260430T112951Z/evidence_run.json",
+  "brief_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/briefs/evidence_brief_20260430T112951Z.md",
+  "evidence_quality": {
+    "version": "evidence_quality.v1",
+    "grade": "C",
+    "fresh_local_pdf_verified": true,
+    "fresh_repo_code_verified": true,
+    "has_mechanism_cards": true,
+    "has_strong_mechanism_cards": false,
+    "strong_mechanism_card_count": 0,
+    "min_strong_mechanism_cards": 3,
+    "strong_card_target_met": false,
+    "has_patch_blueprints": true,
+    "has_implementation_ready_blueprints": false,
+    "usable_for_proposal": false,
+    "usable_for_implementation": false,
+    "diagnosis_only": true,
+    "require_external_evidence": true,
+    "source_novelty": {
+      "version": "source_novelty.v1",
+      "history_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_source_history.jsonl",
+      "policy": {
+        "lookback_runs": 3,
+        "min_attempted_external_sources": 6,
+        "min_new_sources": 3,
+        "max_recent_reused_sources": 1,
+        "reuse_justification": "The run deliberately uses mostly sources not used as strong evidence in the immediately recent generation_018 evidence package; any reused CACE/TorchMD sources must support a different bounded mechanism than generation_017 failures."
+      },
+      "source_discovery_budget": {
+        "min_successful_pdf_sources": 2,
+        "min_successful_repo_sources": 2,
+        "min_strong_mechanism_cards": 3,
+        "max_pdf_attempts": 6,
+        "max_repo_attempts": 5,
+        "max_external_source_attempts": 10,
+        "max_source_expansion_rounds": 2,
+        "source_expansion_round": 1
+      },
+      "pdf_attempted_source_count": 4,
+      "pdf_successful_source_count": 4,
+      "repo_attempted_source_count": 4,
+      "repo_successful_source_count": 4,
+      "attempted_external_source_count": 8,
+      "successful_external_source_count": 8,
+      "source_targets_met": true,
+      "source_budget_exhausted": false,
+      "new_source_count": 8,
+      "recent_reused_source_count": 0,
+      "new_source_ids": [
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu7406u8bbau57fau7840_-_ACEu5b8cu5907u6027u6548u7387u4e0eu7a33u5b9au6027_bb037875e6.pdf#0b468fe81323",
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu8868u793au65b9u6cd5_-_TACEu7b1bu5361u5c14u7a7au95f4u5f20u91cfu539fu5b50u7c07u5c55u5f00_e9ab8f4246.pdf#35cab3944e7c",
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu7b49u53d8u67b6u6784_-_Eu28nu29u7b49u53d8u7b1bu5361u5c14u5f20u91cfu6d88u606fu4f20u9012u52bf_49ffe4f959.pdf#40e1f7ba9cb9",
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu8bbeu8ba1u7a7au95f4_-_E3u7b49u53d8u539fu5b50u4e2du5fc3u52bfu8bbeu8ba1u7a7au95f4_045333ed2f.pdf#49f1d9df0a1f",
+        "repo:e3nn/e3nn#2db5e55e8848",
+        "repo:BingqingCheng/cace#a6c88223e724",
+        "repo:MDIL-SNU/SevenNet#af151d8a481d",
+        "repo:torchmd/torchmd-net#e0cf6c6d162e"
+      ],
+      "recent_reused_source_ids": [],
+      "recent_attempted_reused_source_count": 4,
+      "recent_attempted_reused_source_ids": [
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu8868u793au65b9u6cd5_-_TACEu7b1bu5361u5c14u7a7au95f4u5f20u91cfu539fu5b50u7c07u5c55u5f00_e9ab8f4246.pdf#35cab3944e7c",
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu7b49u53d8u67b6u6784_-_Eu28nu29u7b49u53d8u7b1bu5361u5c14u5f20u91cfu6d88u606fu4f20u9012u52bf_49ffe4f959.pdf#40e1f7ba9cb9",
+        "repo:BingqingCheng/cace#a6c88223e724",
+        "repo:torchmd/torchmd-net#e0cf6c6d162e"
+      ],
+      "reuse_semantics": "recent_reused_source_ids counts sources used as strong evidence in recent runs. recent_attempted_reused_source_ids is diagnostic only and does not fail novelty by itself.",
+      "all_sources_recent_repeats": false,
+      "source_novelty_passed": true,
+      "allow_recent_source_reuse": false
+    },
+    "external_attempted_source_count": 8,
+    "external_successful_source_count": 8,
+    "source_novelty_passed": true,
+    "source_budget_exhausted": false,
+    "needs_source_expansion": true,
+    "hard_rules": [
+      "No provenance -> no strong evidence.",
+      "No mechanism card -> no proposal mechanism.",
+      "No formula derivation/algorithm/repo path/code trace/current insertion point -> weak evidence only.",
+      "No patch blueprint -> not implementation-ready.",
+      "Benchmark diagnosis is not external mechanism evidence."
+    ]
+  },
+  "source_novelty": {
+    "version": "source_novelty.v1",
+    "history_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_source_history.jsonl",
+    "policy": {
+      "lookback_runs": 3,
+      "min_attempted_external_sources": 6,
+      "min_new_sources": 3,
+      "max_recent_reused_sources": 1,
+      "reuse_justification": "The run deliberately uses mostly sources not used as strong evidence in the immediately recent generation_018 evidence package; any reused CACE/TorchMD sources must support a different bounded mechanism than generation_017 failures."
+    },
+    "source_discovery_budget": {
+      "min_successful_pdf_sources": 2,
+      "min_successful_repo_sources": 2,
+      "min_strong_mechanism_cards": 3,
+      "max_pdf_attempts": 6,
+      "max_repo_attempts": 5,
+      "max_external_source_attempts": 10,
+      "max_source_expansion_rounds": 2,
+      "source_expansion_round": 1
+    },
+    "pdf_attempted_source_count": 4,
+    "pdf_successful_source_count": 4,
+    "repo_attempted_source_count": 4,
+    "repo_successful_source_count": 4,
+    "attempted_external_source_count": 8,
+    "successful_external_source_count": 8,
+    "source_targets_met": true,
+    "source_budget_exhausted": false,
+    "new_source_count": 8,
+    "recent_reused_source_count": 0,
+    "new_source_ids": [
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu7406u8bbau57fau7840_-_ACEu5b8cu5907u6027u6548u7387u4e0eu7a33u5b9au6027_bb037875e6.pdf#0b468fe81323",
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu8868u793au65b9u6cd5_-_TACEu7b1bu5361u5c14u7a7au95f4u5f20u91cfu539fu5b50u7c07u5c55u5f00_e9ab8f4246.pdf#35cab3944e7c",
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu7b49u53d8u67b6u6784_-_Eu28nu29u7b49u53d8u7b1bu5361u5c14u5f20u91cfu6d88u606fu4f20u9012u52bf_49ffe4f959.pdf#40e1f7ba9cb9",
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu8bbeu8ba1u7a7au95f4_-_E3u7b49u53d8u539fu5b50u4e2du5fc3u52bfu8bbeu8ba1u7a7au95f4_045333ed2f.pdf#49f1d9df0a1f",
+      "repo:e3nn/e3nn#2db5e55e8848",
+      "repo:BingqingCheng/cace#a6c88223e724",
+      "repo:MDIL-SNU/SevenNet#af151d8a481d",
+      "repo:torchmd/torchmd-net#e0cf6c6d162e"
+    ],
+    "recent_reused_source_ids": [],
+    "recent_attempted_reused_source_count": 4,
+    "recent_attempted_reused_source_ids": [
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu8868u793au65b9u6cd5_-_TACEu7b1bu5361u5c14u7a7au95f4u5f20u91cfu539fu5b50u7c07u5c55u5f00_e9ab8f4246.pdf#35cab3944e7c",
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu7b49u53d8u67b6u6784_-_Eu28nu29u7b49u53d8u7b1bu5361u5c14u5f20u91cfu6d88u606fu4f20u9012u52bf_49ffe4f959.pdf#40e1f7ba9cb9",
+      "repo:BingqingCheng/cace#a6c88223e724",
+      "repo:torchmd/torchmd-net#e0cf6c6d162e"
+    ],
+    "reuse_semantics": "recent_reused_source_ids counts sources used as strong evidence in recent runs. recent_attempted_reused_source_ids is diagnostic only and does not fail novelty by itself.",
+    "all_sources_recent_repeats": false,
+    "source_novelty_passed": true,
+    "allow_recent_source_reuse": false
+  }
+}

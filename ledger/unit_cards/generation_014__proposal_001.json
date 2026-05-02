@@ -1,0 +1,124 @@
+{
+  "unit": "generation_014/proposal_001",
+  "source_unit": "generation_013/proposal_007",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_014_from_generation_013_proposal_007_continuation/proposal_001.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_013/proposal_007",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_013/proposal_007",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 4,
+        "removed_lines": 2,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/model.py",
+          "+++ child/model/model.py",
+          "@@ -126,7 +126,7 @@",
+          "             [BalancedInteractionBlock(hidden_dim=hidden_dim, num_rbf=num_rbf) for _ in range(num_interactions)]",
+          "         )",
+          "         self.readout = nn.Sequential(",
+          "-            nn.Linear(hidden_dim, hidden_dim),",
+          "+            nn.Linear(hidden_dim * 2, hidden_dim),",
+          "             nn.SiLU(),",
+          "             nn.Linear(hidden_dim, hidden_dim),",
+          "             nn.SiLU(),",
+          "@@ -178,7 +178,9 @@",
+          "                 cutoff_weight=cutoff_weight,",
+          "             )",
+          " ",
+          "-        per_atom_energy = self.readout(scalar_state).squeeze(-1)",
+          "+        vector_norm = torch.linalg.norm(vector_state, dim=-1)",
+          "+        readout_input = torch.cat([scalar_state, vector_norm], dim=-1)",
+          "+        per_atom_energy = self.readout(readout_input).squeeze(-1)",
+          "         return atomref + per_atom_energy.sum()",
+          " ",
+          "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+        ]
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      }
+    ],
+    "changed_files": [
+      "model/model.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 3.9465423922116223,
+  "Q_iso17": 3.551661057938775,
+  "Q_total": 3.8083339252161257,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.04537109375,
+      "mild_ood_force_mae": 0.07202783683210146,
+      "hard_ood_energy_mae": 0.04680810546875,
+      "hard_ood_force_mae": 0.07234036703512538,
+      "mixed_force_mae": 0.07221535495391582,
+      "mixed_energy_mae": 0.04623330078125,
+      "gap_penalty": 0.004327752778048873,
+      "Q_dataset": 3.9465423922116223,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.07202783628215548,
+      "best_val_energy_mae": 0.04537115478515625
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.28029229192450494,
+      "within_force_mae": 0.1756829440925676,
+      "other_energy_mae": 0.3477471454326923,
+      "other_force_mae": 0.1913228197940267,
+      "mixed_force_mae": 0.1850668695134431,
+      "mixed_energy_mae": 0.32076520402941733,
+      "gap_penalty": 0.08450932218442553,
+      "Q_dataset": 3.551661057938775,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.15250717103481293,
+      "best_val_energy_mae": 0.36328125
+    }
+  },
+  "created_at_utc": "2026-04-29T08:29:11.566647+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": 0.052549144017595584,
+  "outcome_class": "frontier_win",
+  "outcome_reasons": [
+    "delta_Q=0.0525491 exceeds margin=0.03"
+  ]
+}

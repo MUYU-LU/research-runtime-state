@@ -1,0 +1,179 @@
+{
+  "unit": "generation_022/proposal_008",
+  "source_unit": "generation_021/proposal_001",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_022_from_generation_021_proposal_001_continuation/proposal_008.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_021/proposal_001",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_021/proposal_001",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 30,
+        "removed_lines": 2,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/model.py",
+          "+++ child/model/model.py",
+          "@@ -448,9 +448,27 @@",
+          "             nn.SiLU(),",
+          "             nn.Linear(hidden_dim // 2, 1),",
+          "         )",
+          "-        self.energy_residual_scale_logit = nn.Parameter(torch.tensor(0.0))",
+          "+        # Proposal 008 ablation: keep the ordinary atomwise residual module for",
+          "+        # checkpoint/key compatibility, but freeze its scalar contribution out of",
+          "+        # the returned energy so the diagnostic signal must come from q_i q_j.",
+          "+        self.energy_residual_scale_logit = nn.Parameter(torch.tensor(-20.0), requires_grad=False)",
+          "         nn.init.zeros_(self.energy_residual_head[-1].weight)",
+          "         nn.init.zeros_(self.energy_residual_head[-1].bias)",
+          "+",
+          "+        # GEN022-M01-neutral-charge-electrostatic-energy-head: bounded",
+          "+        # SpookyNet-style neutral charge pair energy, Eq. (23)/(24) inspired,",
+          "+        # using existing directed neighbor tensors and damped/cutoff Coulomb.",
+          "+        self.charge_head = nn.Sequential(",
+          "+            nn.LayerNorm(hidden_dim * 2),",
+          "+            nn.Linear(hidden_dim * 2, hidden_dim // 2),",
+          "+            nn.SiLU(),",
+          "+            nn.Linear(hidden_dim // 2, 1),",
+          "+        )",
+          "+        self.charge_energy_scale_logit = nn.Parameter(torch.tensor(0.0))",
+          "+        # Near-zero rather than exactly-zero avoids a dead quadratic q_i q_j",
+          "+        # head while keeping the source-energy fallback numerically tiny.",
+          "+        nn.init.normal_(self.charge_head[-1].weight, mean=0.0, std=1e-3)",
+          "+        nn.init.zeros_(self.charge_head[-1].bias)",
+          "         self.final_tp_invariant_mixer = TPInvariantPaiNNMixing(hidden_dim=hidden_dim)",
+          " ",
+          "     def _rbf(self, distances: torch.Tensor) -> torch.Tensor:",
+          "@@ -529,8 +547,17 @@",
+          "         scalar_gate = self.readout_scalar_gate(scalar_vector_input)",
+          "         scalar_state = self.readout_norm(scalar_state + torch.sigmoid(scalar_gate) * scalar_update)",
+          "         residual_input = torch.cat([scalar_state, vector_norm], dim=-1)",
+          "+        # Compute the residual head for shape/key continuity, but deliberately",
+          "+        # do not add it: this is the electrostatic-vs-ordinary-residual control.",
+          "         energy_residual = self.energy_residual_head(residual_input).squeeze(-1)",
+          "-        energy_residual_multiplier = 0.02 * torch.sigmoid(self.energy_residual_scale_logit)",
+          "+        energy_residual_multiplier = energy_residual.new_zeros(())",
+          "+",
+          "+        q_raw = 0.1 * torch.tanh(self.charge_head(residual_input).squeeze(-1))",
+          "+        q = q_raw - q_raw.mean()  # neutral molecule assumption, SpookyNet Eq. (24) analogue",
+          "+        pair_kernel = cutoff_weight / torch.sqrt(dij * dij + 1.0)",
+          "+        charge_energy_scale = 0.01 * torch.sigmoid(self.charge_energy_scale_logit)",
+          "+        electrostatic_energy = 0.5 * charge_energy_scale * (q[i_idx] * q[j_idx] * pair_kernel).sum()",
+          "+",
+          "         per_atom_energy = self.readout(scalar_state).squeeze(-1)",
+          "         body_order_residual = self.body_order_readout(body_order_descriptor).squeeze(-1)",
+          "         body_order_multiplier = 0.05 * torch.sigmoid(self.body_order_scale)",
+          "@@ -539,6 +566,7 @@",
+          "             + per_atom_energy.sum()",
+          "             + body_order_multiplier * body_order_residual.sum()",
+          "             + energy_residual_multiplier * energy_residual.sum()",
+          "+            + electrostatic_energy",
+          "         )",
+          " ",
+          "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+        ]
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      }
+    ],
+    "changed_files": [
+      "model/model.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": [
+    "Implemented proposal_008 electrostatic-vs-residual ablation: ordinary energy residual contribution is bypassed; added bounded neutral SpookyNet-style q_i q_j damped pair energy using existing directed neighbors."
+  ],
+  "Q_rmd17": 4.140864215606102,
+  "Q_iso17": 3.7317530332591087,
+  "Q_total": 3.9976753017846547,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.0356588134765625,
+      "mild_ood_force_mae": 0.060165593937155794,
+      "hard_ood_energy_mae": 0.0363179931640625,
+      "hard_ood_force_mae": 0.06073561461741338,
+      "mixed_force_mae": 0.06050760634531034,
+      "mixed_energy_mae": 0.0360543212890625,
+      "gap_penalty": 0.009420645017671283,
+      "Q_dataset": 4.140864215606102,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.06016559296299238,
+      "best_val_energy_mae": 0.0356588134765625
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.2297203743811881,
+      "within_force_mae": 0.13721566653930314,
+      "other_energy_mae": 0.32046724759615386,
+      "other_force_mae": 0.1590779509338049,
+      "mixed_force_mae": 0.1503330371760042,
+      "mixed_energy_mae": 0.28416849831016755,
+      "gap_penalty": 0.14542568157364366,
+      "Q_dataset": 3.7317530332591087,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "worsening",
+      "best_val_force_mae": 0.14395488301912943,
+      "best_val_energy_mae": 0.18033854166666666
+    }
+  },
+  "created_at_utc": "2026-05-01T15:20:37.086070+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.049861219753950525,
+  "component_improvements_vs_parent": [],
+  "component_regressions_vs_parent": [
+    {
+      "dataset": "rmd17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.030508691406250003,
+      "child": 0.0360543212890625,
+      "relative_regression": 0.18177213204485143
+    },
+    {
+      "dataset": "rmd17",
+      "metric": "gap_penalty",
+      "parent": 0.007182587856692758,
+      "child": 0.009420645017671283,
+      "relative_regression": 0.31159481869659217
+    }
+  ],
+  "outcome_class": "negative_method",
+  "outcome_reasons": [
+    "Q_total lost and no tracked component metric improved relative to parent"
+  ]
+}

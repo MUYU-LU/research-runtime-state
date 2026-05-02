@@ -1,0 +1,173 @@
+{
+  "unit": "generation_013/proposal_006",
+  "source_unit": "generation_012/proposal_005",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_013_from_generation_012_proposal_005_continuation/proposal_006.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_012/proposal_005",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_012/proposal_005",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 24,
+        "removed_lines": 4,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/train.py",
+          "+++ child/model/train.py",
+          "@@ -162,19 +162,39 @@",
+          "         num_rbf=int(CONFIG.get(\"num_rbf\", 32)),",
+          "         cutoff=float(CONFIG.get(\"cutoff\", 5.0)),",
+          "     ).to(device)",
+          "-    initialize_atomref_lstsq(",
+          "+    atomref_fitted = initialize_atomref_lstsq(",
+          "         model,",
+          "         train_loader,",
+          "         ridge=float(CONFIG.get(\"atomref_lstsq_ridge\", 1e-3)),",
+          "         device=device,",
+          "     )",
+          "+    if atomref_fitted:",
+          "+        model.atomref.weight.requires_grad_(False)",
+          " ",
+          "     learning_rate = float(lr if lr is not None else CONFIG.get(\"learning_rate\", 1e-3))",
+          "+    weight_decay = float(CONFIG.get(\"weight_decay\", 1e-5))",
+          "+    adam_betas = (0.9, float(CONFIG.get(\"adam_beta2\", 0.97)))",
+          "+",
+          "+    readout_params = []",
+          "+    other_params = []",
+          "+    for name, param in model.named_parameters():",
+          "+        if not param.requires_grad:",
+          "+            continue",
+          "+        if name.startswith(\"readout.\"):",
+          "+            readout_params.append(param)",
+          "+        else:",
+          "+            other_params.append(param)",
+          "+",
+          "+    optimizer_groups = []",
+          "+    if other_params:",
+          "+        optimizer_groups.append({\"params\": other_params, \"weight_decay\": weight_decay})",
+          "+    if readout_params:",
+          "+        optimizer_groups.append({\"params\": readout_params, \"weight_decay\": 2.0 * weight_decay})",
+          "+",
+          "     optimizer = torch.optim.AdamW(",
+          "-        model.parameters(),",
+          "+        optimizer_groups,",
+          "         lr=learning_rate,",
+          "-        weight_decay=float(CONFIG.get(\"weight_decay\", 1e-5)),",
+          "-        betas=(0.9, float(CONFIG.get(\"adam_beta2\", 0.97))),",
+          "+        betas=adam_betas,",
+          "     )",
+          "     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(epochs, 1))",
+          " "
+        ]
+      }
+    ],
+    "changed_files": [
+      "model/train.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 3.945560560045896,
+  "Q_iso17": 3.527130788345191,
+  "Q_total": 3.799110139950649,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.045709716796875,
+      "mild_ood_force_mae": 0.072243040076748,
+      "hard_ood_energy_mae": 0.0467867431640625,
+      "hard_ood_force_mae": 0.07230412339011673,
+      "mixed_force_mae": 0.07227969006476924,
+      "mixed_energy_mae": 0.0463559326171875,
+      "gap_penalty": 0.0008450965037777824,
+      "Q_dataset": 3.945560560045896,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.07224304002989083,
+      "best_val_energy_mae": 0.045709716796875
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.2733978573638614,
+      "within_force_mae": 0.1763913075485737,
+      "other_energy_mae": 0.4069369741586538,
+      "other_force_mae": 0.1911424692519582,
+      "mixed_force_mae": 0.1852420045706044,
+      "mixed_energy_mae": 0.35352132744073683,
+      "gap_penalty": 0.07963184018386343,
+      "Q_dataset": 3.527130788345191,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.171503613392512,
+      "best_val_energy_mae": 0.09798177083333333
+    }
+  },
+  "created_at_utc": "2026-04-28T22:46:03.729066+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.031191345553901684,
+  "component_improvements_vs_parent": [
+    {
+      "dataset": "rmd17",
+      "metric": "gap_penalty",
+      "parent": 0.0041654527485749234,
+      "child": 0.0008450965037777824,
+      "relative_improvement": 0.7971177313037807
+    }
+  ],
+  "component_regressions_vs_parent": [
+    {
+      "dataset": "rmd17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.041819213867187496,
+      "child": 0.0463559326171875,
+      "relative_regression": 0.10848407539194886
+    },
+    {
+      "dataset": "iso17",
+      "metric": "gap_penalty",
+      "parent": 0.06912723100833351,
+      "child": 0.07963184018386343,
+      "relative_regression": 0.1519605085044352
+    }
+  ],
+  "outcome_class": "benchmark_tradeoff",
+  "outcome_reasons": [
+    "some component metrics improved but other tracked metrics regressed strongly"
+  ]
+}

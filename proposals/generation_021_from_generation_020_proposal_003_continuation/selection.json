@@ -1,0 +1,81 @@
+{
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "exploit",
+      "selection_rationale": "Primary GEN021-M01 exploit: adds a direct bounded atomwise scalar plus vector-norm energy residual to target the evidence diagnosis that generation_020's physically valid mixer was too muted to affect ISO17 energy/gap within 8 epochs."
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "backward-simplify",
+      "selection_rationale": "Scalar-only ablation of the direct residual mechanism; isolates whether the main benefit comes from a clean atomwise scalar correction rather than vector-norm coupling, preserving interpretability and low runtime risk."
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "jump",
+      "selection_rationale": "Higher-cap direct residual jump within the same evidence-backed family; tests whether the residual needs the recommended cap to escape the tiny-gate neutral-variance regime observed in generation_020."
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md",
+      "role": "control",
+      "selection_rationale": "Mild late energy/force loss rebalance control for GEN021-M02; diagnoses whether force-dominated training suppresses energy/gap improvements without introducing a new architecture."
+    },
+    {
+      "id": "proposal_006",
+      "path": "proposal_006.md",
+      "role": "exploit",
+      "selection_rationale": "Combines the direct residual mechanism with a mild objective shift, testing the evidence-supported hypothesis that the new energy path needs enough scalar supervision during the fixed 8-epoch budget."
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md",
+      "role": "control",
+      "selection_rationale": "Exact source replicate control for generation_020/proposal_003; calibrates benchmark variance before attributing small Q_total, G_delta, energy, force, or gap changes to new mechanisms."
+    },
+    {
+      "id": "proposal_008",
+      "path": "proposal_008.md",
+      "role": "backward-simplify",
+      "selection_rationale": "Replaces the muted final mixer with a direct residual, preserving the intended energy-calibration axis while removing the underpowered mechanism that likely caused neutral variance in generation_020."
+    },
+    {
+      "id": "proposal_009",
+      "path": "proposal_009.md",
+      "role": "jump",
+      "selection_rationale": "Training-schedule jump/control for the undertraining diagnosis: keeps a nonzero learning-rate tail to test whether residual pathways failed because cosine annealing reached zero too early under the short benchmark budget."
+    }
+  ],
+  "source_unit": "generation_020/proposal_003",
+  "target_generation": "generation_021",
+  "selection_policy": "Prioritize the new grade-A evidence for direct atomwise energy residual calibration and bounded energy/force loss rebalancing, while preserving source recoverability and benchmark semantics. Select three direct-residual mechanism variants, two objective/training diagnostics, one combination proposal, one exact source control, and one backward-simplify replacement of the muted generation_020 mixer. Defer the stronger energy-only schedule and the medium-risk body-order wildcard to avoid over-weighting force/energy objective changes and higher-complexity residuals before the direct-residual family is tested.",
+  "selected_role_counts": {
+    "exploit": 2,
+    "jump": 2,
+    "backward-simplify": 2,
+    "control": 2
+  },
+  "selected_mechanism_axes": [
+    "GEN021-M01 direct atomwise scalar plus vector-norm energy residual",
+    "Scalar-only direct residual ablation",
+    "Higher-cap residual variant to escape muted-gate neutral variance",
+    "GEN021-M02 mild late energy/force loss rebalance",
+    "Tiny residual plus mild objective-rebalance interaction",
+    "Exact source replicate control",
+    "Replace muted final mixer with direct residual",
+    "Nonzero learning-rate tail undertraining diagnostic"
+  ],
+  "omitted_proposals": [
+    {
+      "id": "proposal_005",
+      "reason": "Stronger late energy-emphasis schedule is useful but overlaps with selected proposal_004 and proposal_006; defer it to avoid over-confounding architecture evidence with a more aggressive objective shift."
+    },
+    {
+      "id": "proposal_010",
+      "reason": "Body-order-conditioned residual wildcard is higher-complexity and less directly supported than the direct atomwise residual family; defer until cleaner residual and objective controls establish whether extra body-order conditioning is needed."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "jump",
+      "selection_rationale": "Strong architecture-departure representation-path test: adds a compact Cartesian/body-order residual branch from GEN016-M01 to target ISO17 energy/gap without changing benchmark semantics."
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "jump",
+      "selection_rationale": "Message-passing-path departure: tests whether a bounded descriptor-level edge message improves conformer transfer beyond a static body-order residual."
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "exploit",
+      "selection_rationale": "Low-risk exploit of the body-order evidence: isolates truncated nu=2 invariant residual benefits while avoiding broader message-passing or nonlocal complexity."
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md",
+      "role": "jump",
+      "selection_rationale": "Energy-decomposition and nonlocal-information departure: bounded latent electrostatic residual directly targets the observed ISO17 energy/gap bottleneck."
+    },
+    {
+      "id": "proposal_005",
+      "path": "proposal_005.md",
+      "role": "exploit",
+      "selection_rationale": "Safer exploit of GEN016-M02: adds element-conditioned hardness stabilization to the latent charge residual to reduce unlabelled-charge instability risk."
+    },
+    {
+      "id": "proposal_006",
+      "path": "proposal_006.md",
+      "role": "wildcard",
+      "selection_rationale": "Higher-risk combined architecture departure coupling body-order representation with nonlocal energy decomposition; useful if single-path mechanisms underfit the ISO17 bottleneck."
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md",
+      "role": "exploit",
+      "selection_rationale": "Training-target-path probe: pairs a minimal body-order residual with modest code-level energy/force reweighting to test whether source ISO17 energy instability is partly objective imbalance."
+    },
+    {
+      "id": "proposal_009",
+      "path": "proposal_009.md",
+      "role": "control",
+      "selection_rationale": "Exact source control replicate for generation_015/proposal_004, needed to interpret architecture-departure gains against run variance."
+    }
+  ],
+  "source_unit": "generation_015/proposal_004",
+  "target_generation": "generation_016",
+  "selection_policy": "architecture-departure selection: cover representation path, message passing path, energy decomposition path, nonlocal information path, and training-target path while retaining one exact control and avoiding local-only BalancedInteractionBlock/vector-norm/gate/norm/adapter variants.",
+  "omitted_proposals": [
+    {
+      "id": "proposal_008",
+      "reason": "Useful backward-simplify radial/type ablation, but lower priority than selecting both the fuller representation-path tests and the required training-target probe within the eight-unit budget."
+    },
+    {
+      "id": "proposal_010",
+      "reason": "Explicitly weak physics-regularization wildcard with extra training cost; deferred in favor of stronger mechanism-card / patch-blueprint-backed architecture departures and the exact control."
+    }
+  ]
+}

@@ -1,0 +1,1330 @@
+{
+  "generation": "generation_011",
+  "created_at_utc": "2026-04-22T03:21:19.621858+00:00",
+  "source_unit": "generation_010/proposal_007",
+  "parent": {
+    "unit": "generation_010/proposal_007",
+    "Q_rmd17": 2.644823681825324,
+    "Q_iso17": 3.016007265905866,
+    "Q_total": 2.774737936253514
+  },
+  "control_sigma_Q_total": null,
+  "margin": 0.03,
+  "did_any_child_beat_parent": false,
+  "best_child": {
+    "unit": "generation_011/proposal_003",
+    "Q_rmd17": 2.4668969047676126,
+    "Q_iso17": 2.9340930574775967,
+    "Q_total": 2.6304155582161073,
+    "outcome_class": "negative_method"
+  },
+  "outcome_counts": {
+    "benchmark_tradeoff": 6,
+    "control_replicate": 1,
+    "negative_method": 1
+  },
+  "lessons": [
+    "No child beat parent generation_010/proposal_007; keep parent unless a reviewed override is chosen.",
+    "Negative methods should not be repeated unless the proposal addresses the recorded failure pattern."
+  ],
+  "units": [
+    {
+      "unit": "generation_011/proposal_001",
+      "source_unit": "generation_010/proposal_007",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_011_from_generation_010_proposal_007_continuation/proposal_001.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": false,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_010/proposal_007",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_010/proposal_007",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": false,
+            "added_lines": 13,
+            "removed_lines": 1,
+            "diff_truncated": false,
+            "unified_diff_excerpt": [
+              "--- source/model/model.py",
+              "+++ child/model/model.py",
+              "@@ -38,8 +38,18 @@",
+              "             nn.SiLU(),",
+              "             nn.Linear(hidden_dim * 2, hidden_dim * 2),",
+              "         )",
+              "+        self.scalar_mix_norm = nn.LayerNorm(hidden_dim)",
+              "+        reentry_hidden = max(hidden_dim // 6, 8)",
+              "+        self.scalar_reentry_gate = nn.Sequential(",
+              "+            nn.Linear(hidden_dim * 2, reentry_hidden),",
+              "+            nn.SiLU(),",
+              "+            nn.Linear(reentry_hidden, hidden_dim),",
+              "+        )",
+              "         self.layer_norm = nn.LayerNorm(hidden_dim)",
+              "         self.vector_residual_scale = nn.Parameter(torch.tensor(0.35))",
+              "+",
+              "+        nn.init.zeros_(self.scalar_reentry_gate[-1].weight)",
+              "+        nn.init.constant_(self.scalar_reentry_gate[-1].bias, math.log(0.02 / 0.06))",
+              " ",
+              "     def _apply_linear_to_vector(self, linear: nn.Linear, vector: torch.Tensor) -> torch.Tensor:",
+              "         return linear(vector.transpose(1, 2)).transpose(1, 2)",
+              "@@ -91,7 +101,9 @@",
+              "         delta_scalar = self.scalar_update(scalar_input)",
+              "         scalar_gate = torch.sigmoid(self.scalar_residual_gate(torch.cat([scalar_state, agg_scalar], dim=-1)))",
+              "         mixed_scalar = scalar_state + scalar_gate * delta_scalar",
+              "-        new_scalar = self.layer_norm(mixed_scalar)",
+              "+        scalar_context = self.scalar_mix_norm(scalar_state + agg_scalar)",
+              "+        reentry_alpha = 0.08 * torch.sigmoid(self.scalar_reentry_gate(torch.cat([mixed_scalar, agg_scalar], dim=-1)))",
+              "+        new_scalar = self.layer_norm(mixed_scalar + reentry_alpha * (scalar_context - mixed_scalar))",
+              " ",
+              "         vector_mix = torch.tanh(self.vector_gate(torch.cat([new_scalar, agg_scalar], dim=-1)))",
+              "         self_mix, agg_mix = vector_mix.chunk(2, dim=-1)"
+            ]
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [
+          "model/model.py"
+        ],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": null,
+      "Q_rmd17": 2.2337678832856094,
+      "Q_iso17": 2.820925225372244,
+      "Q_total": 2.4392729530159314,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 2.5792844848632814,
+          "mild_ood_force_mae": 0.1854748360128142,
+          "hard_ood_energy_mae": 2.5826557006835937,
+          "hard_ood_force_mae": 0.185532059838064,
+          "mixed_force_mae": 0.1855091703079641,
+          "mixed_energy_mae": 2.581307214355469,
+          "gap_penalty": 0.00030846898379472147,
+          "Q_dataset": 2.2337678832856094,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.1854748381669633,
+          "best_val_energy_mae": 2.5792772216796873
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 1.3144192837252475,
+          "within_force_mae": 0.3041292357489024,
+          "other_energy_mae": 1.3767191256009614,
+          "other_force_mae": 0.30802561298585857,
+          "mixed_force_mae": 0.3064670620910761,
+          "mixed_energy_mae": 1.3517991888506757,
+          "gap_penalty": 0.012713853196352766,
+          "Q_dataset": 2.820925225372244,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.1869735966126124,
+          "best_val_energy_mae": 2.2470703125
+        }
+      },
+      "created_at_utc": "2026-04-22T03:21:19.614016+00:00",
+      "control_replicate": false,
+      "delta_Q_vs_parent": -0.33546498323758245,
+      "component_improvements_vs_parent": [
+        {
+          "dataset": "iso17",
+          "metric": "gap_penalty",
+          "parent": 0.021890034905864147,
+          "child": 0.012713853196352766,
+          "relative_improvement": 0.4191944758869783
+        }
+      ],
+      "component_regressions_vs_parent": [
+        {
+          "dataset": "rmd17",
+          "metric": "mixed_energy_mae",
+          "parent": 0.6365381103515625,
+          "child": 2.581307214355469,
+          "relative_regression": 3.0552280725655265
+        },
+        {
+          "dataset": "iso17",
+          "metric": "mixed_energy_mae",
+          "parent": 0.7179993082992193,
+          "child": 1.3517991888506757,
+          "relative_regression": 0.8827304890485025
+        }
+      ],
+      "outcome_class": "benchmark_tradeoff",
+      "outcome_reasons": [
+        "some component metrics improved but other tracked metrics regressed strongly"
+      ]
+    },
+    {
+      "unit": "generation_011/proposal_002",
+      "source_unit": "generation_010/proposal_007",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_011_from_generation_010_proposal_007_continuation/proposal_002.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": false,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_010/proposal_007",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_010/proposal_007",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": false,
+            "added_lines": 17,
+            "removed_lines": 5,
+            "diff_truncated": false,
+            "unified_diff_excerpt": [
+              "--- source/model/train.py",
+              "+++ child/model/train.py",
+              "@@ -23,6 +23,11 @@",
+              " ",
+              " def force_mae(pred, target):",
+              "     return float(torch.mean(torch.abs(pred - target)).detach().cpu().item())",
+              "+",
+              "+",
+              "+def smoothstep(ratio: float) -> float:",
+              "+    clamped = min(1.0, max(0.0, float(ratio)))",
+              "+    return clamped * clamped * (3.0 - 2.0 * clamped)",
+              " ",
+              " ",
+              " def get_cuda_device() -> torch.device:",
+              "@@ -121,18 +126,25 @@",
+              "         weight_decay=float(CONFIG.get(\"weight_decay\", 1e-5)),",
+              "         betas=(0.9, float(CONFIG.get(\"adam_beta2\", 0.97))),",
+              "     )",
+              "-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(epochs, 1))",
+              "+    min_lr = learning_rate * float(CONFIG.get(\"min_lr_scale\", 0.1))",
+              "+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(epochs, 1), eta_min=min_lr)",
+              " ",
+              "     energy_weight = float(CONFIG.get(\"energy_weight\", 2.4))",
+              "     force_weight = float(CONFIG.get(\"force_weight\", 10.0))",
+              "     grad_clip = float(CONFIG.get(\"grad_clip\", 3.0))",
+              "-    energy_warmup_epochs = max(1, int(CONFIG.get(\"energy_warmup_epochs\", 3)))",
+              "+    energy_warmup_epochs = max(1, int(CONFIG.get(\"energy_warmup_epochs\", 5)))",
+              "+    energy_start_scale = float(CONFIG.get(\"energy_start_scale\", 0.5))",
+              "+    early_force_scale = float(CONFIG.get(\"early_force_scale\", 1.02))",
+              "+    final_force_scale = float(CONFIG.get(\"final_force_scale\", 0.95))",
+              " ",
+              "     history = []",
+              "     for epoch in range(1, epochs + 1):",
+              "-        warmup_ratio = min(1.0, epoch / energy_warmup_epochs)",
+              "-        epoch_energy_weight = energy_weight * (0.6 + 0.4 * warmup_ratio)",
+              "-        epoch_force_weight = force_weight * (1.1 - 0.1 * warmup_ratio)",
+              "+        warmup_ratio = smoothstep(epoch / energy_warmup_epochs)",
+              "+        full_training_ratio = smoothstep(epoch / max(epochs, 1))",
+              "+        epoch_energy_weight = energy_weight * (energy_start_scale + (1.0 - energy_start_scale) * warmup_ratio)",
+              "+        epoch_force_weight = force_weight * (",
+              "+            early_force_scale + (final_force_scale - early_force_scale) * full_training_ratio",
+              "+        )",
+              " ",
+              "         model.train()",
+              "         train_metrics = run_epoch("
+            ]
+          }
+        ],
+        "changed_files": [
+          "model/train.py"
+        ],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": null,
+      "Q_rmd17": 1.984452830031467,
+      "Q_iso17": 2.4560493697689387,
+      "Q_total": 2.149511618939582,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 7.550400695800781,
+          "mild_ood_force_mae": 0.18038178892899304,
+          "hard_ood_energy_mae": 7.547705810546875,
+          "hard_ood_force_mae": 0.1810697319372557,
+          "mixed_force_mae": 0.18079455473395062,
+          "mixed_energy_mae": 7.548783764648437,
+          "gap_penalty": 0.0038051091155439196,
+          "Q_dataset": 1.984452830031467,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.17933066595951094,
+          "best_val_energy_mae": 2.9309028930664063
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 7.457433477722772,
+          "within_force_mae": 0.27741425694658023,
+          "other_energy_mae": 7.581494140625,
+          "other_force_mae": 0.28321665248618677,
+          "mixed_force_mae": 0.28089569427034417,
+          "mixed_energy_mae": 7.531869875464109,
+          "gap_penalty": 0.020656762128939757,
+          "Q_dataset": 2.4560493697689387,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.20925922195116678,
+          "best_val_energy_mae": 8.3583984375
+        }
+      },
+      "created_at_utc": "2026-04-22T03:21:19.615124+00:00",
+      "control_replicate": false,
+      "delta_Q_vs_parent": -0.6252263173139316,
+      "component_improvements_vs_parent": [
+        {
+          "dataset": "iso17",
+          "metric": "mixed_force_mae",
+          "parent": 0.2913965663328165,
+          "child": 0.28089569427034417,
+          "relative_improvement": 0.03603636169987967
+        },
+        {
+          "dataset": "iso17",
+          "metric": "gap_penalty",
+          "parent": 0.021890034905864147,
+          "child": 0.020656762128939757,
+          "relative_improvement": 0.056339461413741604
+        }
+      ],
+      "component_regressions_vs_parent": [
+        {
+          "dataset": "rmd17",
+          "metric": "mixed_energy_mae",
+          "parent": 0.6365381103515625,
+          "child": 7.548783764648437,
+          "relative_regression": 10.859123031108403
+        },
+        {
+          "dataset": "iso17",
+          "metric": "mixed_energy_mae",
+          "parent": 0.7179993082992193,
+          "child": 7.531869875464109,
+          "relative_regression": 9.49007957027902
+        }
+      ],
+      "outcome_class": "benchmark_tradeoff",
+      "outcome_reasons": [
+        "some component metrics improved but other tracked metrics regressed strongly"
+      ]
+    },
+    {
+      "unit": "generation_011/proposal_003",
+      "source_unit": "generation_010/proposal_007",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_011_from_generation_010_proposal_007_continuation/proposal_003.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": false,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_010/proposal_007",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_010/proposal_007",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": false,
+            "added_lines": 17,
+            "removed_lines": 1,
+            "diff_truncated": false,
+            "unified_diff_excerpt": [
+              "--- source/model/model.py",
+              "+++ child/model/model.py",
+              "@@ -126,6 +126,18 @@",
+              "         self.interactions = nn.ModuleList(",
+              "             [BalancedInteractionBlock(hidden_dim=hidden_dim, num_rbf=num_rbf) for _ in range(num_interactions)]",
+              "         )",
+              "+        calibrator_width = max(4, hidden_dim // 12)",
+              "+        self.readout_calibrator = nn.Sequential(",
+              "+            nn.Linear(hidden_dim * 2, calibrator_width),",
+              "+            nn.SiLU(),",
+              "+            nn.Linear(calibrator_width, hidden_dim),",
+              "+        )",
+              "+        self.readout_calibrator_gate = nn.Linear(hidden_dim * 2, 1)",
+              "+        self.readout_calibrator_norm = nn.LayerNorm(hidden_dim)",
+              "+        nn.init.zeros_(self.readout_calibrator[-1].weight)",
+              "+        nn.init.zeros_(self.readout_calibrator[-1].bias)",
+              "+        nn.init.zeros_(self.readout_calibrator_gate.weight)",
+              "+        nn.init.constant_(self.readout_calibrator_gate.bias, -4.0)",
+              "         self.readout = nn.Sequential(",
+              "             nn.Linear(hidden_dim * 2, hidden_dim),",
+              "             nn.SiLU(),",
+              "@@ -180,7 +192,11 @@",
+              "             )",
+              " ",
+              "         vector_norm = torch.linalg.norm(vector_state, dim=-1)",
+              "-        per_atom_energy = self.readout(torch.cat([scalar_state, vector_norm], dim=-1)).squeeze(-1)",
+              "+        calibrator_input = torch.cat([scalar_state, vector_norm], dim=-1)",
+              "+        calibrator_delta = self.readout_calibrator(calibrator_input)",
+              "+        calibrator_gate = 0.1 * torch.sigmoid(self.readout_calibrator_gate(calibrator_input))",
+              "+        readout_scalar = self.readout_calibrator_norm(scalar_state + calibrator_gate * calibrator_delta)",
+              "+        per_atom_energy = self.readout(torch.cat([readout_scalar, vector_norm], dim=-1)).squeeze(-1)",
+              "         return atomref + per_atom_energy.sum()",
+              " ",
+              "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+            ]
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [
+          "model/model.py"
+        ],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": [
+        "Implemented tiny readout residual calibrator in model/model.py; model/train.py unchanged."
+      ],
+      "Q_rmd17": 2.4668969047676126,
+      "Q_iso17": 2.9340930574775967,
+      "Q_total": 2.6304155582161073,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 1.1183280029296876,
+          "mild_ood_force_mae": 0.17906564711034298,
+          "hard_ood_energy_mae": 1.126715087890625,
+          "hard_ood_force_mae": 0.17952466123132035,
+          "mixed_force_mae": 0.1793410555829294,
+          "mixed_energy_mae": 1.1233602539062502,
+          "gap_penalty": 0.002559448083333945,
+          "Q_dataset": 2.4668969047676126,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.17906564818462356,
+          "best_val_energy_mae": 1.1183218383789062
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 0.8963064665841585,
+          "within_force_mae": 0.2929843574467272,
+          "other_energy_mae": 0.9597757662259615,
+          "other_force_mae": 0.30060308197369945,
+          "mixed_force_mae": 0.29755559216291055,
+          "mixed_energy_mae": 0.9343880463692403,
+          "gap_penalty": 0.02560437352753713,
+          "Q_dataset": 2.9340930574775967,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.21335972845554352,
+          "best_val_energy_mae": 1.3723958333333333
+        }
+      },
+      "created_at_utc": "2026-04-22T03:21:19.616244+00:00",
+      "control_replicate": false,
+      "delta_Q_vs_parent": -0.14432237803740655,
+      "component_improvements_vs_parent": [],
+      "component_regressions_vs_parent": [
+        {
+          "dataset": "rmd17",
+          "metric": "mixed_energy_mae",
+          "parent": 0.6365381103515625,
+          "child": 1.1233602539062502,
+          "relative_regression": 0.7647965387112704
+        },
+        {
+          "dataset": "iso17",
+          "metric": "mixed_energy_mae",
+          "parent": 0.7179993082992193,
+          "child": 0.9343880463692403,
+          "relative_regression": 0.3013773628593011
+        },
+        {
+          "dataset": "iso17",
+          "metric": "gap_penalty",
+          "parent": 0.021890034905864147,
+          "child": 0.02560437352753713,
+          "relative_regression": 0.16968171305555768
+        }
+      ],
+      "outcome_class": "negative_method",
+      "outcome_reasons": [
+        "Q_total lost and no tracked component metric improved relative to parent"
+      ]
+    },
+    {
+      "unit": "generation_011/proposal_004",
+      "source_unit": "generation_010/proposal_007",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_011_from_generation_010_proposal_007_continuation/proposal_004.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": false,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_010/proposal_007",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_010/proposal_007",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": false,
+            "added_lines": 18,
+            "removed_lines": 1,
+            "diff_truncated": false,
+            "unified_diff_excerpt": [
+              "--- source/model/model.py",
+              "+++ child/model/model.py",
+              "@@ -126,6 +126,18 @@",
+              "         self.interactions = nn.ModuleList(",
+              "             [BalancedInteractionBlock(hidden_dim=hidden_dim, num_rbf=num_rbf) for _ in range(num_interactions)]",
+              "         )",
+              "+        helper_width = max(4, hidden_dim // 48)",
+              "+        self.late_helper_proj = nn.Sequential(",
+              "+            nn.Linear(hidden_dim * 3, helper_width),",
+              "+            nn.SiLU(),",
+              "+            nn.Linear(helper_width, hidden_dim),",
+              "+        )",
+              "+        self.late_helper_gate = nn.Linear(hidden_dim * 2, hidden_dim)",
+              "+        self.late_helper_norm = nn.LayerNorm(hidden_dim)",
+              "+        nn.init.zeros_(self.late_helper_proj[-1].weight)",
+              "+        nn.init.zeros_(self.late_helper_proj[-1].bias)",
+              "+        nn.init.zeros_(self.late_helper_gate.weight)",
+              "+        nn.init.constant_(self.late_helper_gate.bias, -7.0)",
+              "         self.readout = nn.Sequential(",
+              "             nn.Linear(hidden_dim * 2, hidden_dim),",
+              "             nn.SiLU(),",
+              "@@ -180,7 +192,12 @@",
+              "             )",
+              " ",
+              "         vector_norm = torch.linalg.norm(vector_state, dim=-1)",
+              "-        per_atom_energy = self.readout(torch.cat([scalar_state, vector_norm], dim=-1)).squeeze(-1)",
+              "+        late_helper_input = torch.cat([scalar_state, vector_norm, scalar_state * vector_norm], dim=-1)",
+              "+        late_helper = self.late_helper_proj(late_helper_input)",
+              "+        late_helper_gate = 0.05 * torch.sigmoid(self.late_helper_gate(torch.cat([scalar_state, vector_norm], dim=-1)))",
+              "+        readout_scalar = self.late_helper_norm(scalar_state + late_helper_gate * late_helper)",
+              "+",
+              "+        per_atom_energy = self.readout(torch.cat([readout_scalar, vector_norm], dim=-1)).squeeze(-1)",
+              "         return atomref + per_atom_energy.sum()",
+              " ",
+              "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+            ]
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [
+          "model/model.py"
+        ],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": [
+        "Implemented conservative late helper jump in model/model.py; model/train.py unchanged."
+      ],
+      "Q_rmd17": 2.353510665255083,
+      "Q_iso17": 2.6465563980072924,
+      "Q_total": 2.456076671718356,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 1.390927001953125,
+          "mild_ood_force_mae": 0.1943914892077446,
+          "hard_ood_energy_mae": 1.3907664794921875,
+          "hard_ood_force_mae": 0.1943091675117612,
+          "mixed_force_mae": 0.19434209619015455,
+          "mixed_energy_mae": 1.3908306884765624,
+          "gap_penalty": 0.0,
+          "Q_dataset": 2.353510665255083,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.19439148692646996,
+          "best_val_energy_mae": 1.39092041015625
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 3.3494561223700496,
+          "within_force_mae": 0.28091540426606,
+          "other_energy_mae": 3.5472213040865386,
+          "other_force_mae": 0.2836774678872182,
+          "mixed_force_mae": 0.2825726424387549,
+          "mixed_energy_mae": 3.468115231399943,
+          "gap_penalty": 0.009774702877498466,
+          "Q_dataset": 2.6465563980072924,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.20955999692281088,
+          "best_val_energy_mae": 2.2936197916666665
+        }
+      },
+      "created_at_utc": "2026-04-22T03:21:19.617314+00:00",
+      "control_replicate": false,
+      "delta_Q_vs_parent": -0.31866126453515786,
+      "component_improvements_vs_parent": [
+        {
+          "dataset": "iso17",
+          "metric": "mixed_force_mae",
+          "parent": 0.2913965663328165,
+          "child": 0.2825726424387549,
+          "relative_improvement": 0.030281495781194046
+        },
+        {
+          "dataset": "iso17",
+          "metric": "gap_penalty",
+          "parent": 0.021890034905864147,
+          "child": 0.009774702877498466,
+          "relative_improvement": 0.5534633489835181
+        }
+      ],
+      "component_regressions_vs_parent": [
+        {
+          "dataset": "rmd17",
+          "metric": "mixed_force_mae",
+          "parent": 0.17101307652965186,
+          "child": 0.19434209619015455,
+          "relative_regression": 0.13641658365497963
+        },
+        {
+          "dataset": "rmd17",
+          "metric": "mixed_energy_mae",
+          "parent": 0.6365381103515625,
+          "child": 1.3908306884765624,
+          "relative_regression": 1.184992015180994
+        },
+        {
+          "dataset": "iso17",
+          "metric": "mixed_energy_mae",
+          "parent": 0.7179993082992193,
+          "child": 3.468115231399943,
+          "relative_regression": 3.8302487081988095
+        }
+      ],
+      "outcome_class": "benchmark_tradeoff",
+      "outcome_reasons": [
+        "some component metrics improved but other tracked metrics regressed strongly"
+      ]
+    },
+    {
+      "unit": "generation_011/proposal_005",
+      "source_unit": "generation_010/proposal_007",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_011_from_generation_010_proposal_007_continuation/proposal_005.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": false,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_010/proposal_007",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_010/proposal_007",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": false,
+            "added_lines": 30,
+            "removed_lines": 2,
+            "diff_truncated": false,
+            "unified_diff_excerpt": [
+              "--- source/model/model.py",
+              "+++ child/model/model.py",
+              "@@ -38,8 +38,24 @@",
+              "             nn.SiLU(),",
+              "             nn.Linear(hidden_dim * 2, hidden_dim * 2),",
+              "         )",
+              "+        self.directional_feedback = nn.Sequential(",
+              "+            nn.Linear(hidden_dim * 2, hidden_dim),",
+              "+            nn.SiLU(),",
+              "+            nn.Linear(hidden_dim, hidden_dim),",
+              "+        )",
+              "+        self.directional_feedback_gate = nn.Sequential(",
+              "+            nn.Linear(hidden_dim * 3, hidden_dim),",
+              "+            nn.SiLU(),",
+              "+            nn.Linear(hidden_dim, hidden_dim),",
+              "+        )",
+              "         self.layer_norm = nn.LayerNorm(hidden_dim)",
+              "+        self.scalar_mix_norm = nn.LayerNorm(hidden_dim)",
+              "         self.vector_residual_scale = nn.Parameter(torch.tensor(0.35))",
+              "+",
+              "+        nn.init.zeros_(self.directional_feedback[-1].weight)",
+              "+        nn.init.zeros_(self.directional_feedback[-1].bias)",
+              "+        nn.init.zeros_(self.directional_feedback_gate[-1].weight)",
+              "+        nn.init.constant_(self.directional_feedback_gate[-1].bias, -4.0)",
+              " ",
+              "     def _apply_linear_to_vector(self, linear: nn.Linear, vector: torch.Tensor) -> torch.Tensor:",
+              "         return linear(vector.transpose(1, 2)).transpose(1, 2)",
+              "@@ -82,16 +98,28 @@",
+              "         agg_scalar = agg_scalar * neighbor_scale",
+              "         agg_vector = agg_vector * neighbor_scale.unsqueeze(-1)",
+              " ",
+              "+        edge_direction_summary = directional_invariant * torch.tanh(direction_gate)",
+              "+        agg_directional = torch.zeros_like(scalar_state)",
+              "+        agg_directional.index_add_(0, i_idx, edge_direction_summary)",
+              "+        agg_directional = agg_directional * neighbor_scale",
+              "+",
+              "         self_vector = self._apply_linear_to_vector(self.self_vector, vector_state)",
+              "         mixed_agg_vector = self._apply_linear_to_vector(self.agg_vector, agg_vector)",
+              " ",
+              "         agg_norm = torch.linalg.norm(agg_vector, dim=-1)",
+              "         vector_alignment = torch.sum(self_vector * mixed_agg_vector, dim=-1)",
+              "-        scalar_input = torch.cat([scalar_state, agg_scalar, agg_norm, vector_alignment], dim=-1)",
+              "+        directional_features = torch.cat([agg_directional, agg_norm], dim=-1)",
+              "+        directional_delta = self.directional_feedback(directional_features)",
+              "+        directional_gate = torch.sigmoid(",
+              "+            self.directional_feedback_gate(torch.cat([scalar_state, agg_scalar, agg_directional], dim=-1))",
+              "+        )",
+              "+        directional_scalar = directional_gate * directional_delta",
+              "+",
+              "+        scalar_input = torch.cat([scalar_state, agg_scalar + directional_scalar, agg_norm, vector_alignment], dim=-1)",
+              "         delta_scalar = self.scalar_update(scalar_input)",
+              "         scalar_gate = torch.sigmoid(self.scalar_residual_gate(torch.cat([scalar_state, agg_scalar], dim=-1)))",
+              "         mixed_scalar = scalar_state + scalar_gate * delta_scalar",
+              "-        new_scalar = self.layer_norm(mixed_scalar)",
+              "+        new_scalar = self.layer_norm(self.scalar_mix_norm(mixed_scalar) + directional_scalar)",
+              " ",
+              "         vector_mix = torch.tanh(self.vector_gate(torch.cat([new_scalar, agg_scalar], dim=-1)))",
+              "         self_mix, agg_mix = vector_mix.chunk(2, dim=-1)"
+            ]
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [
+          "model/model.py"
+        ],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": null,
+      "Q_rmd17": 2.309803358384871,
+      "Q_iso17": 3.0156023814590633,
+      "Q_total": 2.556833016460838,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 1.9946165161132812,
+          "mild_ood_force_mae": 0.18250387205649168,
+          "hard_ood_energy_mae": 1.9928826293945312,
+          "hard_ood_force_mae": 0.1827816025055945,
+          "mixed_force_mae": 0.18267051032595338,
+          "mixed_energy_mae": 1.9935761840820312,
+          "gap_penalty": 0.001520390174668684,
+          "Q_dataset": 2.309803358384871,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.18250387372775004,
+          "best_val_energy_mae": 1.9946082763671875
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 0.6139416383044555,
+          "within_force_mae": 0.30017068874422864,
+          "other_energy_mae": 0.6400217848557692,
+          "other_force_mae": 0.30743329871732455,
+          "mixed_force_mae": 0.3045282547280862,
+          "mixed_energy_mae": 0.6295897262352437,
+          "gap_penalty": 0.02384872293560038,
+          "Q_dataset": 3.0156023814590633,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.17854302624861398,
+          "best_val_energy_mae": 0.5289713541666666
+        }
+      },
+      "created_at_utc": "2026-04-22T03:21:19.618494+00:00",
+      "control_replicate": false,
+      "delta_Q_vs_parent": -0.21790491979267568,
+      "component_improvements_vs_parent": [
+        {
+          "dataset": "iso17",
+          "metric": "mixed_energy_mae",
+          "parent": 0.7179993082992193,
+          "child": 0.6295897262352437,
+          "relative_improvement": 0.1231332412748395
+        }
+      ],
+      "component_regressions_vs_parent": [
+        {
+          "dataset": "rmd17",
+          "metric": "mixed_energy_mae",
+          "parent": 0.6365381103515625,
+          "child": 1.9935761840820312,
+          "relative_regression": 2.131903890217934
+        }
+      ],
+      "outcome_class": "benchmark_tradeoff",
+      "outcome_reasons": [
+        "some component metrics improved but other tracked metrics regressed strongly"
+      ]
+    },
+    {
+      "unit": "generation_011/proposal_006",
+      "source_unit": "generation_010/proposal_007",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_011_from_generation_010_proposal_007_continuation/proposal_006.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": false,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_010/proposal_007",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_010/proposal_007",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": false,
+            "added_lines": 8,
+            "removed_lines": 6,
+            "diff_truncated": false,
+            "unified_diff_excerpt": [
+              "--- source/model/model.py",
+              "+++ child/model/model.py",
+              "@@ -7,7 +7,7 @@",
+              " ",
+              " ",
+              " class BalancedInteractionBlock(nn.Module):",
+              "-    def __init__(self, hidden_dim: int, num_rbf: int):",
+              "+    def __init__(self, hidden_dim: int, num_rbf: int, residual_scale_bias: float = 0.0):",
+              "         super().__init__()",
+              "         self.hidden_dim = hidden_dim",
+              " ",
+              "@@ -39,7 +39,8 @@",
+              "             nn.Linear(hidden_dim * 2, hidden_dim * 2),",
+              "         )",
+              "         self.layer_norm = nn.LayerNorm(hidden_dim)",
+              "-        self.vector_residual_scale = nn.Parameter(torch.tensor(0.35))",
+              "+        self.scalar_residual_scale = nn.Parameter(torch.tensor(residual_scale_bias))",
+              "+        self.vector_residual_scale = nn.Parameter(torch.tensor(0.35 + residual_scale_bias))",
+              " ",
+              "     def _apply_linear_to_vector(self, linear: nn.Linear, vector: torch.Tensor) -> torch.Tensor:",
+              "         return linear(vector.transpose(1, 2)).transpose(1, 2)",
+              "@@ -90,7 +91,8 @@",
+              "         scalar_input = torch.cat([scalar_state, agg_scalar, agg_norm, vector_alignment], dim=-1)",
+              "         delta_scalar = self.scalar_update(scalar_input)",
+              "         scalar_gate = torch.sigmoid(self.scalar_residual_gate(torch.cat([scalar_state, agg_scalar], dim=-1)))",
+              "-        mixed_scalar = scalar_state + scalar_gate * delta_scalar",
+              "+        residual_scale = 0.75 + 0.20 * torch.sigmoid(self.scalar_residual_scale)",
+              "+        mixed_scalar = scalar_state + residual_scale * scalar_gate * delta_scalar",
+              "         new_scalar = self.layer_norm(mixed_scalar)",
+              " ",
+              "         vector_mix = torch.tanh(self.vector_gate(torch.cat([new_scalar, agg_scalar], dim=-1)))",
+              "@@ -123,9 +125,9 @@",
+              "         self.register_buffer(\"rbf_centers\", centers)",
+              "         self.register_buffer(\"rbf_widths\", widths)",
+              " ",
+              "-        self.interactions = nn.ModuleList(",
+              "-            [BalancedInteractionBlock(hidden_dim=hidden_dim, num_rbf=num_rbf) for _ in range(num_interactions)]",
+              "-        )",
+              "+        base_interactions = [BalancedInteractionBlock(hidden_dim=hidden_dim, num_rbf=num_rbf) for _ in range(num_interactions)]",
+              "+        extra_interaction = BalancedInteractionBlock(hidden_dim=hidden_dim, num_rbf=num_rbf, residual_scale_bias=-1.5)",
+              "+        self.interactions = nn.ModuleList([*base_interactions, extra_interaction])",
+              "         self.readout = nn.Sequential(",
+              "             nn.Linear(hidden_dim * 2, hidden_dim),",
+              "             nn.SiLU(),"
+            ]
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [
+          "model/model.py"
+        ],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": null,
+      "Q_rmd17": 2.340934560457937,
+      "Q_iso17": 2.9017712967396805,
+      "Q_total": 2.5372274181565473,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 2.296172790527344,
+          "mild_ood_force_mae": 0.16726291528088041,
+          "hard_ood_energy_mae": 2.3020687255859373,
+          "hard_ood_force_mae": 0.16703828233480453,
+          "mixed_force_mae": 0.16712813551323488,
+          "mixed_energy_mae": 2.2997103515625,
+          "gap_penalty": 0.0,
+          "Q_dataset": 2.340934560457937,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.16726291173393837,
+          "best_val_energy_mae": 2.1541566162109373
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 1.5729878944925744,
+          "within_force_mae": 0.2513165993708195,
+          "other_energy_mae": 1.750814678485577,
+          "other_force_mae": 0.2582050835398527,
+          "mixed_force_mae": 0.2554496898722395,
+          "mixed_energy_mae": 1.679683964888376,
+          "gap_penalty": 0.02696610895261389,
+          "Q_dataset": 2.9017712967396805,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.212218647201856,
+          "best_val_energy_mae": 0.22200520833333334
+        }
+      },
+      "created_at_utc": "2026-04-22T03:21:19.619660+00:00",
+      "control_replicate": false,
+      "delta_Q_vs_parent": -0.23751051809696655,
+      "component_improvements_vs_parent": [
+        {
+          "dataset": "rmd17",
+          "metric": "mixed_force_mae",
+          "parent": 0.17101307652965186,
+          "child": 0.16712813551323488,
+          "relative_improvement": 0.022717216105654785
+        },
+        {
+          "dataset": "iso17",
+          "metric": "mixed_force_mae",
+          "parent": 0.2913965663328165,
+          "child": 0.2554496898722395,
+          "relative_improvement": 0.12336067275247357
+        }
+      ],
+      "component_regressions_vs_parent": [
+        {
+          "dataset": "rmd17",
+          "metric": "mixed_energy_mae",
+          "parent": 0.6365381103515625,
+          "child": 2.2997103515625,
+          "relative_regression": 2.6128400077920886
+        },
+        {
+          "dataset": "iso17",
+          "metric": "mixed_energy_mae",
+          "parent": 0.7179993082992193,
+          "child": 1.679683964888376,
+          "relative_regression": 1.33939496246476
+        },
+        {
+          "dataset": "iso17",
+          "metric": "gap_penalty",
+          "parent": 0.021890034905864147,
+          "child": 0.02696610895261389,
+          "relative_regression": 0.23188971916120185
+        }
+      ],
+      "outcome_class": "benchmark_tradeoff",
+      "outcome_reasons": [
+        "some component metrics improved but other tracked metrics regressed strongly"
+      ]
+    },
+    {
+      "unit": "generation_011/proposal_007",
+      "source_unit": "generation_010/proposal_007",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_011_from_generation_010_proposal_007_continuation/proposal_007.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": false,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_010/proposal_007",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_010/proposal_007",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": false,
+            "added_lines": 2,
+            "removed_lines": 3,
+            "diff_truncated": false,
+            "unified_diff_excerpt": [
+              "--- source/model/model.py",
+              "+++ child/model/model.py",
+              "@@ -39,7 +39,7 @@",
+              "             nn.Linear(hidden_dim * 2, hidden_dim * 2),",
+              "         )",
+              "         self.layer_norm = nn.LayerNorm(hidden_dim)",
+              "-        self.vector_residual_scale = nn.Parameter(torch.tensor(0.35))",
+              "+        self.vector_residual_scale = 0.2",
+              " ",
+              "     def _apply_linear_to_vector(self, linear: nn.Linear, vector: torch.Tensor) -> torch.Tensor:",
+              "         return linear(vector.transpose(1, 2)).transpose(1, 2)",
+              "@@ -96,8 +96,7 @@",
+              "         vector_mix = torch.tanh(self.vector_gate(torch.cat([new_scalar, agg_scalar], dim=-1)))",
+              "         self_mix, agg_mix = vector_mix.chunk(2, dim=-1)",
+              "         delta_vector = self_mix.unsqueeze(-1) * self_vector + agg_mix.unsqueeze(-1) * mixed_agg_vector",
+              "-        residual_scale = 0.15 + 0.35 * torch.sigmoid(self.vector_residual_scale)",
+              "-        new_vector = vector_state + residual_scale * delta_vector",
+              "+        new_vector = vector_state + self.vector_residual_scale * delta_vector",
+              "         return new_scalar, new_vector",
+              " ",
+              " "
+            ]
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [
+          "model/model.py"
+        ],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": null,
+      "Q_rmd17": 2.5693920750088894,
+      "Q_iso17": 2.688548261243752,
+      "Q_total": 2.6110967401910914,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 0.6770751342773438,
+          "mild_ood_force_mae": 0.18513996055256576,
+          "hard_ood_energy_mae": 0.6747427978515625,
+          "hard_ood_force_mae": 0.1854718469423242,
+          "mixed_force_mae": 0.18533909238642082,
+          "mixed_energy_mae": 0.6756757324218751,
+          "gap_penalty": 0.0017906982573577604,
+          "Q_dataset": 2.5693920750088894,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.18513996064616367,
+          "best_val_energy_mae": 0.6770726318359375
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 2.9071840191831684,
+          "within_force_mae": 0.2801565753240692,
+          "other_energy_mae": 2.8472701322115386,
+          "other_force_mae": 0.2866494319244073,
+          "mixed_force_mae": 0.28405228928427206,
+          "mixed_energy_mae": 2.8712356870001905,
+          "gap_penalty": 0.022857962583844434,
+          "Q_dataset": 2.688548261243752,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.18626746038595834,
+          "best_val_energy_mae": 1.5289713541666667
+        }
+      },
+      "created_at_utc": "2026-04-22T03:21:19.620732+00:00",
+      "control_replicate": false,
+      "delta_Q_vs_parent": -0.16364119606242244,
+      "component_improvements_vs_parent": [
+        {
+          "dataset": "iso17",
+          "metric": "mixed_force_mae",
+          "parent": 0.2913965663328165,
+          "child": 0.28405228928427206,
+          "relative_improvement": 0.025203718564604644
+        }
+      ],
+      "component_regressions_vs_parent": [
+        {
+          "dataset": "iso17",
+          "metric": "mixed_energy_mae",
+          "parent": 0.7179993082992193,
+          "child": 2.8712356870001905,
+          "relative_regression": 2.998939349679193
+        }
+      ],
+      "outcome_class": "benchmark_tradeoff",
+      "outcome_reasons": [
+        "some component metrics improved but other tracked metrics regressed strongly"
+      ]
+    },
+    {
+      "unit": "generation_011/proposal_008",
+      "source_unit": "generation_010/proposal_007",
+      "proposal": {
+        "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_011_from_generation_010_proposal_007_continuation/proposal_008.md",
+        "family": null,
+        "phase": null,
+        "jump_type": null,
+        "budget_class": null,
+        "control_replicate": true,
+        "mechanism_refs": [],
+        "negative_pattern_refs": [],
+        "historical_relation": null
+      },
+      "run_state": "terminal_success",
+      "failure_class": null,
+      "implementation_state": "launch_ready",
+      "remote_synced": true,
+      "remote_smoke_passed": true,
+      "code_delta": {
+        "source_unit": "generation_010/proposal_007",
+        "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_010/proposal_007",
+        "files": [
+          {
+            "path": "model/model.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          },
+          {
+            "path": "model/train.py",
+            "child_exists": true,
+            "source_exists": true,
+            "same_as_source": true,
+            "added_lines": 0,
+            "removed_lines": 0,
+            "diff_truncated": false,
+            "unified_diff_excerpt": []
+          }
+        ],
+        "changed_files": [],
+        "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+      },
+      "implementation_notes": [
+        "Exact control replicate of generation_010/proposal_007; no code edits applied.",
+        "Set control_replicate metadata true and corrected selection_row.json to proposal_008/control."
+      ],
+      "Q_rmd17": 2.261542079122762,
+      "Q_iso17": 2.895652159274603,
+      "Q_total": 2.483480607175906,
+      "rmd17": {
+        "metrics": {
+          "mild_ood_energy_mae": 2.0206221313476562,
+          "mild_ood_force_mae": 0.1942120329006575,
+          "hard_ood_energy_mae": 2.0131149291992188,
+          "hard_ood_force_mae": 0.19406211052648722,
+          "mixed_force_mae": 0.19412207947615534,
+          "mixed_energy_mae": 2.016117810058594,
+          "gap_penalty": 0.0,
+          "Q_dataset": 2.261542079122762,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.19421203683735802,
+          "best_val_energy_mae": 2.020615539550781
+        }
+      },
+      "iso17": {
+        "metrics": {
+          "within_energy_mae": 1.365036161819307,
+          "within_force_mae": 0.27605736357445765,
+          "other_energy_mae": 1.2376047926682692,
+          "other_force_mae": 0.2846304409435162,
+          "mixed_force_mae": 0.28120120999589276,
+          "mixed_energy_mae": 1.2885773403286844,
+          "gap_penalty": 0.03048734167663531,
+          "Q_dataset": 2.895652159274603,
+          "device": "cuda"
+        },
+        "history_summary": {
+          "epochs": 8,
+          "force_trend": "improving",
+          "energy_trend": "improving",
+          "best_val_force_mae": 0.20560184121131897,
+          "best_val_energy_mae": 0.4788411458333333
+        }
+      },
+      "created_at_utc": "2026-04-22T03:21:19.621724+00:00",
+      "control_replicate": true,
+      "outcome_class": "control_replicate",
+      "outcome_reasons": [
+        "unit is marked as a control replicate"
+      ]
+    }
+  ],
+  "partial_positive_patterns": [],
+  "negative_patterns": [
+    {
+      "pattern_id": "NEG-generation_011__proposal_003",
+      "unit": "generation_011/proposal_003",
+      "source_unit": "generation_010/proposal_007",
+      "reason": "Q_total lost and no tracked component metric improved relative to parent",
+      "do_not_repeat_unless": [
+        "proposal declares historical_relation as retry, salvage, or ablation",
+        "proposal explains why_not_duplicate",
+        "proposal adds an explicit guard for the failed metric pattern"
+      ],
+      "updated_at_utc": "2026-04-22T03:21:19.621855+00:00"
+    }
+  ]
+}

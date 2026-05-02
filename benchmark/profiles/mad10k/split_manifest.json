@@ -1,0 +1,88 @@
+{
+  "schema": "mad10k_profile.v1",
+  "created_at_utc": "2026-05-02T01:19:26.810951+00:00",
+  "purpose": "External adaptation profile for MLIP architecture/train-code transfer. Not part of main RMD17/ISO17 Q_total.",
+  "source_mad_root": "/mnt/e/文献/MLIP_task_batches/benchmark_tasks/01_phase0_B005-P061-T01_MAD_多域_E_F_S/raw",
+  "seed": 10001,
+  "train_size": 10000,
+  "splits": {
+    "train": {
+      "path": "/mnt/e/vscode_test/tamcae/src/research_runtime/benchmark/profiles/mad10k/train/mad10k-train.extxyz",
+      "frames": 10000,
+      "subset_counts": {
+        "MC2D": 280,
+        "MC3D": 3514,
+        "MC3D-clusters": 949,
+        "MC3D-random": 293,
+        "MC3D-rattled": 3143,
+        "MC3D-surfaces": 585,
+        "SHIFTML-molcrys": 897,
+        "SHIFTML-molfrags": 339
+      }
+    },
+    "val": {
+      "path": "/mnt/e/vscode_test/tamcae/src/research_runtime/benchmark/profiles/mad10k/val/mad-val.extxyz",
+      "frames": 9566,
+      "subset_counts": {
+        "MC2D": 266,
+        "MC3D": 3360,
+        "MC3D-clusters": 907,
+        "MC3D-random": 283,
+        "MC3D-rattled": 3013,
+        "MC3D-surfaces": 555,
+        "SHIFTML-molcrys": 858,
+        "SHIFTML-molfrags": 324
+      }
+    },
+    "test": {
+      "path": "/mnt/e/vscode_test/tamcae/src/research_runtime/benchmark/profiles/mad10k/test/mad-test.extxyz",
+      "frames": 9546,
+      "subset_counts": {
+        "MC2D": 268,
+        "MC3D": 3360,
+        "MC3D-clusters": 909,
+        "MC3D-random": 275,
+        "MC3D-rattled": 2992,
+        "MC3D-surfaces": 559,
+        "SHIFTML-molcrys": 858,
+        "SHIFTML-molfrags": 325
+      }
+    }
+  },
+  "selection": {
+    "method": "deterministic_stratified_subset_from_mad_train",
+    "source_train_counts": {
+      "MC2D": 2142,
+      "MC3D": 26876,
+      "MC3D-clusters": 7255,
+      "MC3D-random": 2242,
+      "MC3D-rattled": 24039,
+      "MC3D-surfaces": 4475,
+      "SHIFTML-molcrys": 6862,
+      "SHIFTML-molfrags": 2592
+    },
+    "allocated_train_counts": {
+      "MC2D": 280,
+      "MC3D": 3514,
+      "MC3D-clusters": 949,
+      "MC3D-random": 293,
+      "MC3D-rattled": 3143,
+      "MC3D-surfaces": 585,
+      "SHIFTML-molcrys": 897,
+      "SHIFTML-molfrags": 339
+    }
+  },
+  "metrics_policy": {
+    "primary": [
+      "test_force_mae_eV_per_A",
+      "test_energy_mae_meV_per_atom",
+      "failure_rate"
+    ],
+    "secondary": [
+      "val_force_mae_eV_per_A",
+      "val_energy_mae_meV_per_atom",
+      "subset_breakdown"
+    ],
+    "stress": "record unsupported unless the unit explicitly implements stress support"
+  }
+}

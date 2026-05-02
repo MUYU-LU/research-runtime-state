@@ -1,0 +1,153 @@
+{
+  "unit": "generation_023/proposal_007",
+  "source_unit": "generation_022/proposal_006",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_023_from_generation_022_proposal_006_continuation/proposal_007.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_022/proposal_006",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_022/proposal_006",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 29,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/model.py",
+          "+++ child/model/model.py",
+          "@@ -465,6 +465,14 @@",
+          "         self.charge_shell_beta_logits = nn.Parameter(torch.full((2,), -6.0))",
+          "         self.charge_scale = 0.1",
+          "         self.charge_shell_beta_cap = 0.006",
+          "+        # GEN023-M01 LES-inspired real-space tail: reuse the neutral latent",
+          "+        # charges, but feed an RMS-normalized copy into a tiny capped all-pair",
+          "+        # nonperiodic erf(1/r) tail.  The original charge remains unchanged for",
+          "+        # the source shell energy, preserving beta-zero source fallback.",
+          "+        self.les_tail_beta_logit = nn.Parameter(torch.tensor(-7.0))",
+          "+        self.les_tail_beta_cap = 0.0025",
+          "+        self.register_buffer(\"les_tail_sigma\", torch.tensor(1.0))",
+          "+        self.register_buffer(\"les_charge_rms_target\", torch.tensor(0.05))",
+          "         # Near-zero, not exactly zero, so the quadratic q_i q_j term keeps a",
+          "         # gradient path while remaining a source-near fallback at construction.",
+          "         nn.init.normal_(self.charge_head[-1].weight, mean=0.0, std=1e-4)",
+          "@@ -571,12 +579,33 @@",
+          "             * (beta_near * damped_kernel + beta_mid * coulomb_kernel)",
+          "         )",
+          " ",
+          "+        charge_rms = torch.sqrt(torch.mean(charge * charge) + 1e-8)",
+          "+        raw_tail_scale = self.les_charge_rms_target.to(charge.dtype) / charge_rms",
+          "+        # Smooth cap equivalent to min(raw_tail_scale, 1): avoids amplifying",
+          "+        # tiny near-neutral charges while keeping a differentiable path through",
+          "+        # q_tail and positions for conservative force training.",
+          "+        tail_scale = raw_tail_scale / torch.pow(1.0 + raw_tail_scale.pow(8), 0.125)",
+          "+        q_tail = charge * tail_scale",
+          "+",
+          "+        all_rij = positions[:, None, :] - positions[None, :, :]",
+          "+        all_dij = torch.linalg.norm(all_rij, dim=-1)",
+          "+        n_atoms = positions.shape[0]",
+          "+        nonself = ~torch.eye(n_atoms, device=positions.device, dtype=torch.bool)",
+          "+        sigma = self.les_tail_sigma.to(dtype=positions.dtype, device=positions.device).clamp_min(1e-6)",
+          "+        les_kernel = torch.erf(all_dij / (math.sqrt(2.0) * sigma)) / all_dij.clamp_min(1e-6)",
+          "+        les_kernel = les_kernel.masked_fill(~nonself, 0.0)",
+          "+        les_tail_beta = self.les_tail_beta_cap * torch.sigmoid(self.les_tail_beta_logit)",
+          "+        les_tail_energy = les_tail_beta * 0.5 * torch.sum(",
+          "+            q_tail[:, None] * q_tail[None, :] * les_kernel",
+          "+        )",
+          "+",
+          "         return (",
+          "             atomref",
+          "             + per_atom_energy.sum()",
+          "             + body_order_multiplier * body_order_residual.sum()",
+          "             + energy_residual_multiplier * energy_residual.sum()",
+          "             + electrostatic_pair_energy",
+          "+            + les_tail_energy",
+          "         )",
+          " ",
+          "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+        ]
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      }
+    ],
+    "changed_files": [
+      "model/model.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 4.184752491718912,
+  "Q_iso17": 3.724110900136661,
+  "Q_total": 4.0235279346651245,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.03502740478515625,
+      "mild_ood_force_mae": 0.05717969641822856,
+      "hard_ood_energy_mae": 0.0352059326171875,
+      "hard_ood_force_mae": 0.057799826178350486,
+      "mixed_force_mae": 0.05755177427430172,
+      "mixed_energy_mae": 0.035134521484375,
+      "gap_penalty": 0.01077516319749773,
+      "Q_dataset": 4.184752491718912,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.057179696136445274,
+      "best_val_energy_mae": 0.03502740478515625
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.21538182626856436,
+      "within_force_mae": 0.1418323654663002,
+      "other_energy_mae": 0.3031727013221154,
+      "other_force_mae": 0.16368955291807652,
+      "mixed_force_mae": 0.154946677937366,
+      "mixed_energy_mae": 0.26805635130069494,
+      "gap_penalty": 0.141062640016526,
+      "Q_dataset": 3.724110900136661,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "worsening",
+      "best_val_force_mae": 0.13364984095096588,
+      "best_val_energy_mae": 0.4954427083333333
+    }
+  },
+  "created_at_utc": "2026-05-01T22:08:39.006457+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.01886801168999952,
+  "outcome_class": "neutral_variance",
+  "outcome_reasons": [
+    "abs(delta_Q)=0.018868 within margin=0.0615747"
+  ]
+}

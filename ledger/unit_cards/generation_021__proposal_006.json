@@ -1,0 +1,157 @@
+{
+  "unit": "generation_021/proposal_006",
+  "source_unit": "generation_020/proposal_003",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_021_from_generation_020_proposal_003_continuation/proposal_006.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_020/proposal_003",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_020/proposal_003",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 17,
+        "removed_lines": 1,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/model.py",
+          "+++ child/model/model.py",
+          "@@ -443,6 +443,15 @@",
+          "             nn.Linear(hidden_dim, 1),",
+          "         )",
+          "         self.final_tp_invariant_mixer = TPInvariantPaiNNMixing(hidden_dim=hidden_dim)",
+          "+        self.energy_residual_head = nn.Sequential(",
+          "+            nn.LayerNorm(hidden_dim * 2),",
+          "+            nn.Linear(hidden_dim * 2, hidden_dim // 2),",
+          "+            nn.SiLU(),",
+          "+            nn.Linear(hidden_dim // 2, 1),",
+          "+        )",
+          "+        self.energy_residual_scale_logit = nn.Parameter(torch.tensor(0.0))",
+          "+        nn.init.zeros_(self.energy_residual_head[-1].weight)",
+          "+        nn.init.zeros_(self.energy_residual_head[-1].bias)",
+          " ",
+          "     def _rbf(self, distances: torch.Tensor) -> torch.Tensor:",
+          "         diff = distances.unsqueeze(-1) - self.rbf_centers",
+          "@@ -520,9 +529,16 @@",
+          "         scalar_gate = self.readout_scalar_gate(scalar_vector_input)",
+          "         scalar_state = self.readout_norm(scalar_state + torch.sigmoid(scalar_gate) * scalar_update)",
+          "         per_atom_energy = self.readout(scalar_state).squeeze(-1)",
+          "+        energy_residual = self.energy_residual_head(torch.cat([scalar_state, vector_norm], dim=-1)).squeeze(-1)",
+          "+        energy_residual_scale = 0.01 * torch.sigmoid(self.energy_residual_scale_logit)",
+          "         body_order_residual = self.body_order_readout(body_order_descriptor).squeeze(-1)",
+          "         body_order_multiplier = 0.05 * torch.sigmoid(self.body_order_scale)",
+          "-        return atomref + per_atom_energy.sum() + body_order_multiplier * body_order_residual.sum()",
+          "+        return (",
+          "+            atomref",
+          "+            + per_atom_energy.sum()",
+          "+            + body_order_multiplier * body_order_residual.sum()",
+          "+            + energy_residual_scale * energy_residual.sum()",
+          "+        )",
+          " ",
+          "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:",
+          "         positions = batch[\"positions\"].clone().detach().requires_grad_(True)"
+        ]
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 6,
+        "removed_lines": 2,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/train.py",
+          "+++ child/model/train.py",
+          "@@ -198,8 +198,12 @@",
+          "     history = []",
+          "     for epoch in range(1, epochs + 1):",
+          "         warmup_ratio = min(1.0, epoch / energy_warmup_epochs)",
+          "-        epoch_energy_weight = energy_weight * (0.6 + 0.4 * warmup_ratio)",
+          "-        epoch_force_weight = force_weight * (1.1 - 0.1 * warmup_ratio)",
+          "+        if epoch <= energy_warmup_epochs:",
+          "+            epoch_energy_weight = energy_weight * (0.6 + 0.4 * warmup_ratio)",
+          "+            epoch_force_weight = force_weight * (1.1 - 0.1 * warmup_ratio)",
+          "+        else:",
+          "+            epoch_energy_weight = energy_weight * 1.2",
+          "+            epoch_force_weight = force_weight * 0.95",
+          " ",
+          "         model.train()",
+          "         train_metrics = run_epoch("
+        ]
+      }
+    ],
+    "changed_files": [
+      "model/model.py",
+      "model/train.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 4.207313746832657,
+  "Q_iso17": 3.7306219268643956,
+  "Q_total": 4.040471609843766,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.02891485595703125,
+      "mild_ood_force_mae": 0.05926306125050178,
+      "hard_ood_energy_mae": 0.029430908203125,
+      "hard_ood_force_mae": 0.05954202297067968,
+      "mixed_force_mae": 0.05943043828260852,
+      "mixed_energy_mae": 0.0292244873046875,
+      "gap_penalty": 0.0046939199547321,
+      "Q_dataset": 4.207313746832657,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.05926306081248913,
+      "best_val_energy_mae": 0.028914794921875
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.21088335396039604,
+      "within_force_mae": 0.14236560018714703,
+      "other_energy_mae": 0.29083420973557694,
+      "other_force_mae": 0.1641349866785682,
+      "mixed_force_mae": 0.15542723208199974,
+      "mixed_energy_mae": 0.25885386742550454,
+      "gap_penalty": 0.14006159795598822,
+      "Q_dataset": 3.7306219268643956,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "worsening",
+      "best_val_force_mae": 0.14192800472180048,
+      "best_val_energy_mae": 0.2763671875
+    }
+  },
+  "created_at_utc": "2026-05-01T08:56:30.403915+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.007368976885716805,
+  "outcome_class": "neutral_variance",
+  "outcome_reasons": [
+    "abs(delta_Q)=0.00736898 within margin=0.03"
+  ]
+}

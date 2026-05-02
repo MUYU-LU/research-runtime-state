@@ -1,0 +1,48 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_020/proposal_003",
+  "target_generation": "generation_021",
+  "mode": "balanced",
+  "selection_intent": "Explain why late source-recoverable PaiNN vector-norm mixing in generation_020/proposal_003 produced only neutral-variance gains, and find bounded next-generation mechanisms that target energy/gap calibration without breaking force/runtime behavior under fixed benchmark semantics.",
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP力场基准 - Forces Are Not Enough分子模拟评测.pdf",
+      "why_selected": "The completed child improved Q only within margin; this source is expected to discuss why force metrics alone are insufficient and why energy-landscape/dynamics-oriented diagnostics should constrain MLIP changes.",
+      "expected_evidence": ["evaluation rule", "energy/force tradeoff", "benchmark failure mode"],
+      "pages": 8,
+      "max_chars": 24000
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP早期架构 - SchNet连续滤波卷积分子势.pdf",
+      "why_selected": "The source unit already uses local radial/message features plus tiny late invariant residuals; SchNet is expected to provide explicit atomwise energy decomposition and continuous-filter interaction equations that can be mapped to bounded energy calibration/interaction-head edits.",
+      "expected_evidence": ["atomwise energy equation", "continuous-filter interaction", "force-from-energy training implication"],
+      "pages": 8,
+      "max_chars": 24000
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "atomistic-machine-learning/schnetpack",
+      "why_selected": "Expected to contain concrete Atomwise/Forces output modules and train/loss wiring for atomistic energy plus force tasks, enabling a code-trace mapping to model/model.py energy_head/aggregation and model/train.py energy_weight/force_weight.",
+      "expected_evidence": ["repo file", "Atomwise or Forces class/function", "training pattern for energy/force outputs"],
+      "max_files": 32,
+      "max_file_chars": 24000
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 2,
+    "min_new_sources": 1,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 1,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 1,
+    "max_pdf_attempts": 6,
+    "max_repo_attempts": 4,
+    "max_external_source_attempts": 10,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 1
+  }
+}

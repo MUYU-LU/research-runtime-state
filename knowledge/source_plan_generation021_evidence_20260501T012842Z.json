@@ -1,0 +1,48 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_020/proposal_003",
+  "target_generation": "generation_021",
+  "mode": "balanced",
+  "selection_intent": "Create fresh proposal-time evidence for why generation_020/proposal_003's late source-recoverable PaiNN vector-norm/dot mixer only produced neutral-variance gains, and identify bounded next-generation mechanisms that improve energy/gap calibration without violating fixed benchmark semantics or the force-from-energy contract.",
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP能量守恒 - ESEN平滑表达原子间势.pdf",
+      "why_selected": "Expected to give explicit desiderata linking conservative forces, smooth bounded derivatives, cutoff/envelope choices, and downstream property/gap behavior; directly relevant because the current child added capacity but not a smoother energy landscape.",
+      "expected_evidence": ["conservative force equation", "smooth derivative/cutoff rule", "energy-conservation diagnostic", "bounded PES implication"],
+      "pages": 8,
+      "max_chars": 26000
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP分子力场 - 有机体系物理嵌入机器学习力场.pdf",
+      "why_selected": "Expected to provide physics-embedded data/model/correction strategies and a concrete top-down correction concept explaining why low force error or small architecture changes can leave macroscopic/energy calibration errors; useful as a guardrail against simply increasing PaiNN mixer capacity.",
+      "expected_evidence": ["physics-embedded correction algorithm", "sampling/correction rule", "intramolecular vs intermolecular scale diagnosis"],
+      "pages": 8,
+      "max_chars": 24000
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "facebookresearch/fairchem",
+      "why_selected": "Expected to contain concrete code patterns for conservative MLIP training/evaluation and smooth radial/envelope modules; this can be mapped to current model/model.py _cutoff_weight/_rbf and model/train.py energy/force loss weighting insertion points.",
+      "expected_evidence": ["repo file", "PolynomialEnvelope or radial basis class", "conserving energy/force config", "training pattern"],
+      "max_files": 110,
+      "max_file_chars": 16000
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 2,
+    "min_new_sources": 1,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 1,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 1,
+    "max_pdf_attempts": 6,
+    "max_repo_attempts": 4,
+    "max_external_source_attempts": 10,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 1
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "unit": "generation_019/proposal_003",
+  "source_unit": "generation_018/proposal_005",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_019_from_generation_018_proposal_005_continuation/proposal_003.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_018/proposal_005",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_018/proposal_005",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 17,
+        "removed_lines": 2,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/model.py",
+          "+++ child/model/model.py",
+          "@@ -131,8 +131,15 @@",
+          "         )",
+          "         self.scalar_out = nn.Linear(hidden_dim, hidden_dim)",
+          "         self.vector_out = nn.Linear(hidden_dim, hidden_dim)",
+          "+        # Source-recoverable TP scale calibration.  The scalar base logits",
+          "+        # preserve the generation_018/proposal_005 behavior at init, while",
+          "+        # per-channel offsets let training separate scalar and vector TP",
+          "+        # residual magnitudes without changing message form or adding a new",
+          "+        # branch.  The 0.1 sigmoid cap remains the hard safety bound.",
+          "         self.scalar_residual_logit = nn.Parameter(torch.tensor(-5.0))",
+          "         self.vector_residual_logit = nn.Parameter(torch.tensor(-5.0))",
+          "+        self.scalar_channel_scale_logit = nn.Parameter(torch.zeros(hidden_dim))",
+          "+        self.vector_channel_scale_logit = nn.Parameter(torch.zeros(hidden_dim))",
+          " ",
+          "         nn.init.normal_(self.scalar_out.weight, mean=0.0, std=1e-3)",
+          "         nn.init.zeros_(self.scalar_out.bias)",
+          "@@ -143,8 +150,16 @@",
+          "         return linear(vector.transpose(1, 2)).transpose(1, 2)",
+          " ",
+          "     def residual_scales(self) -> tuple[torch.Tensor, torch.Tensor]:",
+          "-        # Near-zero but trainable source-preserving residual scales.",
+          "-        return 0.1 * torch.sigmoid(self.scalar_residual_logit), 0.1 * torch.sigmoid(self.vector_residual_logit)",
+          "+        # Near-zero, bounded, per-channel source-preserving residual scales.",
+          "+        # scalar_scale broadcasts over [N, H]; vector_scale broadcasts over",
+          "+        # [N, H, 3].  Zero channel offsets exactly recover the old scalar",
+          "+        # constants, so the proposal is a calibration rather than a new TP",
+          "+        # message path.",
+          "+        scalar_logits = self.scalar_residual_logit + self.scalar_channel_scale_logit",
+          "+        vector_logits = self.vector_residual_logit + self.vector_channel_scale_logit",
+          "+        scalar_scale = 0.1 * torch.sigmoid(scalar_logits).view(1, self.hidden_dim)",
+          "+        vector_scale = 0.1 * torch.sigmoid(vector_logits).view(1, self.hidden_dim, 1)",
+          "+        return scalar_scale, vector_scale",
+          " ",
+          "     def forward(",
+          "         self,"
+        ]
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      }
+    ],
+    "changed_files": [
+      "model/model.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": [
+    "Restored non-control runnable unit and implemented TP scale calibration per proposal_003."
+  ],
+  "Q_rmd17": 4.166948386496077,
+  "Q_iso17": 3.764324633467114,
+  "Q_total": 4.02603007293594,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.031201171875,
+      "mild_ood_force_mae": 0.06056186215620255,
+      "hard_ood_energy_mae": 0.0321478271484375,
+      "hard_ood_force_mae": 0.06120494175184285,
+      "mixed_force_mae": 0.06094770991358673,
+      "mixed_energy_mae": 0.031769165039062505,
+      "gap_penalty": 0.010551333209098793,
+      "Q_dataset": 4.166948386496077,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.06056186202011304,
+      "best_val_energy_mae": 0.0312015380859375
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.21091864557549506,
+      "within_force_mae": 0.13674207408681954,
+      "other_energy_mae": 0.2799560546875,
+      "other_force_mae": 0.158450829913983,
+      "mixed_force_mae": 0.14976732758311762,
+      "mixed_energy_mae": 0.25234109104269803,
+      "gap_penalty": 0.14494987776937268,
+      "Q_dataset": 3.764324633467114,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.14994184424479803,
+      "best_val_energy_mae": 0.5504557291666666
+    }
+  },
+  "created_at_utc": "2026-04-30T18:30:59.457584+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.023958286259071038,
+  "outcome_class": "neutral_variance",
+  "outcome_reasons": [
+    "abs(delta_Q)=0.0239583 within margin=0.03"
+  ]
+}

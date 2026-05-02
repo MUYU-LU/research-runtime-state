@@ -1,0 +1,80 @@
+{
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "exploit",
+      "selection_rationale": "Primary exploitation of the strong GEN020-M01 evidence: implements full bounded intra-layer PaiNN-style vector norm/dot feedback into scalar and vector channels, directly targeting the source unit's ISO17 energy/gap weakness while retaining source recovery through zero-start gates."
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "exploit",
+      "selection_rationale": "Lower-risk scalar-only ablation of the same M01 mechanism; isolates whether invariant vector contractions improve scalar energy channels without disturbing vector_state, protecting the already-strong RMD17 force behavior."
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "exploit",
+      "selection_rationale": "Late-layer placement ablation for the PaiNN mixer; tests whether the source only needs a final low-disruption vector-conditioned scalar correction rather than recurrent feedback throughout message passing."
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md",
+      "role": "jump",
+      "selection_rationale": "Selects a shared recurrent PaiNN mixer as a mechanism-form jump: it keeps the evidence-backed intra-layer feedback pathway but changes parameter sharing and recurrence to probe stability and variance with fewer free parameters."
+    },
+    {
+      "id": "proposal_005",
+      "path": "proposal_005.md",
+      "role": "jump",
+      "selection_rationale": "Tests a bounded capacity/mechanism interaction by pairing the M01 mixer with slightly finer radial resolution; useful because generation_019 scale calibration was neutral, so the next bottleneck may be distance resolution plus vector-conditioned feedback."
+    },
+    {
+      "id": "proposal_006",
+      "path": "proposal_006.md",
+      "role": "jump",
+      "selection_rationale": "Selects one objective-interaction jump, not a pure training-only diagnostic: keeps the M01 mechanism while testing whether a slightly less force-dominated late objective is needed to convert vector-norm feedback into ISO17 energy/gap gains."
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md",
+      "role": "backward-simplify",
+      "selection_rationale": "Backward-simplify diagnostic: removes or freezes the source's body-order side branch to test whether it dilutes the successful TP signal and whether future PaiNN-mixer variants should avoid that complexity."
+    },
+    {
+      "id": "proposal_008",
+      "path": "proposal_008.md",
+      "role": "control",
+      "selection_rationale": "Exact source replicate control is required to calibrate generation_020 variance around generation_019/proposal_003 before attributing small Q_total, energy, force, or gap changes to the selected edits."
+    }
+  ],
+  "source_unit": "generation_019/proposal_003",
+  "target_generation": "generation_020",
+  "selection_policy": "Prioritize the new strong PaiNN intra-layer vector norm/dot mixing evidence while preserving interpretability and benchmark semantics. Select three clean M01 exploit ablations, three broader jump variants spanning shared recurrence, radial-resolution interaction, and objective interaction, one backward-simplify diagnostic for source branch complexity, and one exact source replicate control. Defer the training-only diagnostic and weaker readout-only wildcard so the batch remains mechanism-centric and avoids excessive objective/readout confounding.",
+  "selected_role_counts": {
+    "exploit": 3,
+    "jump": 3,
+    "backward-simplify": 1,
+    "control": 1
+  },
+  "selected_mechanism_axes": [
+    "GEN020-M01 full intra-layer PaiNN vector norm/dot scalar-vector feedback",
+    "Scalar-only and late-layer ablations for M01 placement and feedback-path isolation",
+    "Shared recurrent M01 mixer parameterization",
+    "Radial-resolution plus M01 capacity interaction",
+    "Late objective schedule plus M01 energy/gap interaction",
+    "Body-order side-branch backward simplification",
+    "Exact source replicate control"
+  ],
+  "omitted_proposals": [
+    {
+      "id": "proposal_009",
+      "reason": "Training-only ISO17 energy-tail diagnostic is useful but less mechanism-centric and would confound interpretation against the new PaiNN evidence; proposal_006 already covers one bounded objective interaction while retaining M01."
+    },
+    {
+      "id": "proposal_010",
+      "reason": "Readout-only invariant adapter is a weaker diagnosis-only variant that overlaps with selected late-layer proposal_003; defer it unless the selected M01 placement ablations indicate recurrent feedback is unnecessary."
+    }
+  ]
+}

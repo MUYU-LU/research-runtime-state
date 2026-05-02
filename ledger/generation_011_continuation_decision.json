@@ -1,0 +1,96 @@
+{
+  "generated_at_utc": "2026-04-21T17:22:52.919781+00:00",
+  "completed_generation": "generation_010",
+  "target_generation": "generation_011",
+  "selected_continuation_source": "generation_010/proposal_007",
+  "next_to_expand_unit": "generation_010/proposal_007",
+  "best_known_unit": "generation_004/proposal_001",
+  "best_known_Q_total": 3.1332622612787073,
+  "selection_rule": "best-known unit is tracked separately from next-to-expand; continuation prefers the best completed-generation child and keeps the old parent only as fallback under margin/streak guards unless --source-unit is provided",
+  "selected_Q_rmd17": 2.644823681825324,
+  "selected_Q_iso17": 3.016007265905866,
+  "selected_Q_total": 2.774737936253514,
+  "parent_margin": 0.15,
+  "max_parent_streak": 3,
+  "selection_mode": "streak_forced_child",
+  "parent_source_unit": "generation_004/proposal_001",
+  "parent_source_streak": 6,
+  "best_child_unit": "generation_010/proposal_007",
+  "best_child_Q_total": 2.774737936253514,
+  "best_child_gap_to_parent": 0.3585243250251935,
+  "fallback_to_parent_reason": null,
+  "candidates": [
+    {
+      "unit": "generation_004/proposal_001",
+      "run_state": "terminal_success",
+      "Q_rmd17": 3.0291108938796594,
+      "Q_iso17": 3.32668622930551,
+      "Q_total": 3.1332622612787073,
+      "candidate_origin": "parent_source"
+    },
+    {
+      "unit": "generation_010/proposal_007",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.644823681825324,
+      "Q_iso17": 3.016007265905866,
+      "Q_total": 2.774737936253514,
+      "candidate_origin": "completed_generation"
+    },
+    {
+      "unit": "generation_010/proposal_002",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.484920530862871,
+      "Q_iso17": 3.0136448225270223,
+      "Q_total": 2.6699740329453236,
+      "candidate_origin": "completed_generation"
+    },
+    {
+      "unit": "generation_010/proposal_005",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.255853429309394,
+      "Q_iso17": 3.114684023530406,
+      "Q_total": 2.556444137286748,
+      "candidate_origin": "completed_generation"
+    },
+    {
+      "unit": "generation_010/proposal_010",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.341101384094837,
+      "Q_iso17": 2.9311455907282777,
+      "Q_total": 2.547616856416541,
+      "candidate_origin": "completed_generation"
+    },
+    {
+      "unit": "generation_010/proposal_004",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.216844611048095,
+      "Q_iso17": 2.7420563838206444,
+      "Q_total": 2.400668731518487,
+      "candidate_origin": "completed_generation"
+    },
+    {
+      "unit": "generation_010/proposal_003",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.0632212031994657,
+      "Q_iso17": 2.899177617391987,
+      "Q_total": 2.3558059481668483,
+      "candidate_origin": "completed_generation"
+    },
+    {
+      "unit": "generation_010/proposal_008",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.174996527186686,
+      "Q_iso17": 2.595454711133995,
+      "Q_total": 2.3221568915682442,
+      "candidate_origin": "completed_generation"
+    },
+    {
+      "unit": "generation_010/proposal_001",
+      "run_state": "terminal_success",
+      "Q_rmd17": 2.0483090925536316,
+      "Q_iso17": 2.8303570032062506,
+      "Q_total": 2.3220258612820484,
+      "candidate_origin": "completed_generation"
+    }
+  ]
+}

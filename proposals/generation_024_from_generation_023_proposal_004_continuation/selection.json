@@ -1,0 +1,81 @@
+{
+  "source_unit": "generation_023/proposal_004",
+  "target_generation": "generation_024",
+  "completed_generation": "generation_023",
+  "selection_policy": "Select a compact, interpretable 8-unit batch centered on the active evidence axis GEN024-M01-adaptive-sog-realspace-latent-tail after generation_023 produced no child that beat parent but identified generation_023/proposal_004 as the best neutral-variance continuation source. Prioritize three low-to-medium-risk exploit probes of SOG decay flexibility, three broader jump variants that test trainable/signed/objective-coupled SOG mechanisms, one backward-simplify diagnostic, and one exact source replicate control for variance calibration. Defer wildcard radial-resolution and pure objective-only changes so generation_024 remains mechanism-centric and attribution-friendly.",
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "exploit",
+      "selection_rationale": "Primary evidence-axis exploit: replaces the rigid two-sigma LES tail with a bounded three-width real-space SOG bank, directly testing whether adaptive Gaussian decay improves transfer while preserving source fallback."
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "exploit",
+      "selection_rationale": "Lower-risk additive SOG residual companion to proposal_001; keeps the existing proposal_004 LES tail intact while isolating whether SOG flexibility adds signal without destructive replacement."
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "exploit",
+      "selection_rationale": "Normalized fixed-width SOG mixture constrains total tail budget and tests decay-shape redistribution with minimal parameter freedom, useful for separating mechanism benefit from amplitude instability."
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md",
+      "role": "jump",
+      "selection_rationale": "Most direct broader SOG mechanism jump: learns bounded positive Gaussian bandwidths from source-near initialization, testing whether fixed LES/SOG widths are the current bottleneck."
+    },
+    {
+      "id": "proposal_005",
+      "path": "proposal_005.md",
+      "role": "jump",
+      "selection_rationale": "Signed SOG amplitude contrast tests a more expressive residual decay family than positive-only tails; selected as a controlled high-risk/high-information jump under a strict total scale cap."
+    },
+    {
+      "id": "proposal_006",
+      "path": "proposal_006.md",
+      "role": "jump",
+      "selection_rationale": "Objective-coupled SOG branch probes whether the long-range mechanism needs slightly stronger energy supervision to affect ISO17 energy/gap, while keeping the architectural intervention bounded."
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md",
+      "role": "backward-simplify",
+      "selection_rationale": "Backward-simplify diagnostic: collapses the two-sigma LES idea toward one long Gaussian SOG channel, testing whether complexity beyond any smooth latent-charge tail is actually needed."
+    },
+    {
+      "id": "proposal_008",
+      "path": "proposal_008.md",
+      "role": "control",
+      "selection_rationale": "Exact source replicate control is required to calibrate generation_024 variance before attributing small Q_total, energy, force, or gap deltas to SOG mechanism edits."
+    }
+  ],
+  "selected_role_counts": {
+    "exploit": 3,
+    "jump": 3,
+    "backward-simplify": 1,
+    "control": 1
+  },
+  "selected_mechanism_axes": [
+    "GEN024-M01 adaptive SOG real-space latent-charge tail",
+    "Replacement versus additive residual SOG tail attribution",
+    "Normalized fixed-width versus trainable-bandwidth SOG decay",
+    "Signed contrastive SOG residual expressivity",
+    "Energy-supervision interaction with SOG long-range branch",
+    "Single-width backward simplification",
+    "Exact source replicate variance calibration"
+  ],
+  "omitted_proposals": [
+    {
+      "id": "proposal_009",
+      "reason": "Wildcard radial-resolution scaling is useful but mechanism-distinct from the active SOG evidence axis; defer to avoid confounding local geometric resolution with long-range-tail attribution in this batch."
+    },
+    {
+      "id": "proposal_010",
+      "reason": "Pure energy-weight stabilization is an objective-only wildcard and overlaps with the selected proposal_006 objective-coupled test while lacking a direct SOG mechanism edit."
+    }
+  ]
+}

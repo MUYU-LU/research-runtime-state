@@ -1,0 +1,213 @@
+{
+  "unit": "generation_017/proposal_005",
+  "source_unit": "generation_016/proposal_002",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_017_from_generation_016_proposal_002_continuation/proposal_005.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_016/proposal_002",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_016/proposal_002",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 56,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/model.py",
+          "+++ child/model/model.py",
+          "@@ -98,6 +98,59 @@",
+          "         delta_vector = self_mix.unsqueeze(-1) * self_vector + agg_mix.unsqueeze(-1) * mixed_agg_vector",
+          "         new_vector = vector_state + self.vector_residual_scale * delta_vector",
+          "         return new_scalar, new_vector",
+          "+",
+          "+",
+          "+class IntraatomicPainnMixing(nn.Module):",
+          "+    \"\"\"One bounded PaiNN-style scalar/vector mixing update per atom.",
+          "+",
+          "+    This is intentionally local: it does not add edge loops or replace the",
+          "+    existing interaction stack.  It forms rotationally invariant scalar",
+          "+    contractions from the learned vector state, updates the scalar channels,",
+          "+    and optionally nudges the vector channels through a gated residual.",
+          "+    \"\"\"",
+          "+",
+          "+    def __init__(self, hidden_dim: int, eps: float = 1e-8):",
+          "+        super().__init__()",
+          "+        self.hidden_dim = hidden_dim",
+          "+        self.eps = eps",
+          "+",
+          "+        self.u_proj = nn.Linear(hidden_dim, hidden_dim, bias=False)",
+          "+        self.v_proj = nn.Linear(hidden_dim, hidden_dim, bias=False)",
+          "+        self.w_proj = nn.Linear(hidden_dim, hidden_dim, bias=False)",
+          "+        self.context_mlp = nn.Sequential(",
+          "+            nn.LayerNorm(hidden_dim * 2),",
+          "+            nn.Linear(hidden_dim * 2, hidden_dim),",
+          "+            nn.SiLU(),",
+          "+            nn.Linear(hidden_dim, hidden_dim * 3),",
+          "+        )",
+          "+        self.scalar_residual_scale = nn.Parameter(torch.tensor(-4.0))",
+          "+        self.vector_residual_scale = nn.Parameter(torch.tensor(-4.0))",
+          "+",
+          "+        # Exact source fallback at initialization; the final layer learns the",
+          "+        # PaiNN-like residual while preserving the inherited model at step 0.",
+          "+        nn.init.zeros_(self.context_mlp[-1].weight)",
+          "+        nn.init.zeros_(self.context_mlp[-1].bias)",
+          "+",
+          "+    def _apply_linear_to_vector(self, linear: nn.Linear, vector: torch.Tensor) -> torch.Tensor:",
+          "+        return linear(vector.transpose(1, 2)).transpose(1, 2)",
+          "+",
+          "+    def forward(self, scalar_state: torch.Tensor, vector_state: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:",
+          "+        u_vec = self._apply_linear_to_vector(self.u_proj, vector_state)",
+          "+        v_vec = self._apply_linear_to_vector(self.v_proj, vector_state)",
+          "+        w_vec = self._apply_linear_to_vector(self.w_proj, vector_state)",
+          "+",
+          "+        v_norm = torch.sqrt(torch.sum(v_vec * v_vec, dim=-1) + self.eps)",
+          "+        uv_dot = torch.sum(u_vec * v_vec, dim=-1)",
+          "+        context = torch.cat([scalar_state, v_norm], dim=-1)",
+          "+        delta_scalar_base, delta_vector_gate, delta_scalar_dot = self.context_mlp(context).chunk(3, dim=-1)",
+          "+",
+          "+        scalar_scale = 0.1 * torch.sigmoid(self.scalar_residual_scale)",
+          "+        vector_scale = 0.1 * torch.sigmoid(self.vector_residual_scale)",
+          "+        delta_scalar = delta_scalar_base + delta_scalar_dot * uv_dot",
+          "+",
+          "+        mixed_scalar = scalar_state + scalar_scale * delta_scalar",
+          "+        mixed_vector = vector_state + vector_scale * delta_vector_gate.unsqueeze(-1) * w_vec",
+          "+        return mixed_scalar, mixed_vector",
+          " ",
+          " ",
+          " class BodyOrderMessageBranch(nn.Module):",
+          "@@ -258,6 +311,7 @@",
+          "         self.interactions = nn.ModuleList(",
+          "             [BalancedInteractionBlock(hidden_dim=hidden_dim, num_rbf=num_rbf) for _ in range(num_interactions)]",
+          "         )",
+          "+        self.post_interaction_mixing = IntraatomicPainnMixing(hidden_dim=hidden_dim)",
+          "         self.vector_norm_layer = nn.LayerNorm(hidden_dim)",
+          "         self.readout_scalar_update = nn.Sequential(",
+          "             nn.Linear(hidden_dim * 2, hidden_dim),",
+          "@@ -331,6 +385,8 @@",
+          "                 cutoff_weight=cutoff_weight,",
+          "             )",
+          " ",
+          "+        scalar_state, vector_state = self.post_interaction_mixing(scalar_state, vector_state)",
+          "+",
+          "         vector_norm = self.vector_norm_layer(torch.linalg.norm(vector_state, dim=-1))",
+          "         scalar_vector_input = torch.cat([scalar_state, vector_norm], dim=-1)",
+          "         scalar_update = self.readout_scalar_update(scalar_vector_input)"
+        ]
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      }
+    ],
+    "changed_files": [
+      "model/model.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 4.0114670808122215,
+  "Q_iso17": 3.663388972804072,
+  "Q_total": 3.889639743009369,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.05103289794921875,
+      "mild_ood_force_mae": 0.06385262357117608,
+      "hard_ood_energy_mae": 0.0510220947265625,
+      "hard_ood_force_mae": 0.06421948519174475,
+      "mixed_force_mae": 0.06407274054351728,
+      "mixed_energy_mae": 0.051026416015625,
+      "gap_penalty": 0.005725705150910207,
+      "Q_dataset": 4.0114670808122215,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.0638526238478953,
+      "best_val_energy_mae": 0.05103289794921875
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.22670124922648516,
+      "within_force_mae": 0.1577326936075593,
+      "other_energy_mae": 0.2951983173076923,
+      "other_force_mae": 0.17615188962565018,
+      "mixed_force_mae": 0.1687842112184138,
+      "mixed_energy_mae": 0.2677994900752094,
+      "gap_penalty": 0.10912866721962845,
+      "Q_dataset": 3.663388972804072,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "worsening",
+      "best_val_force_mae": 0.16957286496957144,
+      "best_val_energy_mae": 0.050455729166666664
+    }
+  },
+  "created_at_utc": "2026-04-30T00:45:18.666483+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.05290837377794366,
+  "component_improvements_vs_parent": [
+    {
+      "dataset": "iso17",
+      "metric": "mixed_force_mae",
+      "parent": 0.17568934841089728,
+      "child": 0.1687842112184138,
+      "relative_improvement": 0.03930310661938332
+    },
+    {
+      "dataset": "iso17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.3058581381200019,
+      "child": 0.2677994900752094,
+      "relative_improvement": 0.12443235376611217
+    },
+    {
+      "dataset": "iso17",
+      "metric": "gap_penalty",
+      "parent": 0.11346597420504244,
+      "child": 0.10912866721962845,
+      "relative_improvement": 0.038225617995189566
+    }
+  ],
+  "component_regressions_vs_parent": [
+    {
+      "dataset": "rmd17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.032782373046874994,
+      "child": 0.051026416015625,
+      "relative_regression": 0.5565198999676789
+    }
+  ],
+  "outcome_class": "benchmark_tradeoff",
+  "outcome_reasons": [
+    "some component metrics improved but other tracked metrics regressed strongly"
+  ]
+}

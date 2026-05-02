@@ -1,0 +1,138 @@
+{
+  "unit": "generation_021/proposal_004",
+  "source_unit": "generation_020/proposal_003",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_021_from_generation_020_proposal_003_continuation/proposal_004.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_020/proposal_003",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_020/proposal_003",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 15,
+        "removed_lines": 3,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/train.py",
+          "+++ child/model/train.py",
+          "@@ -19,6 +19,9 @@",
+          " TRAIN_WEIGHT_DECAY = 1e-05",
+          " TRAIN_ENERGY_WEIGHT = 1.0",
+          " TRAIN_FORCE_WEIGHT = 20.0",
+          "+TRAIN_LATE_ENERGY_WEIGHT_MULTIPLIER = 1.25",
+          "+TRAIN_LATE_FORCE_WEIGHT_MULTIPLIER = 0.9",
+          "+TRAIN_LATE_FORCE_WEIGHT_FLOOR = 18.0",
+          " # END MLIP code-level defaults",
+          " ",
+          " ",
+          "@@ -197,9 +200,18 @@",
+          " ",
+          "     history = []",
+          "     for epoch in range(1, epochs + 1):",
+          "-        warmup_ratio = min(1.0, epoch / energy_warmup_epochs)",
+          "-        epoch_energy_weight = energy_weight * (0.6 + 0.4 * warmup_ratio)",
+          "-        epoch_force_weight = force_weight * (1.1 - 0.1 * warmup_ratio)",
+          "+        if epoch <= energy_warmup_epochs:",
+          "+            warmup_ratio = min(1.0, epoch / energy_warmup_epochs)",
+          "+            epoch_energy_weight = energy_weight * (0.6 + 0.4 * warmup_ratio)",
+          "+            epoch_force_weight = force_weight * (1.1 - 0.1 * warmup_ratio)",
+          "+        else:",
+          "+            # GEN021 proposal_004: mild late energy/force rebalance while keeping",
+          "+            # the force objective dominant enough for stable force MAE.",
+          "+            epoch_energy_weight = energy_weight * TRAIN_LATE_ENERGY_WEIGHT_MULTIPLIER",
+          "+            epoch_force_weight = max(",
+          "+                TRAIN_LATE_FORCE_WEIGHT_FLOOR,",
+          "+                force_weight * TRAIN_LATE_FORCE_WEIGHT_MULTIPLIER,",
+          "+            )",
+          " ",
+          "         model.train()",
+          "         train_metrics = run_epoch("
+        ]
+      }
+    ],
+    "changed_files": [
+      "model/train.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": [
+    "Corrected mistaken exact-control materialization: restored as non-control runnable unit and marked train.py implementation from research_context/proposal.md."
+  ],
+  "Q_rmd17": 4.185478519468585,
+  "Q_iso17": 3.7604672250305966,
+  "Q_total": 4.036724566415289,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.0292081298828125,
+      "mild_ood_force_mae": 0.060526520771556534,
+      "hard_ood_energy_mae": 0.03007037353515625,
+      "hard_ood_force_mae": 0.06100645570032066,
+      "mixed_force_mae": 0.060814481728815005,
+      "mixed_energy_mae": 0.02972547607421875,
+      "gap_penalty": 0.007891786875638683,
+      "Q_dataset": 4.185478519468585,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.06052652070764452,
+      "best_val_energy_mae": 0.0292081298828125
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.20712310488861385,
+      "within_force_mae": 0.14029840404112445,
+      "other_energy_mae": 0.2707080078125,
+      "other_force_mae": 0.16022889693769124,
+      "mixed_force_mae": 0.15225669977906453,
+      "mixed_energy_mae": 0.24527404664294553,
+      "gap_penalty": 0.13090059698756423,
+      "Q_dataset": 3.7604672250305966,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.15282916525999704,
+      "best_val_energy_mae": 0.5374348958333334
+    }
+  },
+  "created_at_utc": "2026-05-01T08:56:30.402200+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.011116020314193342,
+  "outcome_class": "neutral_variance",
+  "outcome_reasons": [
+    "abs(delta_Q)=0.011116 within margin=0.03"
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "exploit"
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "exploit"
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "exploit"
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md",
+      "role": "jump"
+    },
+    {
+      "id": "proposal_005",
+      "path": "proposal_005.md",
+      "role": "jump"
+    },
+    {
+      "id": "proposal_006",
+      "path": "proposal_006.md",
+      "role": "jump"
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md",
+      "role": "backward-simplify"
+    },
+    {
+      "id": "proposal_008",
+      "path": "proposal_008.md",
+      "role": "control"
+    }
+  ],
+  "rejected_proposals": [
+    {
+      "id": "proposal_009",
+      "path": "proposal_009.md"
+    },
+    {
+      "id": "proposal_010",
+      "path": "proposal_010.md"
+    }
+  ],
+  "source_unit": "generation_010/proposal_007",
+  "target_generation": "generation_011",
+  "selection_summary": {
+    "rationale": [
+      "Preserve the strongest exploit line around the simplified residual scalar path introduced by generation_010/proposal_007.",
+      "Keep three bounded jump diagnostics plus a backward-simplify anchor and a control to measure whether any added late helper or tiny adaptive scalar mix outperforms the simplified baseline.",
+      "Drop the two wildcard proposals this round to keep the slate tighter and fully policy-compliant while retaining exploit, jump, backward-simplify, and control coverage."
+    ],
+    "policy_checks": {
+      "selected_count": 8,
+      "exploit_count": 3,
+      "jump_count": 3,
+      "control_count": 1
+    }
+  }
+}

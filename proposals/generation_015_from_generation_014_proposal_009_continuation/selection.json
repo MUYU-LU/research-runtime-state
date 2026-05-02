@@ -1,0 +1,64 @@
+{
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "exploit",
+      "selection_rationale": "Strongest direct exploit of GEN015-M01: per-channel damped vector-norm gate targets vector-readout scale while preserving the successful normalized readout direction."
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "exploit",
+      "selection_rationale": "Tiny scalar low-start gate provides a conservative exploit/control-like variant of vector damping with low implementation risk."
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "exploit",
+      "selection_rationale": "Residual vector-readout blend tests the same exploit family with a smoother interpolation from the current frontier unit."
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md",
+      "role": "jump",
+      "selection_rationale": "Gated scalar update is the higher-phase jump most aligned with the available vector-readout damping evidence."
+    },
+    {
+      "id": "proposal_005",
+      "path": "proposal_005.md",
+      "role": "jump",
+      "selection_rationale": "Low-rank vector norm adapter is a bounded jump that increases readout flexibility without changing benchmark semantics."
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md",
+      "role": "backward-simplify",
+      "selection_rationale": "Fixed quarter-strength vector readout provides the required backward-simplify axis and isolates whether learned gating is necessary."
+    },
+    {
+      "id": "proposal_008",
+      "path": "proposal_008.md",
+      "role": "control",
+      "selection_rationale": "Exact source replicate anchors generation_015 variance against generation_014/proposal_009."
+    },
+    {
+      "id": "proposal_009",
+      "path": "proposal_009.md",
+      "role": "wildcard",
+      "selection_rationale": "Scalar-vector cross readout is a mechanism-diversity wildcard that still stays close to the vector-readout evidence thread."
+    }
+  ],
+  "source_unit": "generation_014/proposal_009",
+  "target_generation": "generation_015",
+  "omitted_proposals": [
+    {
+      "id": "proposal_006",
+      "reason": "Diagnosis-driven energy/force balance is useful but weaker evidence than the selected GEN015-M01-aligned jump proposals."
+    },
+    {
+      "id": "proposal_010",
+      "reason": "Vector-norm dropout is a weak-evidence wildcard and lower priority than scalar-vector cross readout for the eight-unit budget."
+    }
+  ]
+}

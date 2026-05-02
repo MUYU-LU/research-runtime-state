@@ -1,0 +1,78 @@
+{
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "exploit",
+      "selection_rationale": "Primary exploitation of the generation_018/proposal_005 frontier signal: adds a bounded rank-2 Cartesian tensor-product sibling while explicitly preserving the existing scalar-vector TP branch and force-from-energy contract."
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "exploit",
+      "selection_rationale": "Lower-risk readout-only companion for the same rank-2 TP mechanism; isolates whether the new angular signal helps when applied after message passing with minimal disturbance to vector_state."
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "exploit",
+      "selection_rationale": "Tiny calibration exploit of the already-successful TP branch; useful as a low-budget interpretability/control point for whether residual-scale calibration, not new mechanism complexity, is the next bottleneck."
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md",
+      "role": "jump",
+      "selection_rationale": "Selects the broadest evidence-grounded hybrid: rank-2 TP plus CACE ν=2 consistency, testing whether the frontier TP signal and a more principled invariant body-order branch combine constructively."
+    },
+    {
+      "id": "proposal_005",
+      "path": "proposal_005.md",
+      "role": "jump",
+      "selection_rationale": "Selects the clean CACE ν=2 descriptor-consistency branch as a mechanism-distinct jump that keeps the TP path intact while replacing ad-hoc body-order behavior with a structured invariant descriptor."
+    },
+    {
+      "id": "proposal_006",
+      "path": "proposal_006.md",
+      "role": "jump",
+      "selection_rationale": "Tests whether the frontier TP branch is bottlenecked by radial/angular resolution rather than mechanism form; keeps the intervention bounded to code-level capacity and a very small rank-2 gate."
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md",
+      "role": "backward-simplify",
+      "selection_rationale": "Backward-simplify diagnostic: preserves the successful TP branch while reducing the body-order side branch, clarifying whether body-order complexity is helping or diluting the frontier signal."
+    },
+    {
+      "id": "proposal_008",
+      "path": "proposal_008.md",
+      "role": "control",
+      "selection_rationale": "Exact source replicate control is required to calibrate generation_019 variance before attributing small Q_total, energy, force, or gap changes to mechanism edits."
+    }
+  ],
+  "source_unit": "generation_018/proposal_005",
+  "target_generation": "generation_019",
+  "selection_policy": "Prioritize continuation of the generation_018/proposal_005 explicit scalar-vector tensor-product frontier win while preserving branch diversity. Select three TP-focused exploit probes, three evidence-grounded jump variants spanning rank-2 TP/CACE/radial-resolution axes, one backward-simplify diagnostic that tests body-order dilution, and one exact control replicate. Defer proposals dominated by training-schedule-only or warmup-only changes so this batch remains mechanism-centric and interpretable.",
+  "selected_role_counts": {
+    "exploit": 3,
+    "jump": 3,
+    "backward-simplify": 1,
+    "control": 1
+  },
+  "selected_mechanism_axes": [
+    "GEN019-M01: rank-2 Cartesian tensor-product sibling/readout adapter",
+    "GEN019-M02: CACE ν=2 descriptor consistency",
+    "TP residual-scale calibration and radial-resolution bottleneck tests",
+    "Body-order simplification diagnostic against the frontier TP source",
+    "Exact source replicate control"
+  ],
+  "omitted_proposals": [
+    {
+      "id": "proposal_009",
+      "reason": "Training-objective energy-tail schedule is useful but less mechanism-centric and risks repeating prior objective-schedule diagnostics; defer until architectural TP/CACE/radial axes are measured."
+    },
+    {
+      "id": "proposal_010",
+      "reason": "Rank-2 gate with late training warmup overlaps strongly with selected proposal_001 while adding schedule confounding; select the cleaner rank-2 mechanism first and revisit warmup if instability appears."
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_018/proposal_005",
+  "target_generation": "generation_019",
+  "mode": "balanced",
+  "completed_generation_context": "generation_018",
+  "selection_intent": "Expansion after source novelty failure: keep the generation_018/proposal_005 explicit scalar-vector tensor-product signal, but use fresh/non-recent evidence sources for TP continuation and branch-diversifying alternatives so generation_019 is not justified only by recently-used G018 NequIP/MACE/CHGNet evidence.",
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP等变架构 - E(n)等变笛卡尔张量消息传递势.pdf",
+      "pages": 14,
+      "max_chars": 52000,
+      "why_selected": "Expected Cartesian/equivariant tensor message equations that can independently ground continuation of the successful scalar-vector TP branch without reusing NequIP as the only paper evidence.",
+      "expected_evidence": ["tensor message update", "scalar-vector/tensor contraction", "energy-force differentiability", "runtime scaling"]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP表示方法 - 笛卡尔原子簇展开CACE.pdf",
+      "pages": 14,
+      "max_chars": 52000,
+      "why_selected": "Expected Cartesian atom-cluster expansion formulas that map directly to the current BodyOrderMessageBranch atom_a tensor and provide a branch-diversifying invariant descriptor alternative.",
+      "expected_evidence": ["Cartesian moment tensor formula", "invariant contraction", "body-order basis", "bounded PyTorch analogue"]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP表示方法 - TACE笛卡尔空间张量原子簇展开.pdf",
+      "pages": 12,
+      "max_chars": 48000,
+      "why_selected": "Expected tensor atomic cluster expansion evidence for rank/channel contractions that diversify from local PaiNN gates while remaining compatible with current Cartesian unit-vector/RBF data flow.",
+      "expected_evidence": ["tensor cluster expansion", "rank/truncation rule", "invariant/equivariant contraction", "cost tradeoff"]
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "torchmd/torchmd-net",
+      "max_files": 38,
+      "max_file_chars": 28000,
+      "why_selected": "Expected TorchMD-NET equivariant/TensorNet code paths with scalar-vector/tensor message implementation patterns that can map to TPInteractionBranch refinements and current interaction loop insertion points.",
+      "expected_evidence": ["repo file", "class/function for equivariant tensor message", "radial/cutoff pattern", "mapping to current model.py TPInteractionBranch"]
+    },
+    {
+      "repo": "BingqingCheng/cace",
+      "max_files": 38,
+      "max_file_chars": 28000,
+      "why_selected": "Expected CACE code paths for atom-centered Cartesian descriptors and product/contraction features that map to current BodyOrderMessageBranch._angular_monomials/_symmetrize insertion points.",
+      "expected_evidence": ["repo file", "descriptor class/function", "Cartesian basis/contraction code", "mapping to current body_order_branch"]
+    },
+    {
+      "repo": "ACEsuit/mace",
+      "max_files": 34,
+      "max_file_chars": 26000,
+      "why_selected": "Expected symmetric contraction/product-basis code for a second implementation trace of branch-diversifying many-body contraction; use as corroboration, not as sole reused G018 evidence.",
+      "expected_evidence": ["repo file", "symmetric contraction class", "product basis/correlation path", "bounded mapping to current _symmetrize"]
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 2,
+    "min_new_sources": 1,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 1,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 2,
+    "max_pdf_attempts": 6,
+    "max_repo_attempts": 4,
+    "max_external_source_attempts": 10,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 2
+  },
+  "benchmark_context_required": [
+    "mixed_force_mae",
+    "mixed_energy_mae",
+    "gap_penalty",
+    "Q_dataset",
+    "Q_rmd17",
+    "Q_iso17",
+    "Q_total",
+    "G_delta",
+    "runtime_summary",
+    "control_replicate_comparison",
+    "/tree/key",
+    "/force/gap/Q/runtime/failure",
+    "/ledger/frontier.jsonl"
+  ]
+}

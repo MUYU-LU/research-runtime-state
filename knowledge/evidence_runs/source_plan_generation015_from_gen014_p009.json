@@ -1,0 +1,48 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_014/proposal_009",
+  "target_generation": "generation_015",
+  "mode": "balanced",
+  "selection_intent": "Bound the next-generation search around the current normalized invariant-vector readout frontier: preserve the generation_014 vector-norm readout win, diagnose ISO17 energy/gap fragility, and gather fresh mechanisms for scalarizing equivariant vector information without breaking energy-conservative force semantics.",
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP分子力场 - 欧氏Transformer快速稳定力场.pdf",
+      "why_selected": "SO3KRATES separates invariant and equivariant information in a sparse Euclidean representation; expected to give a fresh mathematical/physical precedent for extracting scalar invariants from vector/equivariant features while balancing stability and speed.",
+      "expected_evidence": ["invariant/equivariant separation", "Euclidean-vector representation", "stability vs test-error caution", "cutoff/locality implications"],
+      "pages": 10,
+      "max_chars": 32000
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP能量守恒 - ESEN平滑表达原子间势.pdf",
+      "why_selected": "Generation_014/proposal_009 is a frontier win but ISO17 validation energy worsened and gap remains nontrivial; eSEN directly discusses smooth conservative energy landscapes and when test errors fail to predict downstream physical behavior.",
+      "expected_evidence": ["force-from-energy consistency", "smooth bounded energy derivatives", "energy conservation diagnostic", "benchmark metric caution"],
+      "pages": 10,
+      "max_chars": 32000
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "torchmd/torchmd-net",
+      "why_selected": "Fresh implementation repository with EquivariantScalar/GatedEquivariantBlock code that explicitly transforms vector features to scalar invariants by vector projection plus norm before energy readout; maps directly onto current model.py vector_norm readout insertion points.",
+      "expected_evidence": ["repo file", "GatedEquivariantBlock", "torch.norm vector scalarization", "energy output module", "training entrypoint/config"],
+      "max_files": 36,
+      "max_file_chars": 24000
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 2,
+    "min_new_sources": 1,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 1,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 1,
+    "max_pdf_attempts": 6,
+    "max_repo_attempts": 4,
+    "max_external_source_attempts": 10,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 1
+  }
+}

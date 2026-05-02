@@ -1,0 +1,98 @@
+{
+  "unit": "generation_018/proposal_008",
+  "source_unit": "generation_016/proposal_002",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_018_from_generation_016_proposal_002_continuation/proposal_008.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": true,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_016/proposal_002",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_016/proposal_002",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      }
+    ],
+    "changed_files": [],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 4.09968989331709,
+  "Q_iso17": 3.6181281410090333,
+  "Q_total": 3.9311432800092705,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.03134295654296875,
+      "mild_ood_force_mae": 0.06638605095102684,
+      "hard_ood_energy_mae": 0.03236126708984375,
+      "hard_ood_force_mae": 0.0667198744189809,
+      "mixed_force_mae": 0.06658634503179928,
+      "mixed_energy_mae": 0.03195394287109375,
+      "gap_penalty": 0.005013392277194757,
+      "Q_dataset": 4.09968989331709,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.06638605106668546,
+      "best_val_energy_mae": 0.03134307861328125
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.23269018796410892,
+      "within_force_mae": 0.15814528078172763,
+      "other_energy_mae": 0.35766263521634617,
+      "other_force_mae": 0.1793059811167992,
+      "mixed_force_mae": 0.17084170098277057,
+      "mixed_energy_mae": 0.3076736563154513,
+      "gap_penalty": 0.1238614472533365,
+      "Q_dataset": 3.6181281410090333,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.1728946715593338,
+      "best_val_energy_mae": 0.6126302083333334
+    }
+  },
+  "created_at_utc": "2026-04-30T10:41:28.492076+00:00",
+  "control_replicate": true,
+  "outcome_class": "control_replicate",
+  "outcome_reasons": [
+    "unit is marked as a control replicate"
+  ]
+}

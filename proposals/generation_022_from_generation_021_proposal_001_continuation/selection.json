@@ -1,0 +1,102 @@
+{
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "exploit",
+      "selection_rationale": "Conservative small-beta SpookyNet neutral charge pair head; directly satisfies the required low-risk charge-neutral/electrostatic pair-energy mechanism while preserving force conservativity and avoiding ordinary atomwise residual simplification."
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "exploit",
+      "selection_rationale": "Switched Coulomb/damped SpookyNet charge kernel exploit; tests the evidence-backed electrostatic formula variant with explicit mechanism id, repo trace, and current insertion point."
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "exploit",
+      "selection_rationale": "Element-biased neutral charge-pair correction; keeps the electrostatic q_i q_j mechanism but probes whether element-conditioned charge offsets improve ISO17 energy/gap calibration."
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md",
+      "role": "jump",
+      "selection_rationale": "Aggressive charge/electronic interaction variant; tests whether learned charge scalars should gate pair messages as well as contribute pair energy."
+    },
+    {
+      "id": "proposal_005",
+      "path": "proposal_005.md",
+      "role": "jump",
+      "selection_rationale": "Charge-pair energy plus energy-balanced warmup; explores interaction between the SpookyNet electrostatic mechanism and short-budget energy/gap supervision."
+    },
+    {
+      "id": "proposal_006",
+      "path": "proposal_006.md",
+      "role": "jump",
+      "selection_rationale": "Radial shell charge-pair decomposition; higher-capacity electrostatic variant that separates short- and medium-range pair-energy structure without changing benchmark semantics."
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md",
+      "role": "control",
+      "selection_rationale": "Exact source replicate variance control for generation_021/proposal_001; preserves attribution discipline before interpreting small Q_total or split-metric deltas."
+    },
+    {
+      "id": "proposal_008",
+      "path": "proposal_008.md",
+      "role": "backward-simplify",
+      "selection_rationale": "Electrostatic-vs-residual ablation/control; explicitly distinguishes q_i q_j pair-energy structure from ordinary atomwise residual calibration."
+    }
+  ],
+  "source_unit": "generation_021/proposal_001",
+  "target_generation": "generation_022",
+  "selection_policy": "Prioritize the fresh SpookyNet evidence package and the user's explicit charge-neutral/electrostatic pair-energy requirements. Select the conservative small-beta charge head, switched/element-biased electrostatic exploits, aggressive charge/electronic and multishell jumps, an objective-interaction jump, the exact source replicate, and the electrostatic-vs-residual ablation. Defer the tiny readout wildcard and the non-electrostatic body-order comparator because the selected ablation plus exact replicate already isolate electrostatic structure while preserving enough exploit/jump coverage.",
+  "selected_role_counts": {
+    "exploit": 3,
+    "jump": 3,
+    "control": 1,
+    "backward-simplify": 1
+  },
+  "selected_mechanism_axes": [
+    "GEN022-M01 neutral charge electrostatic pair-energy head / conservative small-beta",
+    "Switched Coulomb or damped charge-pair kernel",
+    "Element-biased neutral charge-pair correction",
+    "Aggressive charge/electronic pair-message gating",
+    "Electrostatic pair energy with energy-balanced warmup",
+    "Radial shell charge-pair decomposition",
+    "Exact source replicate variance control",
+    "Electrostatic q_i q_j pair-energy vs ordinary atomwise residual ablation"
+  ],
+  "spookynet_electrostatic_constraints": {
+    "selected_electrostatic_pair_energy_proposals": [
+      "proposal_001",
+      "proposal_002",
+      "proposal_003",
+      "proposal_004",
+      "proposal_005",
+      "proposal_006",
+      "proposal_008"
+    ],
+    "conservative_small_beta_charge_head": "proposal_001",
+    "aggressive_charge_electronic_interaction_variant": "proposal_004",
+    "electrostatic_vs_residual_ablation_control": "proposal_008",
+    "exact_source_control": "proposal_007",
+    "required_citation_fields": [
+      "mechanism_id",
+      "formula",
+      "repo_code_trace",
+      "current_insertion_point"
+    ]
+  },
+  "omitted_proposals": [
+    {
+      "id": "proposal_009",
+      "reason": "Tiny readout-only electrostatic wildcard is low risk but less diagnostic than the selected exploit/jump variants and ablation under an 8-unit budget."
+    },
+    {
+      "id": "proposal_010",
+      "reason": "Non-electrostatic body-order comparator is useful, but selected proposal_008 directly controls electrostatic-vs-residual attribution and proposal_007 preserves exact-source variance calibration."
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_016/proposal_002",
+  "target_generation": "generation_018",
+  "mode": "jump",
+  "selection_intent": "Broader branch-diversification evidence after generation_017 failed to beat generation_016/proposal_002. Deliberately avoid generation_017's weak directions (PaiNN-style scalar/vector gates, body-order gates, norm/dot gates, readout damping, ISO17-only energy-stability fixes) and sample distinct mechanism axes: continuous-filter/radial message passing, local-frame representation, electronic/energy decomposition, and data-efficient global kernel caution. The goal is proposal-time jump evidence, not benchmark diagnosis.",
+  "mechanism_axes": [
+    "neighbor/radial/basis construction path",
+    "message passing path",
+    "representation path",
+    "energy decomposition path",
+    "training/objective/data-efficiency caution path"
+  ],
+  "negative_signal_policy": {
+    "do_not_continue": [
+      "PaiNN-style scalar/vector gates",
+      "body-order gates",
+      "norm/dot gates",
+      "readout damping",
+      "ISO17-only energy-stability fixes"
+    ],
+    "generation_017_interpretation": "weak_or_negative_signal; no non-control child beat parent"
+  },
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP早期架构 - SchNet连续滤波卷积分子势.pdf",
+      "pages": 12,
+      "max_chars": 36000,
+      "axis": "neighbor/radial/basis construction + scalar message passing",
+      "why_selected": "Provides concrete continuous-filter convolution equations and Gaussian radial expansion that differ from generation_017's scalar/vector gate and body-order edits. Useful for a bounded scalar-only residual message path or smoother radial filter insertion in BalancedInteractionBlock.",
+      "expected_evidence": ["continuous-filter convolution equation", "Gaussian radial basis/filter network", "atomwise energy decomposition", "force-from-energy compatibility"]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP架构 - AlphaNet局部框架神经网络原子间势.pdf",
+      "pages": 14,
+      "max_chars": 42000,
+      "axis": "representation path + local-frame directional message passing",
+      "why_selected": "Fresh local-frame source for jump diversification: extracts directional/geometric information via local frames rather than current global Cartesian monomial body-order descriptors or scalar/vector norm/dot gates. Expected to yield concrete local-frame construction equations and message data flow.",
+      "expected_evidence": ["local frame construction", "frame-projected coordinates or embeddings", "equivariance/invariance reasoning", "bounded directional edge feature insertion"]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP量子化学 - PhysNet波函数与分子性质深度网络.pdf",
+      "pages": 14,
+      "max_chars": 42000,
+      "axis": "energy decomposition path / electronic-structure auxiliary head",
+      "why_selected": "Different mechanism family from generation_017: decomposes energy through explicit electronic/wavefunction-derived quantities. Expected to support bounded auxiliary electronic population/charge-style head or energy residual decomposition, with force consistency maintained through energy autograd.",
+      "expected_evidence": ["wavefunction or coefficient prediction equation", "atom/basis-resolved electronic quantity", "energy/property derivation", "force-compatible differentiable energy decomposition"]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP分子力场 - BIGDML材料量子机器学习力场.pdf",
+      "pages": 10,
+      "max_chars": 32000,
+      "axis": "training/objective/data-efficiency caution path",
+      "why_selected": "Provides nonlocal/global kernel and symmetry/data-efficiency perspective as a cautionary counterpoint for molecular/material force fields. It is not selected to justify benchmark diagnosis, but to extract bounded training/control implications and to avoid overfitting local message variants.",
+      "expected_evidence": ["gradient-domain force-field equation", "energy-conserving force derivation", "symmetry/data-efficiency constraints", "bounded control/ablation implications"]
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "atomistic-machine-learning/schnetpack",
+      "max_files": 40,
+      "max_file_chars": 26000,
+      "axis": "neighbor/radial/message implementation path",
+      "why_selected": "Cached production implementation expected to expose concrete SchNet radial basis, cutoff, interaction, atomistic model, examples/configs, and training entrypoints. Reused only to extract a different scalar continuous-filter residual mechanism, not PaiNN/body-order variants.",
+      "expected_evidence": ["representation module path", "GaussianRBF / cutoff class", "SchNetInteraction or CFConv implementation", "Atomwise energy output", "training entrypoint/config pattern"]
+    },
+    {
+      "repo": "torchmd/torchmd-net",
+      "max_files": 40,
+      "max_file_chars": 26000,
+      "axis": "neighbor/radial/basis and message implementation path",
+      "why_selected": "Cached atomistic implementation expected to expose radial smearing/cutoff and equivariant-transformer style distance/message components as a second code-pattern check for bounded radial/edge construction. Reuse is allowed because the current run extracts radial/neighbor construction constraints, not the prior Euclidean-transformer or ESEN energy-stability direction.",
+      "expected_evidence": ["distance or neighbor module", "radial smearing/cutoff code", "message/update function", "examples/config/training pattern"]
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 4,
+    "min_new_sources": 2,
+    "max_recent_reused_sources": 2
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 3,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 3,
+    "max_pdf_attempts": 6,
+    "max_repo_attempts": 3,
+    "max_external_source_attempts": 9,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 1
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "unit": "generation_014/proposal_004",
+  "source_unit": "generation_013/proposal_007",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_014_from_generation_013_proposal_007_continuation/proposal_004.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_013/proposal_007",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_013/proposal_007",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 6,
+        "removed_lines": 2,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/model.py",
+          "+++ child/model/model.py",
+          "@@ -125,8 +125,9 @@",
+          "         self.interactions = nn.ModuleList(",
+          "             [BalancedInteractionBlock(hidden_dim=hidden_dim, num_rbf=num_rbf) for _ in range(num_interactions)]",
+          "         )",
+          "+        self.vector_readout_logit = nn.Parameter(torch.tensor(-4.0))",
+          "         self.readout = nn.Sequential(",
+          "-            nn.Linear(hidden_dim, hidden_dim),",
+          "+            nn.Linear(hidden_dim * 2, hidden_dim),",
+          "             nn.SiLU(),",
+          "             nn.Linear(hidden_dim, hidden_dim),",
+          "             nn.SiLU(),",
+          "@@ -178,7 +179,10 @@",
+          "                 cutoff_weight=cutoff_weight,",
+          "             )",
+          " ",
+          "-        per_atom_energy = self.readout(scalar_state).squeeze(-1)",
+          "+        vector_norm = torch.linalg.norm(vector_state, dim=-1)",
+          "+        vector_gate = torch.sigmoid(self.vector_readout_logit)",
+          "+        readout_input = torch.cat([scalar_state, vector_gate * vector_norm], dim=-1)",
+          "+        per_atom_energy = self.readout(readout_input).squeeze(-1)",
+          "         return atomref + per_atom_energy.sum()",
+          " ",
+          "     def forward(self, batch: dict) -> tuple[torch.Tensor, torch.Tensor]:"
+        ]
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 1,
+        "removed_lines": 3,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/train.py",
+          "+++ child/model/train.py",
+          "@@ -162,14 +162,12 @@",
+          "         num_rbf=int(CONFIG.get(\"num_rbf\", 32)),",
+          "         cutoff=float(CONFIG.get(\"cutoff\", 5.0)),",
+          "     ).to(device)",
+          "-    atomref_fitted = initialize_atomref_lstsq(",
+          "+    initialize_atomref_lstsq(",
+          "         model,",
+          "         train_loader,",
+          "         ridge=float(CONFIG.get(\"atomref_lstsq_ridge\", 1e-3)),",
+          "         device=device,",
+          "     )",
+          "-    if atomref_fitted:",
+          "-        model.atomref.weight.requires_grad_(False)",
+          " ",
+          "     learning_rate = float(lr if lr is not None else CONFIG.get(\"learning_rate\", 1e-3))",
+          "     optimizer = torch.optim.AdamW("
+        ]
+      }
+    ],
+    "changed_files": [
+      "model/model.py",
+      "model/train.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 3.929723982510029,
+  "Q_iso17": 3.5267991153618126,
+  "Q_total": 3.788700279008153,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.0491605224609375,
+      "mild_ood_force_mae": 0.07217149275948759,
+      "hard_ood_energy_mae": 0.049391845703125,
+      "hard_ood_force_mae": 0.07238881480763666,
+      "mixed_force_mae": 0.07230188598837703,
+      "mixed_energy_mae": 0.04929931640625,
+      "gap_penalty": 0.0030057590500613502,
+      "Q_dataset": 3.929723982510029,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.0721714934957563,
+      "best_val_energy_mae": 0.0491605224609375
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.2740234375,
+      "within_force_mae": 0.18366077370056422,
+      "other_energy_mae": 0.3518858924278846,
+      "other_force_mae": 0.1970354505083882,
+      "mixed_force_mae": 0.19168557978525858,
+      "mixed_energy_mae": 0.32074091045673075,
+      "gap_penalty": 0.06977403737275166,
+      "Q_dataset": 3.5267991153618126,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "worsening",
+      "energy_trend": "worsening",
+      "best_val_force_mae": 0.14934284488360086,
+      "best_val_energy_mae": 0.1904296875
+    }
+  },
+  "created_at_utc": "2026-04-29T08:29:11.568098+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": 0.032915497809622885,
+  "outcome_class": "frontier_win",
+  "outcome_reasons": [
+    "delta_Q=0.0329155 exceeds margin=0.03"
+  ]
+}

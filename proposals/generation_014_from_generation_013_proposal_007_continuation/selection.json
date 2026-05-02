@@ -1,0 +1,64 @@
+{
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "exploit",
+      "selection_rationale": "Direct restore of invariant vector-norm readout; strongest bounded repair for the generation_013/proposal_007 vector-readout regression."
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "exploit",
+      "selection_rationale": "Gated vector readout variant tests the same strong mechanism with lower variance risk."
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "exploit",
+      "selection_rationale": "Isolates trainable atomref calibration after proposal_007 energy degradation."
+    },
+    {
+      "id": "proposal_004",
+      "path": "proposal_004.md",
+      "role": "jump",
+      "selection_rationale": "Combines the two strongest evidence-backed mechanisms to test interaction between geometry readout repair and atomref calibration."
+    },
+    {
+      "id": "proposal_006",
+      "path": "proposal_006.md",
+      "role": "jump",
+      "selection_rationale": "Soft-anchor atomref is a bounded energy-surface calibration jump with less hard-freeze risk."
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md",
+      "role": "backward-simplify",
+      "selection_rationale": "A scalar-only atomref ablation keeps a simplification/control axis for interpreting atomref changes."
+    },
+    {
+      "id": "proposal_008",
+      "path": "proposal_008.md",
+      "role": "control",
+      "selection_rationale": "Exact source replicate anchors variance against generation_013/proposal_007."
+    },
+    {
+      "id": "proposal_009",
+      "path": "proposal_009.md",
+      "role": "wildcard",
+      "selection_rationale": "Normalized invariant vector readout adds a scale-controlled variant of the strongest geometry mechanism."
+    }
+  ],
+  "source_unit": "generation_013/proposal_007",
+  "target_generation": "generation_014",
+  "omitted_proposals": [
+    {
+      "id": "proposal_005",
+      "reason": "Additive vector residual overlaps the selected vector-readout repair family but adds more architecture/runtime risk than gated or normalized variants."
+    },
+    {
+      "id": "proposal_010",
+      "reason": "Atomref deviation penalty overlaps the selected soft-anchor atomref jump and is lower priority for the eight-unit budget."
+    }
+  ]
+}

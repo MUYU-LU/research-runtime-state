@@ -1,0 +1,179 @@
+{
+  "unit": "generation_011/proposal_002",
+  "source_unit": "generation_010/proposal_007",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_011_from_generation_010_proposal_007_continuation/proposal_002.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_010/proposal_007",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_010/proposal_007",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 17,
+        "removed_lines": 5,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/train.py",
+          "+++ child/model/train.py",
+          "@@ -23,6 +23,11 @@",
+          " ",
+          " def force_mae(pred, target):",
+          "     return float(torch.mean(torch.abs(pred - target)).detach().cpu().item())",
+          "+",
+          "+",
+          "+def smoothstep(ratio: float) -> float:",
+          "+    clamped = min(1.0, max(0.0, float(ratio)))",
+          "+    return clamped * clamped * (3.0 - 2.0 * clamped)",
+          " ",
+          " ",
+          " def get_cuda_device() -> torch.device:",
+          "@@ -121,18 +126,25 @@",
+          "         weight_decay=float(CONFIG.get(\"weight_decay\", 1e-5)),",
+          "         betas=(0.9, float(CONFIG.get(\"adam_beta2\", 0.97))),",
+          "     )",
+          "-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(epochs, 1))",
+          "+    min_lr = learning_rate * float(CONFIG.get(\"min_lr_scale\", 0.1))",
+          "+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(epochs, 1), eta_min=min_lr)",
+          " ",
+          "     energy_weight = float(CONFIG.get(\"energy_weight\", 2.4))",
+          "     force_weight = float(CONFIG.get(\"force_weight\", 10.0))",
+          "     grad_clip = float(CONFIG.get(\"grad_clip\", 3.0))",
+          "-    energy_warmup_epochs = max(1, int(CONFIG.get(\"energy_warmup_epochs\", 3)))",
+          "+    energy_warmup_epochs = max(1, int(CONFIG.get(\"energy_warmup_epochs\", 5)))",
+          "+    energy_start_scale = float(CONFIG.get(\"energy_start_scale\", 0.5))",
+          "+    early_force_scale = float(CONFIG.get(\"early_force_scale\", 1.02))",
+          "+    final_force_scale = float(CONFIG.get(\"final_force_scale\", 0.95))",
+          " ",
+          "     history = []",
+          "     for epoch in range(1, epochs + 1):",
+          "-        warmup_ratio = min(1.0, epoch / energy_warmup_epochs)",
+          "-        epoch_energy_weight = energy_weight * (0.6 + 0.4 * warmup_ratio)",
+          "-        epoch_force_weight = force_weight * (1.1 - 0.1 * warmup_ratio)",
+          "+        warmup_ratio = smoothstep(epoch / energy_warmup_epochs)",
+          "+        full_training_ratio = smoothstep(epoch / max(epochs, 1))",
+          "+        epoch_energy_weight = energy_weight * (energy_start_scale + (1.0 - energy_start_scale) * warmup_ratio)",
+          "+        epoch_force_weight = force_weight * (",
+          "+            early_force_scale + (final_force_scale - early_force_scale) * full_training_ratio",
+          "+        )",
+          " ",
+          "         model.train()",
+          "         train_metrics = run_epoch("
+        ]
+      }
+    ],
+    "changed_files": [
+      "model/train.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 1.984452830031467,
+  "Q_iso17": 2.4560493697689387,
+  "Q_total": 2.149511618939582,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 7.550400695800781,
+      "mild_ood_force_mae": 0.18038178892899304,
+      "hard_ood_energy_mae": 7.547705810546875,
+      "hard_ood_force_mae": 0.1810697319372557,
+      "mixed_force_mae": 0.18079455473395062,
+      "mixed_energy_mae": 7.548783764648437,
+      "gap_penalty": 0.0038051091155439196,
+      "Q_dataset": 1.984452830031467,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.17933066595951094,
+      "best_val_energy_mae": 2.9309028930664063
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 7.457433477722772,
+      "within_force_mae": 0.27741425694658023,
+      "other_energy_mae": 7.581494140625,
+      "other_force_mae": 0.28321665248618677,
+      "mixed_force_mae": 0.28089569427034417,
+      "mixed_energy_mae": 7.531869875464109,
+      "gap_penalty": 0.020656762128939757,
+      "Q_dataset": 2.4560493697689387,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.20925922195116678,
+      "best_val_energy_mae": 8.3583984375
+    }
+  },
+  "created_at_utc": "2026-04-22T03:21:19.615124+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.6252263173139316,
+  "component_improvements_vs_parent": [
+    {
+      "dataset": "iso17",
+      "metric": "mixed_force_mae",
+      "parent": 0.2913965663328165,
+      "child": 0.28089569427034417,
+      "relative_improvement": 0.03603636169987967
+    },
+    {
+      "dataset": "iso17",
+      "metric": "gap_penalty",
+      "parent": 0.021890034905864147,
+      "child": 0.020656762128939757,
+      "relative_improvement": 0.056339461413741604
+    }
+  ],
+  "component_regressions_vs_parent": [
+    {
+      "dataset": "rmd17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.6365381103515625,
+      "child": 7.548783764648437,
+      "relative_regression": 10.859123031108403
+    },
+    {
+      "dataset": "iso17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.7179993082992193,
+      "child": 7.531869875464109,
+      "relative_regression": 9.49007957027902
+    }
+  ],
+  "outcome_class": "benchmark_tradeoff",
+  "outcome_reasons": [
+    "some component metrics improved but other tracked metrics regressed strongly"
+  ]
+}

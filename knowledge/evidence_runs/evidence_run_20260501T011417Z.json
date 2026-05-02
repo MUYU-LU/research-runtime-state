@@ -1,0 +1,134 @@
+{
+  "run_id": "evidence_run_20260501T011417Z",
+  "evidence_package_dir": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/evidence_run_20260501T011417Z",
+  "evidence_run_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/evidence_run_20260501T011417Z/evidence_run.json",
+  "brief_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/briefs/evidence_brief_20260501T011417Z.md",
+  "package_brief_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/evidence_run_20260501T011417Z/evidence_brief.md",
+  "evidence_quality": {
+    "version": "evidence_quality.v1",
+    "grade": "A",
+    "fresh_local_pdf_verified": true,
+    "fresh_repo_code_verified": true,
+    "has_mechanism_cards": true,
+    "has_strong_mechanism_cards": true,
+    "strong_mechanism_card_count": 2,
+    "min_strong_mechanism_cards": 1,
+    "strong_card_target_met": true,
+    "has_patch_blueprints": true,
+    "has_implementation_ready_blueprints": true,
+    "usable_for_proposal": true,
+    "usable_for_implementation": true,
+    "diagnosis_only": false,
+    "require_external_evidence": true,
+    "source_novelty": {
+      "version": "source_novelty.v1",
+      "history_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_source_history.jsonl",
+      "policy": {
+        "lookback_runs": 3,
+        "min_attempted_external_sources": 2,
+        "min_new_sources": 1,
+        "max_recent_reused_sources": 1
+      },
+      "source_discovery_budget": {
+        "min_successful_pdf_sources": 1,
+        "min_successful_repo_sources": 1,
+        "min_strong_mechanism_cards": 1,
+        "max_pdf_attempts": 6,
+        "max_repo_attempts": 4,
+        "max_external_source_attempts": 10,
+        "max_source_expansion_rounds": 2,
+        "source_expansion_round": 1
+      },
+      "pdf_attempted_source_count": 2,
+      "pdf_successful_source_count": 2,
+      "repo_attempted_source_count": 1,
+      "repo_successful_source_count": 1,
+      "attempted_external_source_count": 3,
+      "successful_external_source_count": 3,
+      "source_targets_met": true,
+      "source_budget_exhausted": false,
+      "new_source_count": 2,
+      "recent_reused_source_count": 1,
+      "new_source_ids": [
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu529bu573au57fau51c6_-_Forces_Are_Not_Enoughu5206u5b50u6a21u62dfu8bc4u6d4b_1791e8e520.pdf#a6c222c86e12",
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu65e9u671fu67b6u6784_-_SchNetu8fdeu7eedu6ee4u6ce2u5377u79efu5206u5b50u52bf_e748cfccb3.pdf#21de6918484e"
+      ],
+      "recent_reused_source_ids": [
+        "repo:atomistic-machine-learning/schnetpack#41e33adf8c61"
+      ],
+      "recent_attempted_reused_source_count": 1,
+      "recent_attempted_reused_source_ids": [
+        "repo:atomistic-machine-learning/schnetpack#41e33adf8c61"
+      ],
+      "reuse_semantics": "recent_reused_source_ids counts sources used as strong evidence in recent runs. recent_attempted_reused_source_ids is diagnostic only and does not fail novelty by itself.",
+      "all_sources_recent_repeats": false,
+      "source_novelty_passed": true,
+      "allow_recent_source_reuse": false
+    },
+    "external_attempted_source_count": 3,
+    "external_successful_source_count": 3,
+    "source_novelty_passed": true,
+    "source_budget_exhausted": false,
+    "needs_source_expansion": false,
+    "hard_rules": [
+      "No provenance -> no strong evidence.",
+      "No mechanism card -> no proposal mechanism.",
+      "No formula derivation/algorithm/repo path/code trace/current insertion point -> weak evidence only.",
+      "No patch blueprint -> not implementation-ready.",
+      "Benchmark diagnosis is not external mechanism evidence."
+    ]
+  },
+  "source_novelty": {
+    "version": "source_novelty.v1",
+    "history_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_source_history.jsonl",
+    "policy": {
+      "lookback_runs": 3,
+      "min_attempted_external_sources": 2,
+      "min_new_sources": 1,
+      "max_recent_reused_sources": 1
+    },
+    "source_discovery_budget": {
+      "min_successful_pdf_sources": 1,
+      "min_successful_repo_sources": 1,
+      "min_strong_mechanism_cards": 1,
+      "max_pdf_attempts": 6,
+      "max_repo_attempts": 4,
+      "max_external_source_attempts": 10,
+      "max_source_expansion_rounds": 2,
+      "source_expansion_round": 1
+    },
+    "pdf_attempted_source_count": 2,
+    "pdf_successful_source_count": 2,
+    "repo_attempted_source_count": 1,
+    "repo_successful_source_count": 1,
+    "attempted_external_source_count": 3,
+    "successful_external_source_count": 3,
+    "source_targets_met": true,
+    "source_budget_exhausted": false,
+    "new_source_count": 2,
+    "recent_reused_source_count": 1,
+    "new_source_ids": [
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu529bu573au57fau51c6_-_Forces_Are_Not_Enoughu5206u5b50u6a21u62dfu8bc4u6d4b_1791e8e520.pdf#a6c222c86e12",
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu65e9u671fu67b6u6784_-_SchNetu8fdeu7eedu6ee4u6ce2u5377u79efu5206u5b50u52bf_e748cfccb3.pdf#21de6918484e"
+    ],
+    "recent_reused_source_ids": [
+      "repo:atomistic-machine-learning/schnetpack#41e33adf8c61"
+    ],
+    "recent_attempted_reused_source_count": 1,
+    "recent_attempted_reused_source_ids": [
+      "repo:atomistic-machine-learning/schnetpack#41e33adf8c61"
+    ],
+    "reuse_semantics": "recent_reused_source_ids counts sources used as strong evidence in recent runs. recent_attempted_reused_source_ids is diagnostic only and does not fail novelty by itself.",
+    "all_sources_recent_repeats": false,
+    "source_novelty_passed": true,
+    "allow_recent_source_reuse": false
+  },
+  "mechanism_cards_materialized_from": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/evidence_run_20260501T011417Z/mechanism_cards_draft_generation021.json",
+  "source_history_backfill": {
+    "updated": true,
+    "history_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_source_history.jsonl",
+    "run_id": "evidence_run_20260501T011417Z",
+    "strong_source_ref_count": 3,
+    "history_rows_updated": 3
+  }
+}

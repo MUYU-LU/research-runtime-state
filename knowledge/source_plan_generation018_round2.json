@@ -1,0 +1,186 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_016/proposal_002",
+  "target_generation": "generation_018",
+  "mode": "jump",
+  "selection_intent": "Source expansion round 2 for a broad generation_018 branch-diversification jump. The prior package evidence_run_20260430T010921Z was diagnosis-only (usable_for_proposal=false, strong_mechanism_card_count=0, needs_source_expansion=true) even though PDFs/repos were read; it did not materialize formula/code/insertion-point strong cards. This plan deliberately avoids generation_017 weak/negative local variants around PaiNN-style scalar/vector gates, body-order gates, norm/dot gates, readout damping, and ISO17-only energy-stability fixes. It samples distinct mechanism axes: long-range/energy-decomposition path, directional edge-basis message path, equivariant representation path, charge-aware energy decomposition path, global attention/message path, and training/objective guardrail path.",
+  "source_expansion_context": {
+    "source_expansion_round": 2,
+    "prior_package": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/evidence_run_20260430T010921Z",
+    "prior_insufficiency": {
+      "usable_for_proposal": false,
+      "strong_mechanism_card_count": 0,
+      "needs_source_expansion": true,
+      "reason": "No strong cards with formula derivation, tensor/data-flow, repo code trace, current model.py/train.py insertion point, bounded edit, and expected benchmark effects were materialized."
+    },
+    "generation_017_signal": "No non-control child beat generation_016/proposal_002; treat scalar/vector gate, body-order gate, norm/dot gate, readout damping, and ISO17-only energy-stability directions as weak_or_negative."
+  },
+  "mechanism_axes": [
+    "energy decomposition / long-range latent interaction path",
+    "message passing path / directional radial-angular edge basis",
+    "representation path / E(3)-equivariant tensor features",
+    "charge-aware composition/energy decomposition path",
+    "global attention / nonlocal message aggregation path",
+    "training/objective guardrail path for force-energy consistency and branch controls"
+  ],
+  "negative_signal_policy": {
+    "do_not_continue": [
+      "PaiNN-style scalar/vector gates",
+      "body-order gates or body-order descriptor local variants",
+      "norm/dot gates",
+      "readout damping only",
+      "ISO17-only energy-stability fixes"
+    ],
+    "generation_017_interpretation": "weak_or_negative_signal; no non-control child beat parent"
+  },
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP长程静电 - LES通用增强框架.pdf",
+      "pages": 16,
+      "max_chars": 52000,
+      "axis": "energy decomposition / long-range latent interaction path",
+      "why_selected": "New source beyond the prior weak package. Expected to provide a plug-in long-range latent Ewald mechanism: learn latent scalar(s) from local descriptors and add differentiable reciprocal/real-space long-range energy. This is a broad branch away from local gates and body-order descriptors.",
+      "expected_evidence": [
+        "latent variable from local atomic descriptors",
+        "Ewald or Fourier-space energy expression",
+        "force-from-energy consistency",
+        "bounded plug-in augmentation guidance"
+      ]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP长程相互作用 - Neural P3M几何GNN长程相互作用增强.pdf",
+      "pages": 14,
+      "max_chars": 46000,
+      "axis": "long-range message/mesh path",
+      "why_selected": "Alternative nonlocal mechanism using particle-mesh or geometry-GNN long-range augmentation. Selected to avoid relying on a single LES family and to extract implementation constraints for all-pair or low-rank nonlocal residuals.",
+      "expected_evidence": [
+        "particle-mesh / reciprocal long-range update",
+        "geometry-aware nonlocal aggregation",
+        "energy/force differentiability constraints",
+        "runtime scaling tradeoffs"
+      ]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP等变架构 - E(n)等变笛卡尔张量消息传递势.pdf",
+      "pages": 14,
+      "max_chars": 46000,
+      "axis": "representation path / equivariant Cartesian tensor message passing",
+      "why_selected": "Representation-path jump distinct from generation_017 PaiNN-style gates: inspect whether tensor-feature equivariance suggests a bounded residual equivariant branch or whether dependency/runtime risk makes it proposal-only caution.",
+      "expected_evidence": [
+        "equivariant tensor feature update",
+        "invariance/equivariance proof sketch",
+        "energy scalar readout from equivariant features",
+        "bounded branch insertion constraints"
+      ]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP通用势 - CHGNet电荷感知预训练神经网络势.pdf",
+      "pages": 14,
+      "max_chars": 44000,
+      "axis": "charge-aware energy decomposition path",
+      "why_selected": "Charge-aware mechanism source independent of SpookyNet/PhysNet prior sources. Expected to support either a latent charge residual or a clear mismatch warning for molecule-only RMD17/ISO17 without charge/magnetic labels.",
+      "expected_evidence": [
+        "charge-informed atomic features",
+        "energy decomposition or site-property regularization",
+        "insertion/mismatch constraints for current molecule benchmark",
+        "bounded latent charge-head implications"
+      ]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP长程注意力 - EFA欧氏快速注意力全局原子表示.pdf",
+      "pages": 14,
+      "max_chars": 44000,
+      "axis": "global attention / nonlocal message aggregation path",
+      "why_selected": "Global message path not centered on Ewald or equivariant tensor products. Expected to expose efficient attention/global aggregation formulas that could be reduced to a bounded global context residual in current model.py.",
+      "expected_evidence": [
+        "global attention or fast attention update",
+        "per-atom context aggregation",
+        "complexity controls",
+        "bounded global-context residual design"
+      ]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP力场基准 - Forces Are Not Enough分子模拟评测.pdf",
+      "pages": 12,
+      "max_chars": 38000,
+      "axis": "training/objective guardrail path",
+      "why_selected": "Guardrail source for proposal constraints: generation_017 had force/energy tradeoffs; this source should not justify benchmark diagnosis as external mechanism evidence, but can constrain controls and reject force-only proposals.",
+      "expected_evidence": [
+        "energy landscape / force metric limitations",
+        "proposal guardrails",
+        "force-energy tradeoff cautions",
+        "ablation requirements"
+      ]
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "ChengUCB/les",
+      "max_files": 70,
+      "max_file_chars": 32000,
+      "axis": "energy decomposition / long-range latent interaction path",
+      "why_selected": "LES implementation should expose a plug-in long-range layer and code paths for learning latent charges/descriptors and computing long-range energy. Needed for formula-to-current-code trace.",
+      "expected_evidence": [
+        "README and examples",
+        "LatentEwald / long-range module class/function",
+        "energy computation path",
+        "training/config pattern"
+      ]
+    },
+    {
+      "repo": "klicperajo/dimenet",
+      "max_files": 80,
+      "max_file_chars": 32000,
+      "axis": "message passing path / directional radial-angular edge basis",
+      "why_selected": "Directional message-passing source family distinct from SchNet/PaiNN/body-order gates. Expected to expose Bessel radial basis, spherical/angular basis, triplet edge-message data flow, and envelope cutoff code patterns.",
+      "expected_evidence": [
+        "Bessel/radial basis implementation",
+        "angular/spherical basis implementation",
+        "triplet message update",
+        "energy/force training entrypoint or config"
+      ]
+    },
+    {
+      "repo": "mir-group/nequip",
+      "max_files": 80,
+      "max_file_chars": 32000,
+      "axis": "representation path / E(3)-equivariant tensor features",
+      "why_selected": "Full E(3)-equivariant codebase for tensor-product interaction/readout trace. Use to decide whether a bounded equivariant residual branch is proposal-usable or too rewrite-heavy; do not continue PaiNN scalar/vector gate variants.",
+      "expected_evidence": [
+        "irreps / spherical harmonics / tensor product modules",
+        "interaction block code path",
+        "energy head and force autograd path",
+        "dependency/runtime constraints"
+      ]
+    },
+    {
+      "repo": "materialsvirtuallab/matgl",
+      "max_files": 80,
+      "max_file_chars": 32000,
+      "axis": "charge-aware composition / graph potential path",
+      "why_selected": "MatGL/CHGNet-adjacent ecosystem should provide graph potential implementation patterns, model config/training entrypoints, and site/element feature handling. Used for charge-aware or graph-state decomposition trace and mismatch assessment.",
+      "expected_evidence": [
+        "potential/model classes",
+        "site/element feature handling",
+        "training entrypoint/config pattern",
+        "energy/force output path"
+      ]
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 7,
+    "min_new_sources": 5,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 4,
+    "min_successful_repo_sources": 3,
+    "min_strong_mechanism_cards": 3,
+    "max_pdf_attempts": 6,
+    "max_repo_attempts": 4,
+    "max_external_source_attempts": 10,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 2
+  }
+}

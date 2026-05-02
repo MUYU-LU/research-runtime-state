@@ -1,0 +1,144 @@
+{
+  "unit": "generation_021/proposal_009",
+  "source_unit": "generation_020/proposal_003",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_021_from_generation_020_proposal_003_continuation/proposal_009.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_020/proposal_003",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_020/proposal_003",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 6,
+        "removed_lines": 1,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/train.py",
+          "+++ child/model/train.py",
+          "@@ -19,6 +19,7 @@",
+          " TRAIN_WEIGHT_DECAY = 1e-05",
+          " TRAIN_ENERGY_WEIGHT = 1.0",
+          " TRAIN_FORCE_WEIGHT = 20.0",
+          "+TRAIN_LR_ETA_MIN_FRACTION = 0.1",
+          " # END MLIP code-level defaults",
+          " ",
+          " ",
+          "@@ -188,7 +189,11 @@",
+          "         weight_decay=TRAIN_WEIGHT_DECAY,",
+          "         betas=(0.9, float(CONFIG.get(\"adam_beta2\", 0.97))),",
+          "     )",
+          "-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(epochs, 1))",
+          "+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(",
+          "+        optimizer,",
+          "+        T_max=max(epochs, 1),",
+          "+        eta_min=learning_rate * TRAIN_LR_ETA_MIN_FRACTION,",
+          "+    )",
+          " ",
+          "     energy_weight = TRAIN_ENERGY_WEIGHT",
+          "     force_weight = TRAIN_FORCE_WEIGHT"
+        ]
+      }
+    ],
+    "changed_files": [
+      "model/train.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": [
+    "Corrected mistaken exact-control materialization: restored as non-control runnable unit and marked train.py implementation from research_context/proposal.md."
+  ],
+  "Q_rmd17": 4.130327519635347,
+  "Q_iso17": 3.7103997142048013,
+  "Q_total": 3.9833527877346557,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.03727557373046875,
+      "mild_ood_force_mae": 0.060148911844706165,
+      "hard_ood_energy_mae": 0.03797674560546875,
+      "hard_ood_force_mae": 0.06067596048291307,
+      "mixed_force_mae": 0.06046514102763031,
+      "mixed_energy_mae": 0.03769627685546875,
+      "gap_penalty": 0.008716570064019996,
+      "Q_dataset": 4.130327519635347,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.06014891132712364,
+      "best_val_energy_mae": 0.03727557373046875
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.321430228960396,
+      "within_force_mae": 0.13619925997192317,
+      "other_energy_mae": 0.3179676231971154,
+      "other_force_mae": 0.15727949487475248,
+      "mixed_force_mae": 0.14884740091362075,
+      "mixed_energy_mae": 0.3193526655024277,
+      "gap_penalty": 0.14162313062437004,
+      "Q_dataset": 3.7103997142048013,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "worsening",
+      "best_val_force_mae": 0.1422392874956131,
+      "best_val_energy_mae": 0.6070963541666666
+    }
+  },
+  "created_at_utc": "2026-05-01T08:56:30.408998+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.06448779899482693,
+  "component_improvements_vs_parent": [],
+  "component_regressions_vs_parent": [
+    {
+      "dataset": "rmd17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.028949890136718753,
+      "child": 0.03769627685546875,
+      "relative_regression": 0.3021215858659329
+    },
+    {
+      "dataset": "iso17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.26482278849128904,
+      "child": 0.3193526655024277,
+      "relative_regression": 0.2059108180296664
+    }
+  ],
+  "outcome_class": "negative_method",
+  "outcome_reasons": [
+    "Q_total lost and no tracked component metric improved relative to parent"
+  ]
+}

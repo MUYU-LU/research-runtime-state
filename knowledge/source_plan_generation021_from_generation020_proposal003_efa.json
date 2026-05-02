@@ -1,0 +1,41 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_020/proposal_003",
+  "target_generation": "generation_021",
+  "mode": "balanced",
+  "selection_intent": "Generation 020 added a late zero-initialized PaiNN-style invariant scalar/vector mixer and achieved only neutral variance; this run tests whether a bounded, explicitly global Euclidean attention/norm-gated branch is better-supported than another tiny local mixer under fixed energy/force/Q semantics.",
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP长程注意力 - EFA欧氏快速注意力全局原子表示.pdf",
+      "pages": 10,
+      "max_chars": 32000,
+      "why_selected": "Expected equations/algorithm for Euclidean Fast Attention global atomic representations: equivariant/invariant query-key-value updates using geometric tensor products and fast linear attention; relevant to escaping the current late-local PaiNN mixer's neutral variance.",
+      "expected_evidence": ["attention equations", "equivariance/invariance constraints", "linear/global update rule", "force/energy task motivation"]
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "thorben-frank/euclidean_fast_attention",
+      "max_files": 90,
+      "max_file_chars": 30000,
+      "why_selected": "Expected concrete implementation pattern for Euclidean fast attention modules, tensor integration, rotary/relative position handling, and MD17-style energy/force training configs that can map to model/model.py insertion points.",
+      "expected_evidence": ["repo file", "attention class/function", "tensor integration pattern", "MD17 config/training pattern"]
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 2,
+    "min_new_sources": 1,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 1,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 1,
+    "max_pdf_attempts": 4,
+    "max_repo_attempts": 3,
+    "max_external_source_attempts": 6,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 1
+  }
+}

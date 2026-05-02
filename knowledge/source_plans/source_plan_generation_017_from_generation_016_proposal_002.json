@@ -1,0 +1,69 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_016/proposal_002",
+  "target_generation": "generation_017",
+  "mode": "balanced",
+  "selection_intent": "Evidence for continuing the successful-but-neutral one-step body-order descriptor message branch: identify whether the next bounded proposal should refine Cartesian body-order moment construction, scalar/vector equivariant message coupling, or residual/gating normalization to improve ISO17 energy/gap without sacrificing RMD17 force stability.",
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP模型架构 - CAMP笛卡尔原子矩机器学习势.pdf",
+      "pages": 12,
+      "max_chars": 36000,
+      "why_selected": "CAMP is a fresh local Cartesian-moment MLIP source expected to give concrete moment tensor / tensor product body-order equations close to the current BodyOrderMessageBranch monomials, but not the recently used CACE paper.",
+      "expected_evidence": ["atomic moment tensor equation", "tensor product body-order construction", "GNN integration pattern", "Cartesian invariant/equivariant reasoning"]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP表示方法 - TACE笛卡尔空间张量原子簇展开.pdf",
+      "pages": 12,
+      "max_chars": 36000,
+      "why_selected": "TACE is a fresh local Cartesian tensor ACE source expected to clarify Clebsch-Gordan-free Cartesian tensor contractions and controlled many-body hierarchy relevant to improving the current l<=2 Cartesian descriptor branch.",
+      "expected_evidence": ["Cartesian tensor basis", "ACE hierarchy", "invariant contraction", "body-order control"]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP等变架构 - PaiNN张量性质与分子光谱消息传递.pdf",
+      "pages": 12,
+      "max_chars": 36000,
+      "why_selected": "PaiNN is selected for concrete scalar/vector equivariant message updates and radial filter/gating formulas; these can inform a bounded next edit that feeds the current body-order residual through source scalar/vector features or applies safer message normalization.",
+      "expected_evidence": ["scalar/vector message update", "radial filter", "equivariant mixing", "force-from-energy compatible message passing"]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP等变训练 - NequIP高性能训练推理深度等变原子间势.pdf",
+      "pages": 8,
+      "max_chars": 30000,
+      "why_selected": "NequIP performance/inference source gives current software-side evidence about tensor-product runtime cost; useful as a caution against adding heavy equivariant tensor products after generation_016/proposal_002 only achieved a neutral gain.",
+      "expected_evidence": ["tensor product computational bottleneck", "training/inference performance", "runtime risk constraint"]
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "MaxH1996/PaiNN-in-PyG",
+      "max_files": 28,
+      "max_file_chars": 24000,
+      "why_selected": "Compact PaiNN implementation with a likely model.py path; expected to provide concrete scalar/vector message code trace that can be mapped to EvolutionMLIP.forward_energy and BalancedInteractionBlock without requiring a full framework rewrite.",
+      "expected_evidence": ["model.py", "PaiNN message function", "radial edge filters", "scalar-vector update pattern"]
+    },
+    {
+      "repo": "atomistic-machine-learning/schnetpack",
+      "max_files": 36,
+      "max_file_chars": 24000,
+      "why_selected": "Production atomistic repository containing PaiNN/Schnet-style representation modules and examples; selected to cross-check the compact PaiNN implementation and extract implementation constraints for train/model insertion points.",
+      "expected_evidence": ["representation module path", "examples/config", "training entrypoint", "dependency/runtime pattern"]
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 2,
+    "min_new_sources": 1,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 1,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 1,
+    "max_pdf_attempts": 6,
+    "max_repo_attempts": 4,
+    "max_external_source_attempts": 10,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 1
+  }
+}

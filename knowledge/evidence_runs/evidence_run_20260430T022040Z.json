@@ -1,0 +1,127 @@
+{
+  "run_id": "evidence_run_20260430T022040Z",
+  "evidence_package_dir": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/evidence_run_20260430T022040Z",
+  "evidence_run_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/evidence_run_20260430T022040Z/evidence_run.json",
+  "brief_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/briefs/evidence_brief_20260430T022040Z.md",
+  "evidence_quality": {
+    "version": "evidence_quality.v1",
+    "grade": "C",
+    "fresh_local_pdf_verified": true,
+    "fresh_repo_code_verified": true,
+    "has_mechanism_cards": true,
+    "has_strong_mechanism_cards": false,
+    "strong_mechanism_card_count": 0,
+    "min_strong_mechanism_cards": 3,
+    "strong_card_target_met": false,
+    "has_patch_blueprints": true,
+    "has_implementation_ready_blueprints": false,
+    "usable_for_proposal": false,
+    "usable_for_implementation": false,
+    "diagnosis_only": true,
+    "require_external_evidence": true,
+    "source_novelty": {
+      "version": "source_novelty.v1",
+      "history_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_source_history.jsonl",
+      "policy": {
+        "lookback_runs": 3,
+        "min_attempted_external_sources": 8,
+        "min_new_sources": 3,
+        "max_recent_reused_sources": 5,
+        "reuse_justification": "Recent failed packages are explicitly diagnosis-only. Reuse is allowed only to re-deep-read repositories after the clone/cache fix and to extract mechanisms not promoted from those failed packages."
+      },
+      "source_discovery_budget": {
+        "min_successful_pdf_sources": 3,
+        "min_successful_repo_sources": 3,
+        "min_strong_mechanism_cards": 3,
+        "max_pdf_attempts": 4,
+        "max_repo_attempts": 4,
+        "max_external_source_attempts": 8,
+        "max_source_expansion_rounds": 2,
+        "source_expansion_round": 1
+      },
+      "pdf_attempted_source_count": 4,
+      "pdf_successful_source_count": 4,
+      "repo_attempted_source_count": 4,
+      "repo_successful_source_count": 4,
+      "attempted_external_source_count": 8,
+      "successful_external_source_count": 8,
+      "source_targets_met": true,
+      "source_budget_exhausted": true,
+      "new_source_count": 4,
+      "recent_reused_source_count": 4,
+      "new_source_ids": [
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu57fau7840u6a21u578b_-_MACE-MPu539fu5b50u6750u6599u5316u5b66u57fau7840u6a21u578b_2500f8644a.pdf#5aaf69b35fb9",
+        "repo:thorben-frank/euclidean_fast_attention#da8923302a31",
+        "repo:ACESuit/mace#059fbdc41b25",
+        "repo:CederGroupHub/chgnet#2248a04aa729"
+      ],
+      "recent_reused_source_ids": [
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu957fu7a0bu6ce8u610fu529b_-_EFAu6b27u6c0fu5febu901fu6ce8u610fu529bu5168u5c40u539fu5b50u8868u793a_0ef43a7c38.pdf#9b564004b09e",
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu7b49u53d8u8badu7ec3_-_NequIPu9ad8u6027u80fdu8badu7ec3u63a8u7406u6df1u5ea6u7b49u53d8u539fu5b50u95f4u52bf_63e6df2008.pdf#a4fb3c313353",
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu901au7528u52bf_-_CHGNetu7535u8377u611fu77e5u9884u8badu7ec3u795eu7ecfu7f51u7edcu52bf_7d8d76686d.pdf#9d970111678e",
+        "repo:mir-group/nequip#ba95170e90de"
+      ],
+      "all_sources_recent_repeats": false,
+      "source_novelty_passed": true,
+      "allow_recent_source_reuse": false
+    },
+    "external_attempted_source_count": 8,
+    "external_successful_source_count": 8,
+    "source_novelty_passed": true,
+    "source_budget_exhausted": true,
+    "needs_source_expansion": false,
+    "hard_rules": [
+      "No provenance -> no strong evidence.",
+      "No mechanism card -> no proposal mechanism.",
+      "No formula derivation/algorithm/repo path/code trace/current insertion point -> weak evidence only.",
+      "No patch blueprint -> not implementation-ready.",
+      "Benchmark diagnosis is not external mechanism evidence."
+    ]
+  },
+  "source_novelty": {
+    "version": "source_novelty.v1",
+    "history_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_source_history.jsonl",
+    "policy": {
+      "lookback_runs": 3,
+      "min_attempted_external_sources": 8,
+      "min_new_sources": 3,
+      "max_recent_reused_sources": 5,
+      "reuse_justification": "Recent failed packages are explicitly diagnosis-only. Reuse is allowed only to re-deep-read repositories after the clone/cache fix and to extract mechanisms not promoted from those failed packages."
+    },
+    "source_discovery_budget": {
+      "min_successful_pdf_sources": 3,
+      "min_successful_repo_sources": 3,
+      "min_strong_mechanism_cards": 3,
+      "max_pdf_attempts": 4,
+      "max_repo_attempts": 4,
+      "max_external_source_attempts": 8,
+      "max_source_expansion_rounds": 2,
+      "source_expansion_round": 1
+    },
+    "pdf_attempted_source_count": 4,
+    "pdf_successful_source_count": 4,
+    "repo_attempted_source_count": 4,
+    "repo_successful_source_count": 4,
+    "attempted_external_source_count": 8,
+    "successful_external_source_count": 8,
+    "source_targets_met": true,
+    "source_budget_exhausted": true,
+    "new_source_count": 4,
+    "recent_reused_source_count": 4,
+    "new_source_ids": [
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu57fau7840u6a21u578b_-_MACE-MPu539fu5b50u6750u6599u5316u5b66u57fau7840u6a21u578b_2500f8644a.pdf#5aaf69b35fb9",
+      "repo:thorben-frank/euclidean_fast_attention#da8923302a31",
+      "repo:ACESuit/mace#059fbdc41b25",
+      "repo:CederGroupHub/chgnet#2248a04aa729"
+    ],
+    "recent_reused_source_ids": [
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu957fu7a0bu6ce8u610fu529b_-_EFAu6b27u6c0fu5febu901fu6ce8u610fu529bu5168u5c40u539fu5b50u8868u793a_0ef43a7c38.pdf#9b564004b09e",
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu7b49u53d8u8badu7ec3_-_NequIPu9ad8u6027u80fdu8badu7ec3u63a8u7406u6df1u5ea6u7b49u53d8u539fu5b50u95f4u52bf_63e6df2008.pdf#a4fb3c313353",
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu901au7528u52bf_-_CHGNetu7535u8377u611fu77e5u9884u8badu7ec3u795eu7ecfu7f51u7edcu52bf_7d8d76686d.pdf#9d970111678e",
+      "repo:mir-group/nequip#ba95170e90de"
+    ],
+    "all_sources_recent_repeats": false,
+    "source_novelty_passed": true,
+    "allow_recent_source_reuse": false
+  }
+}

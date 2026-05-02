@@ -1,0 +1,78 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_018/proposal_005",
+  "target_generation": "generation_019",
+  "mode": "balanced",
+  "completed_generation_context": "generation_018",
+  "selection_intent": "Build proposal-time evidence that preserves the generation_018/proposal_005 explicit scalar-vector tensor-product frontier signal while adding branch-diversifying, benchmark-centric alternatives that are not repeats of generation_017 PaiNN/body-order/norm-dot/readout-damping local repairs.",
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP等变训练 - NequIP高性能训练推理深度等变原子间势.pdf",
+      "pages": 14,
+      "max_chars": 52000,
+      "why_selected": "Expected concrete irreducible/tensor-product message-passing equations and training/inference constraints that can ground exploitation of the successful TPInteractionBranch rather than just naming NequIP.",
+      "expected_evidence": ["equivariant tensor product formula", "radial-conditioned message update", "energy/force training implication", "runtime/stability constraints"]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP基础模型 - MACE-MP原子材料化学基础模型.pdf",
+      "pages": 14,
+      "max_chars": 52000,
+      "why_selected": "Expected many-body/correlation and MACE message-construction evidence for a branch-diversifying alternative that enriches the current body-order branch without repeating PaiNN gates.",
+      "expected_evidence": ["many-body correlation basis", "symmetric contraction/product basis", "energy/force/gap relevance", "cost scaling"]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP表示方法 - 笛卡尔原子簇展开CACE.pdf",
+      "pages": 12,
+      "max_chars": 48000,
+      "why_selected": "Expected Cartesian atom-cluster expansion formulas that connect directly to the current BodyOrderMessageBranch atom_a tensor and can diversify generation_019 with explicit invariant descriptors instead of norm/dot gates.",
+      "expected_evidence": ["Cartesian moment tensor formula", "invariant contraction", "tensor/data flow", "bounded implementation analogue"]
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "mir-group/nequip",
+      "max_files": 36,
+      "max_file_chars": 26000,
+      "why_selected": "Implementation code should expose tensor-product convolution / equivariant message patterns that map to TPInteractionBranch radial weights, edge unit vectors, scalar/vector channels, and near-zero residual exploitation.",
+      "expected_evidence": ["repo file", "class/function for tensor-product convolution", "radial MLP/cutoff path", "mapping to current model.py interaction loop"]
+    },
+    {
+      "repo": "ACEsuit/mace",
+      "max_files": 36,
+      "max_file_chars": 26000,
+      "why_selected": "Implementation code should expose symmetric contraction / product-basis patterns for a branch-diversifying body-order enhancement compatible with current BodyOrderMessageBranch._symmetrize insertion points.",
+      "expected_evidence": ["repo file", "symmetric contraction class/function", "product basis or correlation code", "mapping to current atom_a descriptor flow"]
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 2,
+    "min_new_sources": 1,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 1,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 2,
+    "max_pdf_attempts": 6,
+    "max_repo_attempts": 4,
+    "max_external_source_attempts": 10,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 1
+  },
+  "benchmark_context_required": [
+    "mixed_force_mae",
+    "mixed_energy_mae",
+    "gap_penalty",
+    "Q_dataset",
+    "Q_rmd17",
+    "Q_iso17",
+    "Q_total",
+    "G_delta",
+    "runtime_summary",
+    "control_replicate_comparison",
+    "/tree/key",
+    "/force/gap/Q/runtime/failure",
+    "/ledger/frontier.jsonl"
+  ]
+}

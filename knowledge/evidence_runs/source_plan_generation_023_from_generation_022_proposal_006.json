@@ -1,0 +1,41 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_022/proposal_006",
+  "target_generation": "generation_023",
+  "mode": "balanced",
+  "selection_intent": "Profile generation_022/proposal_006, which already has a SpookyNet-style neutral multishell charge pair correction with neutral-variance outcome, and test whether LES-style latent long-range charge energy provides a bounded next mechanism rather than repeating the same cutoff-shell charge head.",
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP长程相互作用 - 从能量和力学习电荷与长程作用.pdf",
+      "pages": 8,
+      "max_chars": 30000,
+      "why_selected": "Fresh local paper directly explains learning latent charges/long-range interactions from energies and forces, including real-space direct sum for isolated systems; relevant because current proposal_006 learned charges only on a cutoff directed neighbor list.",
+      "expected_evidence": ["range separation equation", "latent charge mapping q_i=Q_phi(B_i)", "real-space direct long-range energy for isolated systems", "charge learned from energy/forces without charge labels"]
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "BingqingCheng/cace",
+      "max_files": 30,
+      "max_file_chars": 20000,
+      "why_selected": "CACE contains a current LES integration and EwaldPotential implementation with a nonperiodic direct real-space path, making the paper mechanism concrete enough to map to the current EvolutionMLIP forward_energy insertion point.",
+      "expected_evidence": ["cace/modules/ewald.py::EwaldPotential.compute_potential_realspace", "cace/modules/les_wrapper.py::LesWrapper.forward", "latent charge feature path", "direct pair distance energy"]
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 2,
+    "min_new_sources": 1,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 1,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 1,
+    "max_pdf_attempts": 4,
+    "max_repo_attempts": 3,
+    "max_external_source_attempts": 6,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 1
+  }
+}

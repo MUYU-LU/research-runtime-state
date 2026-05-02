@@ -1,0 +1,45 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_023/proposal_004",
+  "target_generation": "generation_024",
+  "mode": "balanced",
+  "selection_intent": "After generation_023/proposal_004 added a fixed two-sigma LES all-pair charge tail but only achieved neutral-variance delta, gather fresh evidence for whether a bounded adaptive sum-of-Gaussians long-range tail or calibrated multiscale LR kernel is a better next mechanism than further fixed-sigma LES variants.",
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP长程体系 - Sum-of-Gaussians长程机器学习势.pdf",
+      "why_selected": "The current source unit already has latent neutral charges and two fixed erf/Coulomb-like all-pair kernels; SOG-Net explicitly learns trainable Gaussian multipliers for long-range decay tails and reports fixed-SR/LR balance constraints, which can test whether current fixed sigmas are too rigid after a neutral generation.",
+      "expected_evidence": [
+        "equations for E = E_SR + E_LR and Fourier/real-space sum-of-Gaussians multiplier",
+        "latent variable q_i,eta mapping from invariant descriptors",
+        "training/benchmark observations about balancing short-range cutoff and long-range contribution"
+      ]
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "DuktigYajie/SOG-Net",
+      "why_selected": "Repository should contain SOGPotential / SOG_3D layers with trainable amplitudes/bandwidths, q feature input, zero-mode/self-interaction handling, and a CACE example combining SR and SOG LR energies and forces; this maps directly to current model/model.py charge_head and les_tail_energy insertion points.",
+      "expected_evidence": [
+        "CACE-SOG/cace/modules/sog.py::SOGPotential.forward and compute_potential_SOG_realspace/triclinic",
+        "Deep-SOG/SOG_Net/lrc_layers.py SOG_3D layers showing trainable shift/amplitude Gaussian multiplier",
+        "CACE-SOG fit scripts combining CACE_energy, SOG_potential, SOG_forces through CombinePotential"
+      ]
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 2,
+    "min_new_sources": 1,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 1,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 1,
+    "max_pdf_attempts": 4,
+    "max_repo_attempts": 3,
+    "max_external_source_attempts": 6,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 1
+  }
+}

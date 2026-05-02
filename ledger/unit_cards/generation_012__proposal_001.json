@@ -1,0 +1,143 @@
+{
+  "unit": "generation_012/proposal_001",
+  "source_unit": "generation_011/proposal_007",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_012_from_generation_011_proposal_007_continuation/proposal_001.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_011/proposal_007",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_011/proposal_007",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 25,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/train.py",
+          "+++ child/model/train.py",
+          "@@ -38,6 +38,30 @@",
+          "         \"energy\": sample[\"energy\"].to(device),",
+          "         \"forces\": sample[\"forces\"].to(device),",
+          "     }",
+          "+",
+          "+",
+          "+def initialize_atomref_from_training_split(model: EvolutionMLIP, loader, device: torch.device) -> None:",
+          "+    \"\"\"Initialize observed atomrefs from training-only composition/energy statistics.\"\"\"",
+          "+    atomref_weight = model.atomref.weight",
+          "+    energy_sums = torch.zeros(atomref_weight.shape[0], device=device, dtype=atomref_weight.dtype)",
+          "+    atom_counts = torch.zeros_like(energy_sums)",
+          "+",
+          "+    with torch.no_grad():",
+          "+        for batch in loader:",
+          "+            for sample in batch:",
+          "+                numbers = sample[\"numbers\"].to(device)",
+          "+                energy = sample[\"energy\"].to(device=device, dtype=atomref_weight.dtype)",
+          "+                n_atoms = int(numbers.numel())",
+          "+                if n_atoms <= 0:",
+          "+                    continue",
+          "+                per_atom_target = energy / float(n_atoms)",
+          "+                counts = torch.bincount(numbers, minlength=atomref_weight.shape[0]).to(device=device, dtype=atomref_weight.dtype)",
+          "+                energy_sums += counts * per_atom_target",
+          "+                atom_counts += counts",
+          "+",
+          "+        observed = atom_counts > 0",
+          "+        if torch.any(observed):",
+          "+            atomref_weight[observed, 0] = energy_sums[observed] / atom_counts[observed]",
+          " ",
+          " ",
+          " def run_epoch(",
+          "@@ -113,6 +137,7 @@",
+          "         num_rbf=int(CONFIG.get(\"num_rbf\", 32)),",
+          "         cutoff=float(CONFIG.get(\"cutoff\", 5.0)),",
+          "     ).to(device)",
+          "+    initialize_atomref_from_training_split(model, train_loader, device)",
+          " ",
+          "     learning_rate = float(lr if lr is not None else CONFIG.get(\"learning_rate\", 1e-3))",
+          "     optimizer = torch.optim.AdamW("
+        ]
+      }
+    ],
+    "changed_files": [
+      "model/train.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 2.845506494803844,
+  "Q_iso17": 3.537596313127245,
+  "Q_total": 3.0877379312170343,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.47560357666015624,
+      "mild_ood_force_mae": 0.14284983300464227,
+      "hard_ood_energy_mae": 0.4837113037109375,
+      "hard_ood_force_mae": 0.14404748455667868,
+      "mixed_force_mae": 0.1435684239358641,
+      "mixed_energy_mae": 0.480468212890625,
+      "gap_penalty": 0.008342026186503877,
+      "Q_dataset": 2.845506494803844,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.1428498294565361,
+      "best_val_energy_mae": 0.475603271484375
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.25918452196782177,
+      "within_force_mae": 0.17930313557165095,
+      "other_energy_mae": 0.37306678185096154,
+      "other_force_mae": 0.19304297131701156,
+      "mixed_force_mae": 0.18754703701886732,
+      "mixed_energy_mae": 0.32751387789770564,
+      "gap_penalty": 0.0732607454838389,
+      "Q_dataset": 3.537596313127245,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "worsening",
+      "energy_trend": "worsening",
+      "best_val_force_mae": 0.1642702395717303,
+      "best_val_energy_mae": 0.18912760416666666
+    }
+  },
+  "created_at_utc": "2026-04-28T14:56:57.904081+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": 0.47664119102594293,
+  "outcome_class": "frontier_win",
+  "outcome_reasons": [
+    "delta_Q=0.476641 exceeds margin=0.03"
+  ]
+}

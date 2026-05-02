@@ -1,0 +1,51 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_015/proposal_004",
+  "mode": "jump",
+  "selection_intent": "Find architecture-departure mechanisms for generation_016 that move beyond BalancedInteractionBlock/readout gate/norm/adapter local tweaks while preserving benchmark split/eval/metric/entrypoint semantics. Prioritize mechanisms that can change representation path, message passing path, energy decomposition path, nonlocal information path, and/or training target physics regularization with bounded insertion points in the current model.py/train.py.",
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP表示方法 - 笛卡尔原子簇展开CACE.pdf",
+      "why_selected": "Expected explicit Cartesian atomic cluster expansion representation equations and body-order tensor construction; useful for a representation-path departure from the current learned scalar/vector message-passing state.",
+      "expected_evidence": ["equation", "basis/descriptor construction", "body-order representation", "implementation implication"]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP分子力场 - SpookyNet含电子自由度非局域力场.pdf",
+      "why_selected": "Expected explicit energy decomposition, charge/spin/electronic-degree nonlocal update, electrostatic/dispersion terms, and conservative force training; useful for energy-decomposition and nonlocal-information departures.",
+      "expected_evidence": ["energy decomposition", "charge/electrostatic formula", "nonlocal message/update", "training target/physics regularization"]
+    },
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP分子力场 - sGDML能量守恒分子力场.pdf",
+      "why_selected": "Expected force-field energy-conservation / gradient-domain training rule; useful as a training-target/physics regularization direction and guardrail without changing benchmark metrics or entrypoints.",
+      "expected_evidence": ["training rule", "conservative force constraint", "kernel/gradient formula", "loss implication"]
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "BingqingCheng/cace",
+      "why_selected": "Repository should expose Cartesian atomic cluster expansion representation construction and modules that can be mapped to current embedding/RBF/interaction insertion points.",
+      "expected_evidence": ["README", "tree", "class/function", "representation module", "training/config pattern"]
+    },
+    {
+      "repo": "OUnke/SpookyNet",
+      "why_selected": "Reference implementation should expose energy_terms / charge / electrostatic / dispersion / nonlocal blocks, giving concrete code traces for an energy-decomposition or nonlocal-head bounded edit.",
+      "expected_evidence": ["README", "tree", "class/function", "energy term code", "training entrypoint/config pattern"]
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 2,
+    "min_new_sources": 1,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 1,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 1,
+    "max_pdf_attempts": 6,
+    "max_repo_attempts": 4,
+    "max_external_source_attempts": 10,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 1
+  }
+}

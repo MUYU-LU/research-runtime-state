@@ -1,0 +1,41 @@
+{
+  "version": "source_plan.v1",
+  "source_unit": "generation_019/proposal_003",
+  "target_generation": "generation_020",
+  "mode": "balanced",
+  "selection_intent": "Find bounded mechanisms that explain or improve source-recoverable TP residual calibration after generation_019 scale calibration was best child but did not beat the parent/control envelope; prioritize adapter-style changes that preserve the existing scalar-vector TP branch and avoid repeating failed rank2/body-order/long-range branches.",
+  "selected_pdfs": [
+    {
+      "path": "/mnt/c/Users/1/Desktop/文献/MLIP/MLIP参数高效微调 - ELoRA等变低秩适配.pdf",
+      "why_selected": "Expected explicit low-rank equivariant adapter equations for tensor products/residual connections; directly relevant to replacing independent scalar/vector per-channel scale logits with a coupled low-rank source-recoverable adapter.",
+      "expected_evidence": ["low-rank update equation", "tensor product adapter rule", "residual/self-interaction propositions", "bounded fine-tuning/training rule"],
+      "pages": 10,
+      "max_chars": 28000
+    }
+  ],
+  "selected_repos": [
+    {
+      "repo": "hyjwpk/ELoRA",
+      "why_selected": "Repository linked from the ELoRA PDF; expected implementation pattern for low-rank A/B adapters in equivariant tensor products and parameter-freezing source recovery.",
+      "expected_evidence": ["repo file", "adapter class/function", "A/B low-rank parameterization", "config/training pattern"],
+      "max_files": 44,
+      "max_file_chars": 22000
+    }
+  ],
+  "novelty_policy": {
+    "lookback_runs": 3,
+    "min_attempted_external_sources": 2,
+    "min_new_sources": 1,
+    "max_recent_reused_sources": 1
+  },
+  "source_discovery_budget": {
+    "min_successful_pdf_sources": 1,
+    "min_successful_repo_sources": 1,
+    "min_strong_mechanism_cards": 1,
+    "max_pdf_attempts": 4,
+    "max_repo_attempts": 3,
+    "max_external_source_attempts": 6,
+    "max_source_expansion_rounds": 2,
+    "source_expansion_round": 1
+  }
+}

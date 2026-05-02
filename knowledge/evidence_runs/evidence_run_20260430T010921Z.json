@@ -1,0 +1,121 @@
+{
+  "run_id": "evidence_run_20260430T010921Z",
+  "evidence_package_dir": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/evidence_run_20260430T010921Z",
+  "evidence_run_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/evidence_run_20260430T010921Z/evidence_run.json",
+  "brief_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/briefs/evidence_brief_20260430T010921Z.md",
+  "evidence_quality": {
+    "version": "evidence_quality.v1",
+    "grade": "C",
+    "fresh_local_pdf_verified": true,
+    "fresh_repo_code_verified": true,
+    "has_mechanism_cards": true,
+    "has_strong_mechanism_cards": false,
+    "strong_mechanism_card_count": 0,
+    "min_strong_mechanism_cards": 3,
+    "strong_card_target_met": false,
+    "has_patch_blueprints": true,
+    "has_implementation_ready_blueprints": false,
+    "usable_for_proposal": false,
+    "usable_for_implementation": false,
+    "diagnosis_only": true,
+    "require_external_evidence": true,
+    "source_novelty": {
+      "version": "source_novelty.v1",
+      "history_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_source_history.jsonl",
+      "policy": {
+        "lookback_runs": 3,
+        "min_attempted_external_sources": 4,
+        "min_new_sources": 2,
+        "max_recent_reused_sources": 2
+      },
+      "source_discovery_budget": {
+        "min_successful_pdf_sources": 3,
+        "min_successful_repo_sources": 1,
+        "min_strong_mechanism_cards": 3,
+        "max_pdf_attempts": 6,
+        "max_repo_attempts": 3,
+        "max_external_source_attempts": 9,
+        "max_source_expansion_rounds": 2,
+        "source_expansion_round": 1
+      },
+      "pdf_attempted_source_count": 4,
+      "pdf_successful_source_count": 4,
+      "repo_attempted_source_count": 2,
+      "repo_successful_source_count": 2,
+      "attempted_external_source_count": 6,
+      "successful_external_source_count": 6,
+      "source_targets_met": true,
+      "source_budget_exhausted": false,
+      "new_source_count": 4,
+      "recent_reused_source_count": 2,
+      "new_source_ids": [
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu65e9u671fu67b6u6784_-_SchNetu8fdeu7eedu6ee4u6ce2u5377u79efu5206u5b50u52bf_e748cfccb3.pdf#21de6918484e",
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu67b6u6784_-_AlphaNetu5c40u90e8u6846u67b6u795eu7ecfu7f51u7edcu539fu5b50u95f4u52bf_a87ab20bd7.pdf#4ad46b498dc7",
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu91cfu5b50u5316u5b66_-_PhysNetu6ce2u51fdu6570u4e0eu5206u5b50u6027u8d28u6df1u5ea6u7f51u7edc_ddf32524b0.pdf#89d141a5099c",
+        "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu5206u5b50u529bu573a_-_BIGDMLu6750u6599u91cfu5b50u673au5668u5b66u4e60u529bu573a_aff90676d4.pdf#70c641c78db0"
+      ],
+      "recent_reused_source_ids": [
+        "repo:atomistic-machine-learning/schnetpack#41e33adf8c61",
+        "repo:torchmd/torchmd-net#e0cf6c6d162e"
+      ],
+      "all_sources_recent_repeats": false,
+      "source_novelty_passed": true,
+      "allow_recent_source_reuse": false
+    },
+    "external_attempted_source_count": 6,
+    "external_successful_source_count": 6,
+    "source_novelty_passed": true,
+    "source_budget_exhausted": false,
+    "needs_source_expansion": true,
+    "hard_rules": [
+      "No provenance -> no strong evidence.",
+      "No mechanism card -> no proposal mechanism.",
+      "No formula derivation/algorithm/repo path/code trace/current insertion point -> weak evidence only.",
+      "No patch blueprint -> not implementation-ready.",
+      "Benchmark diagnosis is not external mechanism evidence."
+    ]
+  },
+  "source_novelty": {
+    "version": "source_novelty.v1",
+    "history_path": "/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_source_history.jsonl",
+    "policy": {
+      "lookback_runs": 3,
+      "min_attempted_external_sources": 4,
+      "min_new_sources": 2,
+      "max_recent_reused_sources": 2
+    },
+    "source_discovery_budget": {
+      "min_successful_pdf_sources": 3,
+      "min_successful_repo_sources": 1,
+      "min_strong_mechanism_cards": 3,
+      "max_pdf_attempts": 6,
+      "max_repo_attempts": 3,
+      "max_external_source_attempts": 9,
+      "max_source_expansion_rounds": 2,
+      "source_expansion_round": 1
+    },
+    "pdf_attempted_source_count": 4,
+    "pdf_successful_source_count": 4,
+    "repo_attempted_source_count": 2,
+    "repo_successful_source_count": 2,
+    "attempted_external_source_count": 6,
+    "successful_external_source_count": 6,
+    "source_targets_met": true,
+    "source_budget_exhausted": false,
+    "new_source_count": 4,
+    "recent_reused_source_count": 2,
+    "new_source_ids": [
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu65e9u671fu67b6u6784_-_SchNetu8fdeu7eedu6ee4u6ce2u5377u79efu5206u5b50u52bf_e748cfccb3.pdf#21de6918484e",
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu67b6u6784_-_AlphaNetu5c40u90e8u6846u67b6u795eu7ecfu7f51u7edcu539fu5b50u95f4u52bf_a87ab20bd7.pdf#4ad46b498dc7",
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu91cfu5b50u5316u5b66_-_PhysNetu6ce2u51fdu6570u4e0eu5206u5b50u6027u8d28u6df1u5ea6u7f51u7edc_ddf32524b0.pdf#89d141a5099c",
+      "local_pdf:/home/lmy/.openclaw/workspace/research_runtime/knowledge/evidence_runs/source_inputs/MLIPu5206u5b50u529bu573a_-_BIGDMLu6750u6599u91cfu5b50u673au5668u5b66u4e60u529bu573a_aff90676d4.pdf#70c641c78db0"
+    ],
+    "recent_reused_source_ids": [
+      "repo:atomistic-machine-learning/schnetpack#41e33adf8c61",
+      "repo:torchmd/torchmd-net#e0cf6c6d162e"
+    ],
+    "all_sources_recent_repeats": false,
+    "source_novelty_passed": true,
+    "allow_recent_source_reuse": false
+  }
+}

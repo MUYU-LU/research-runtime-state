@@ -1,0 +1,78 @@
+{
+  "selected_proposals": [
+    {
+      "id": "proposal_001",
+      "path": "proposal_001.md",
+      "role": "jump",
+      "selection_rationale": "Selects the strongest nonlocal geometry mechanism axis (G018-MECH-001) as a broader branch-diversification jump: damped Euclidean RoPE context between local interaction blocks directly targets ISO17 energy/gap without repeating generation_017 PaiNN/body-order/local-gate repairs."
+    },
+    {
+      "id": "proposal_002",
+      "path": "proposal_002.md",
+      "role": "exploit",
+      "selection_rationale": "Lower-risk readout-only companion to proposal_001 for the same G018-MECH-001 axis; isolates whether nonlocal RoPE context is useful at the least disruptive insertion point before per-layer message mixing."
+    },
+    {
+      "id": "proposal_003",
+      "path": "proposal_003.md",
+      "role": "jump",
+      "selection_rationale": "Selects the MACE-style learned symmetric contraction axis (G018-MECH-002) as a genuine descriptor-family jump, replacing ad-hoc body summaries with bounded learned product-basis contractions rather than another local gate."
+    },
+    {
+      "id": "proposal_005",
+      "path": "proposal_005.md",
+      "role": "jump",
+      "selection_rationale": "Selects the NequIP-inspired low-rank tensor-product interaction axis (G018-MECH-003), adding explicit scalar/vector geometric couplings that are mechanism-distinct from generation_017 norm/dot or PaiNN-style gating variants."
+    },
+    {
+      "id": "proposal_006",
+      "path": "proposal_006.md",
+      "role": "exploit",
+      "selection_rationale": "Small-scope first-layer tensor-product probe paired with proposal_005; preserves the G018-MECH-003 mechanism while limiting runtime and force-gradient risk, making interpretation easier if the full-stack TP branch is unstable."
+    },
+    {
+      "id": "proposal_007",
+      "path": "proposal_007.md",
+      "role": "wildcard",
+      "selection_rationale": "Keeps the charge/global-state mechanism axis (G018-MECH-004) in the selected batch through a label-free latent conditioned readout, targeting ISO17 energy decomposition and gap from a mechanism not explored in generation_017."
+    },
+    {
+      "id": "proposal_008",
+      "path": "proposal_008.md",
+      "role": "control",
+      "selection_rationale": "Exact generation_016/proposal_002 control replicate is required because generation_017 controls were close to the parent and no child beat it; this calibrates generation_018 run variance before attributing gains to new mechanisms."
+    },
+    {
+      "id": "proposal_009",
+      "path": "proposal_009.md",
+      "role": "backward-simplify",
+      "selection_rationale": "Backward-simplify diagnostic for the body/product-basis family: tests whether a smaller normalized correlation-2 body path generalizes better than the current complex body branch while remaining grounded in G018-MECH-002."
+    }
+  ],
+  "source_unit": "generation_016/proposal_002",
+  "target_generation": "generation_018",
+  "selection_policy": "Prioritize broad branch diversification from the proposal-ready generation_018 evidence package: include nonlocal Euclidean RoPE context, MACE-style learned product-basis contraction, explicit tensor-product scalar/vector interaction, charge/global-state conditioned readout, an exact control, and one backward-simplify diagnostic. Avoid selecting a batch dominated by generation_017's failed PaiNN/body-order/norm-dot/readout-damping/energy-stability local repair pattern. Preserve interpretability by pairing high-scope jumps with lower-risk companions on the RoPE and tensor-product axes.",
+  "selected_role_counts": {
+    "jump": 3,
+    "exploit": 2,
+    "wildcard": 1,
+    "control": 1,
+    "backward-simplify": 1
+  },
+  "selected_mechanism_axes": [
+    "G018-MECH-001: Euclidean RoPE nonlocal geometry context",
+    "G018-MECH-002: learned symmetric/product-basis contractions",
+    "G018-MECH-003: explicit scalar-vector tensor-product interaction",
+    "G018-MECH-004: latent charge/global-state conditioned readout"
+  ],
+  "omitted_proposals": [
+    {
+      "id": "proposal_004",
+      "reason": "Conservative correlation-2 product-basis residual is useful but overlaps with selected proposal_003 and proposal_009 on G018-MECH-002; the selected pair gives a broader descriptor-family jump plus a simplification diagnostic within the same slot budget."
+    },
+    {
+      "id": "proposal_010",
+      "reason": "RoPE-plus-latent-readout hybrid combines G018-MECH-001 and G018-MECH-004, but would confound interpretation before the single-axis RoPE and latent conditioned readout proposals are measured; defer until individual axes show signal."
+    }
+  ]
+}

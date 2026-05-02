@@ -1,0 +1,171 @@
+{
+  "unit": "generation_017/proposal_004",
+  "source_unit": "generation_016/proposal_002",
+  "proposal": {
+    "proposal_file": "/home/lmy/.openclaw/workspace/research_runtime/proposals/generation_017_from_generation_016_proposal_002_continuation/proposal_004.md",
+    "family": null,
+    "phase": null,
+    "jump_type": null,
+    "budget_class": null,
+    "control_replicate": false,
+    "mechanism_refs": [],
+    "negative_pattern_refs": [],
+    "historical_relation": null
+  },
+  "run_state": "terminal_success",
+  "failure_class": null,
+  "implementation_state": "launch_ready",
+  "remote_synced": true,
+  "remote_smoke_passed": true,
+  "code_delta": {
+    "source_unit": "generation_016/proposal_002",
+    "source_root": "/home/lmy/.openclaw/workspace/research_runtime/generations/generation_016/proposal_002",
+    "files": [
+      {
+        "path": "model/model.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": false,
+        "added_lines": 28,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": [
+          "--- source/model/model.py",
+          "+++ child/model/model.py",
+          "@@ -255,6 +255,21 @@",
+          "         nn.init.normal_(self.body_order_readout[-1].weight, mean=0.0, std=1e-3)",
+          "         nn.init.zeros_(self.body_order_readout[-1].bias)",
+          " ",
+          "+        # Bounded PaiNN-style scalar-state adapter: feed the main readout a",
+          "+        # near-zero update from scalar state, body-order descriptor, and",
+          "+        # invariant vector contractions without changing the residual branch.",
+          "+        self.body_descriptor_to_hidden = nn.Linear(self.body_order_branch.descriptor_dim, hidden_dim)",
+          "+        self.scalar_body_vector_u = nn.Linear(hidden_dim, hidden_dim, bias=False)",
+          "+        self.scalar_body_vector_v = nn.Linear(hidden_dim, hidden_dim, bias=False)",
+          "+        self.scalar_body_vector_update = nn.Sequential(",
+          "+            nn.Linear(hidden_dim * 4, hidden_dim),",
+          "+            nn.SiLU(),",
+          "+            nn.Linear(hidden_dim, hidden_dim),",
+          "+        )",
+          "+        self.scalar_body_vector_scale = nn.Parameter(torch.tensor(-6.0))",
+          "+        nn.init.zeros_(self.scalar_body_vector_update[-1].weight)",
+          "+        nn.init.zeros_(self.scalar_body_vector_update[-1].bias)",
+          "+",
+          "         self.interactions = nn.ModuleList(",
+          "             [BalancedInteractionBlock(hidden_dim=hidden_dim, num_rbf=num_rbf) for _ in range(num_interactions)]",
+          "         )",
+          "@@ -331,6 +346,19 @@",
+          "                 cutoff_weight=cutoff_weight,",
+          "             )",
+          " ",
+          "+        uv_vector = self.scalar_body_vector_u(vector_state.transpose(1, 2)).transpose(1, 2)",
+          "+        vv_vector = self.scalar_body_vector_v(vector_state.transpose(1, 2)).transpose(1, 2)",
+          "+        vector_mix_norm = torch.sqrt(torch.sum(vv_vector * vv_vector, dim=-1) + 1e-8)",
+          "+        vector_mix_dot = torch.sum(uv_vector * vv_vector, dim=-1)",
+          "+        body_hidden = self.body_descriptor_to_hidden(body_order_descriptor)",
+          "+        scalar_body_vector_input = torch.cat(",
+          "+            [scalar_state, body_hidden, vector_mix_norm, vector_mix_dot],",
+          "+            dim=-1,",
+          "+        )",
+          "+        scalar_body_vector_delta = self.scalar_body_vector_update(scalar_body_vector_input)",
+          "+        scalar_body_vector_multiplier = 0.05 * torch.sigmoid(self.scalar_body_vector_scale)",
+          "+        scalar_state = self.readout_norm(scalar_state + scalar_body_vector_multiplier * scalar_body_vector_delta)",
+          "+",
+          "         vector_norm = self.vector_norm_layer(torch.linalg.norm(vector_state, dim=-1))",
+          "         scalar_vector_input = torch.cat([scalar_state, vector_norm], dim=-1)",
+          "         scalar_update = self.readout_scalar_update(scalar_vector_input)"
+        ]
+      },
+      {
+        "path": "model/train.py",
+        "child_exists": true,
+        "source_exists": true,
+        "same_as_source": true,
+        "added_lines": 0,
+        "removed_lines": 0,
+        "diff_truncated": false,
+        "unified_diff_excerpt": []
+      }
+    ],
+    "changed_files": [
+      "model/model.py"
+    ],
+    "diff_note": "Diff is child runnable unit against its declared source unit, limited to model/model.py and model/train.py."
+  },
+  "implementation_notes": null,
+  "Q_rmd17": 4.084267159156609,
+  "Q_iso17": 3.574540877702511,
+  "Q_total": 3.905862960647675,
+  "rmd17": {
+    "metrics": {
+      "mild_ood_energy_mae": 0.03663531494140625,
+      "mild_ood_force_mae": 0.0644891792999697,
+      "hard_ood_energy_mae": 0.03741680908203125,
+      "hard_ood_force_mae": 0.06479065581422765,
+      "mixed_force_mae": 0.06467006520852447,
+      "mixed_energy_mae": 0.03710421142578125,
+      "gap_penalty": 0.00466176295448593,
+      "Q_dataset": 4.084267159156609,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "improving",
+      "best_val_force_mae": 0.06448917923442786,
+      "best_val_energy_mae": 0.03663531494140625
+    }
+  },
+  "iso17": {
+    "metrics": {
+      "within_energy_mae": 0.251926051980198,
+      "within_force_mae": 0.16766507750616805,
+      "other_energy_mae": 0.37373685396634615,
+      "other_force_mae": 0.18548132380613913,
+      "mixed_force_mae": 0.1783548252861507,
+      "mixed_energy_mae": 0.3250125331718869,
+      "gap_penalty": 0.0998921462948198,
+      "Q_dataset": 3.574540877702511,
+      "device": "cuda"
+    },
+    "history_summary": {
+      "epochs": 8,
+      "force_trend": "improving",
+      "energy_trend": "worsening",
+      "best_val_force_mae": 0.15584001441796622,
+      "best_val_energy_mae": 0.23567708333333334
+    }
+  },
+  "created_at_utc": "2026-04-30T00:45:18.665208+00:00",
+  "control_replicate": false,
+  "delta_Q_vs_parent": -0.03668515613963752,
+  "component_improvements_vs_parent": [
+    {
+      "dataset": "rmd17",
+      "metric": "gap_penalty",
+      "parent": 0.00572809902567738,
+      "child": 0.00466176295448593,
+      "relative_improvement": 0.18615880528799855
+    },
+    {
+      "dataset": "iso17",
+      "metric": "gap_penalty",
+      "parent": 0.11346597420504244,
+      "child": 0.0998921462948198,
+      "relative_improvement": 0.11962906065296376
+    }
+  ],
+  "component_regressions_vs_parent": [
+    {
+      "dataset": "rmd17",
+      "metric": "mixed_energy_mae",
+      "parent": 0.032782373046874994,
+      "child": 0.03710421142578125,
+      "relative_regression": 0.13183421385408942
+    }
+  ],
+  "outcome_class": "benchmark_tradeoff",
+  "outcome_reasons": [
+    "some component metrics improved but other tracked metrics regressed strongly"
+  ]
+}
